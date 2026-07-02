@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { GyroBall } from "@/components/ui/gyro-ball";
 
 const VERT_SHADER = `
   attribute vec2 position;
@@ -400,9 +401,9 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
   const engineRef = useRef<HalftoneTrailEngine | null>(null);
   const requestGyroRef = useRef<(() => void) | null>(null);
   const [supported, setSupported] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-  const [cursorPos, setCursorPos] = useState<{ x: number; y: number } | null>(null);
   const [showGyroPrompt, setShowGyroPrompt] = useState(false);
+  const [ballPos, setBallPos] = useState<{ x: number; y: number } | null>(null);
+  const [rotation, setRotation] = useState(0);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -428,7 +429,6 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     );
 
     const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    setIsMobile(mobile);
 
     const ro = new ResizeObserver((entries) => {
       const { width: w, height: h } = entries[0].contentRect;
@@ -463,6 +463,9 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     let baseGamma: number | null = null;
     let baseBeta: number | null = null;
     const TILT_RANGE_DEG = 30; // degrees of tilt to sweep from center to screen edge
+    let lastX: number | null = null;
+    let lastY: number | null = null;
+    let rotation = 0; // degrees
 
     const handleOrientation = (e: DeviceOrientationEvent) => {
       // Some browsers fire an initial event with null values before real sensor
@@ -487,8 +490,16 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       const x = Math.max(0, Math.min(window.innerWidth, rawX));
       const y = Math.max(0, Math.min(window.innerHeight, rawY));
 
+      // Spin the ball based on rolling velocity (how far it moved since the last reading)
+      const velX = lastX === null ? 0 : x - lastX;
+      const velY = lastY === null ? 0 : y - lastY;
+      rotation += velX * 3 + velY * 0.5;
+      lastX = x;
+      lastY = y;
+
       engine.updatePointer(x, y, container.getBoundingClientRect());
-      setCursorPos({ x, y });
+      setBallPos({ x, y });
+      setRotation(rotation);
     };
 
     type DeviceOrientationEventWithPermission = typeof DeviceOrientationEvent & {
@@ -567,19 +578,14 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
         ref={canvasRef}
         style={{ display: "block", width: "100%", height: "100%", pointerEvents: "none" }}
       />
-      {isMobile && cursorPos && (
-        <div
-          className="fixed w-3 h-3 rounded-full bg-orange-500 pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 transition-all duration-75"
-          style={{ left: cursorPos.x, top: cursorPos.y }}
-        />
-      )}
+      {ballPos && <GyroBall x={ballPos.x} y={ballPos.y} rotation={rotation} />}
       {showGyroPrompt && (
         <button
           type="button"
           onClick={() => requestGyroRef.current?.()}
           className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto rounded-full bg-orange-500 px-4 py-2 text-xs font-mono uppercase tracking-wider text-white shadow-lg"
         >
-          Move your phone
+          Tap to play
         </button>
       )}
     </div>
