@@ -492,8 +492,8 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     let baseBeta: number | null = null;
     const TILT_RANGE_DEG = 30; // degrees of tilt for max gravity strength
     const MAX_ACCEL = 0.6; // px/frame^2 of "gravity" at full tilt
-    const FRICTION = 0.97;
-    const BOUNCE_DAMPING = 0.6;
+    const FRICTION = 0.91; // lower = more rolling resistance/"grip", less ice-like sliding
+    const BOUNCE_DAMPING = 0.4;
     const BALL_RADIUS = 28;
     let tiltX = 0; // current gravity input, -1..1
     let tiltY = 0;
