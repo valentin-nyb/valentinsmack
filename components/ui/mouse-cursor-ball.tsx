@@ -7,7 +7,7 @@ import { GyroHole } from "@/components/ui/gyro-ball";
 // so it visually reads as the hand cursor pushing the ball forward rather
 // than the ball being glued to the pointer tip.
 const LAG = 0.2;
-const BALL_SIZE = 95;
+const BALL_SIZE = 85;
 const BALL_RADIUS = BALL_SIZE / 2;
 const HIT_RADIUS = 56;
 const FRICTION = 0.985;
@@ -19,9 +19,9 @@ const SETTLE_SPEED = 0.06;
 
 const PORTFOLIO_HOLE_SIZE = 120;
 const PORTFOLIO_HOLE_RADIUS = 55;
-const EMAIL_HOLE_SIZE = 50;
+const EMAIL_HOLE_SIZE = 64;
 const EMAIL_HOLE_ASPECT = 1005 / 840;
-const EMAIL_HOLE_RADIUS = 24;
+const EMAIL_HOLE_RADIUS = 30;
 
 interface HoleTarget {
   x: number;

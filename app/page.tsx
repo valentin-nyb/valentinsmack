@@ -109,8 +109,8 @@ export default function Home() {
           href="mailto:smack.valentin@gmail.com"
           className="fixed z-40 whitespace-nowrap font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase"
           style={{
-            left: emailHolePos.x - 140,
-            top: emailHolePos.y - 8,
+            left: emailHolePos.x - 105,
+            top: emailHolePos.y + 10,
             transform: "translateZ(0)",
             WebkitBackfaceVisibility: "hidden",
             willChange: "transform",
