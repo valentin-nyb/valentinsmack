@@ -2,14 +2,16 @@
   "buildCommand": "NEXT_ADAPTER_PATH= next build",
   "outputDirectory": "out",
   "framework": null,
-  "rewrites": [
+  "redirects": [
     {
       "source": "/work",
-      "destination": "https://valentinsmack.myportfolio.com"
+      "destination": "https://valentinsmack.myportfolio.com",
+      "permanent": false
     },
     {
       "source": "/work/:path*",
-      "destination": "https://valentinsmack.myportfolio.com/:path*"
+      "destination": "https://valentinsmack.myportfolio.com/:path*",
+      "permanent": false
     }
   ]
 }
