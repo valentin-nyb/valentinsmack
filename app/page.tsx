@@ -118,12 +118,10 @@ export default function Home() {
           <span className="text-orange-500">London</span>
         </p>
       </div>
-      {!emailHolePos && (
+      {!emailHolePos && !isMobileDevice && (
         <a
           href="mailto:smack.valentin@gmail.com"
-          className={`fixed z-10 font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase ${
-            isMobileDevice ? "bottom-10 right-6" : "top-10 right-6 md:top-14 md:right-12"
-          }`}
+          className="fixed z-10 top-10 right-6 md:top-14 md:right-12 font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase"
         >
           Email ↗
         </a>
@@ -158,7 +156,10 @@ export default function Home() {
           Brand identity, campaigns,<br />
           web & AI design.
         </p>
-        <div className="flex flex-col items-end gap-2">
+        <div className="flex flex-col items-end justify-between self-stretch gap-2">
+          {isMobileDevice && (
+            <a href="mailto:smack.valentin@gmail.com" className="mt-8 font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase">Email ↗</a>
+          )}
           {!holePos && (
             <a href="https://valentinsmack.myportfolio.com" target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase">Portfolio ↗</a>
           )}
