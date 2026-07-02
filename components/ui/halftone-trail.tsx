@@ -398,9 +398,11 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<HalftoneTrailEngine | null>(null);
+  const requestGyroRef = useRef<(() => void) | null>(null);
   const [supported, setSupported] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [cursorPos, setCursorPos] = useState<{ x: number; y: number } | null>(null);
+  const [showGyroPrompt, setShowGyroPrompt] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -506,22 +508,21 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
               window.addEventListener("deviceorientation", handleOrientation);
             }
           })
-          .catch(() => {});
+          .catch(() => {})
+          .finally(() => setShowGyroPrompt(false));
       } else if (typeof DeviceOrientationEvent !== "undefined") {
         window.addEventListener("deviceorientation", handleOrientation);
       }
     };
+    requestGyroRef.current = requestGyro;
 
-    let onFirstTap: (() => void) | null = null;
     if (needsPermission) {
-      // iOS 13+ requires the permission prompt to originate from a user gesture
-      onFirstTap = () => {
-        requestGyro();
-        window.removeEventListener("click", onFirstTap!);
-        window.removeEventListener("touchstart", onFirstTap!);
-      };
-      window.addEventListener("click", onFirstTap);
-      window.addEventListener("touchstart", onFirstTap);
+      // iOS 13+ requires the permission prompt to originate from a user gesture.
+      // Surface an explicit on-screen button rather than a silent "tap anywhere"
+      // listener - if the visitor's first tap lands on a link and navigates away,
+      // or they simply never happen to tap the page, gyro would otherwise never
+      // activate with no indication anything was expected of them.
+      setShowGyroPrompt(true);
     } else {
       requestGyro();
     }
@@ -529,12 +530,9 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     return () => {
       engine.destroy();
       engineRef.current = null;
+      requestGyroRef.current = null;
       ro.disconnect();
       window.removeEventListener("deviceorientation", handleOrientation);
-      if (onFirstTap) {
-        window.removeEventListener("click", onFirstTap);
-        window.removeEventListener("touchstart", onFirstTap);
-      }
     };
   }, [cellSize, decay, brushSize, hoverBrushSize, opacity, hoverOpacity, speedScale, hoverSelector]);
 
@@ -574,6 +572,15 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
           className="fixed w-3 h-3 rounded-full bg-orange-500 pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 transition-all duration-75"
           style={{ left: cursorPos.x, top: cursorPos.y }}
         />
+      )}
+      {showGyroPrompt && (
+        <button
+          type="button"
+          onClick={() => requestGyroRef.current?.()}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto rounded-full bg-orange-500 px-4 py-2 text-xs font-mono uppercase tracking-wider text-white shadow-lg"
+        >
+          Tap to enable tilt
+        </button>
       )}
     </div>
   );
