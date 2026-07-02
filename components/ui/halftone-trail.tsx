@@ -614,40 +614,45 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
   if (!supported) return null;
 
   return (
-    <div
-      ref={containerRef}
-      className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}
-      style={{ zIndex: 0 }}
-    >
-      <canvas
-        ref={canvasRef}
-        style={{ display: "block", width: "100%", height: "100%", pointerEvents: "none" }}
-      />
-      {holePos && <GyroHole x={holePos.x} y={holePos.y} />}
-      {ballPos && <GyroBall x={ballPos.x} y={ballPos.y} rotation={rotation} sunk={ballSunk} />}
+    <>
+      <div
+        ref={containerRef}
+        className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}
+        style={{ zIndex: 0 }}
+      >
+        <canvas
+          ref={canvasRef}
+          style={{ display: "block", width: "100%", height: "100%", pointerEvents: "none" }}
+        />
+        {holePos && <GyroHole x={holePos.x} y={holePos.y} />}
+        {ballPos && <GyroBall x={ballPos.x} y={ballPos.y} rotation={rotation} sunk={ballSunk} />}
+      </div>
+      {/* Rendered outside the trail's low z-index layer (kept low so the ball
+          stays behind the discipline text for the reveal effect) so this prompt
+          sits on top of everything, including that text, and stays clickable. */}
       {showGyroPrompt && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src="/gyro/cloud.png"
           alt=""
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none w-[220px]"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] pointer-events-none w-[280px]"
         />
       )}
       {showGyroPrompt && (
         <button
           type="button"
           onClick={() => requestGyroRef.current?.()}
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-auto rounded-full bg-orange-500 px-4 py-2 text-xs font-mono uppercase tracking-wider text-white shadow-lg"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] pointer-events-auto rounded-full bg-orange-500 px-6 py-3 text-sm font-mono uppercase tracking-wider text-white shadow-lg"
         >
           Tap to play
         </button>
       )}
       {gyroDenied && (
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none rounded-lg bg-black/90 px-4 py-3 text-center text-[10px] font-mono uppercase tracking-wider text-white shadow-lg max-w-[85vw]">
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] pointer-events-none rounded-lg bg-black/90 px-4 py-3 text-center text-[10px] font-mono uppercase tracking-wider text-white shadow-lg max-w-[85vw]">
           Motion access is off. Enable it in Settings → Safari → Motion &amp; Orientation Access, then reload.
         </div>
       )}
-    </div>
+    </>
   );
 };
 
