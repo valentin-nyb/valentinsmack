@@ -399,6 +399,8 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<HalftoneTrailEngine | null>(null);
   const [supported, setSupported] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [cursorPos, setCursorPos] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -423,10 +425,8 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       resolveColor(container, colorHigh)
     );
 
-    const onPointerMove = (e: PointerEvent) => {
-      engine.updatePointer(e.clientX, e.clientY, container.getBoundingClientRect());
-    };
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    setIsMobile(mobile);
 
     const ro = new ResizeObserver((entries) => {
       const { width: w, height: h } = entries[0].contentRect;
@@ -438,11 +438,81 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     });
     ro.observe(container);
 
+    if (!mobile) {
+      // Desktop: mouse-driven cursor, unchanged
+      const onPointerMove = (e: PointerEvent) => {
+        engine.updatePointer(e.clientX, e.clientY, container.getBoundingClientRect());
+      };
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+
+      return () => {
+        engine.destroy();
+        engineRef.current = null;
+        window.removeEventListener("pointermove", onPointerMove);
+        ro.disconnect();
+      };
+    }
+
+    // Mobile: gyroscope-driven virtual cursor via DeviceOrientationEvent
+    const handleOrientation = (e: DeviceOrientationEvent) => {
+      const gamma = e.gamma ?? 0; // left/right tilt: -90 to 90
+      const beta = e.beta ?? 0; // front/back tilt: -180 to 180
+
+      const rawX = ((gamma + 45) / 90) * window.innerWidth;
+      const rawY = ((beta - 30) / 60) * window.innerHeight;
+      const x = Math.max(0, Math.min(window.innerWidth, rawX));
+      const y = Math.max(0, Math.min(window.innerHeight, rawY));
+
+      engine.updatePointer(x, y, container.getBoundingClientRect());
+      setCursorPos({ x, y });
+    };
+
+    type DeviceOrientationEventWithPermission = typeof DeviceOrientationEvent & {
+      requestPermission?: () => Promise<"granted" | "denied">;
+    };
+    const DOE =
+      typeof DeviceOrientationEvent !== "undefined"
+        ? (DeviceOrientationEvent as DeviceOrientationEventWithPermission)
+        : undefined;
+    const needsPermission = typeof DOE !== "undefined" && typeof DOE.requestPermission === "function";
+
+    const requestGyro = () => {
+      if (needsPermission) {
+        DOE!.requestPermission!()
+          .then((state) => {
+            if (state === "granted") {
+              window.addEventListener("deviceorientation", handleOrientation);
+            }
+          })
+          .catch(() => {});
+      } else if (typeof DeviceOrientationEvent !== "undefined") {
+        window.addEventListener("deviceorientation", handleOrientation);
+      }
+    };
+
+    let onFirstTap: (() => void) | null = null;
+    if (needsPermission) {
+      // iOS 13+ requires the permission prompt to originate from a user gesture
+      onFirstTap = () => {
+        requestGyro();
+        window.removeEventListener("click", onFirstTap!);
+        window.removeEventListener("touchstart", onFirstTap!);
+      };
+      window.addEventListener("click", onFirstTap);
+      window.addEventListener("touchstart", onFirstTap);
+    } else {
+      requestGyro();
+    }
+
     return () => {
       engine.destroy();
       engineRef.current = null;
-      window.removeEventListener("pointermove", onPointerMove);
       ro.disconnect();
+      window.removeEventListener("deviceorientation", handleOrientation);
+      if (onFirstTap) {
+        window.removeEventListener("click", onFirstTap);
+        window.removeEventListener("touchstart", onFirstTap);
+      }
     };
   }, [cellSize, decay, brushSize, hoverBrushSize, opacity, hoverOpacity, speedScale, hoverSelector]);
 
@@ -477,6 +547,12 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
         ref={canvasRef}
         style={{ display: "block", width: "100%", height: "100%", pointerEvents: "none" }}
       />
+      {isMobile && cursorPos && (
+        <div
+          className="fixed w-3 h-3 rounded-full bg-orange-500 pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2 transition-all duration-75"
+          style={{ left: cursorPos.x, top: cursorPos.y }}
+        />
+      )}
     </div>
   );
 };
