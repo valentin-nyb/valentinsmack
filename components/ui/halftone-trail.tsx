@@ -391,6 +391,7 @@ export interface HalftoneTrailProps {
   lightHoverSelector?: string;
   className?: string;
   onHolePosition?: (pos: { x: number; y: number } | null) => void;
+  onTouchedChar?: (touched: { label: string; index: number } | null) => void;
 }
 
 export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
@@ -409,6 +410,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
   lightHoverSelector = "[data-hover-light]",
   className = "",
   onHolePosition,
+  onTouchedChar,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -490,9 +492,19 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     // (beta) pulls it down/up.
     let baseGamma: number | null = null;
     let baseBeta: number | null = null;
-    const TILT_RANGE_DEG = 30; // degrees of tilt for max gravity strength
-    const MAX_ACCEL = 0.6; // px/frame^2 of "gravity" at full tilt
-    const FRICTION = 0.91; // lower = more rolling resistance/"grip", less ice-like sliding
+    // Held upright (the normal way to browse), a comfortable forward/back
+    // wrist tilt covers a much smaller degree range than a comfortable
+    // left/right one, so beta needs a tighter range to reach full "gravity"
+    // strength — otherwise vertical movement feels weak/absent next to
+    // horizontal, which is what was making the ball feel like it only
+    // rolled sideways.
+    const TILT_RANGE_X_DEG = 30;
+    const TILT_RANGE_Y_DEG = 14;
+    // Grip (lower FRICTION) eats into top speed, since terminal velocity is
+    // roughly MAX_ACCEL * FRICTION / (1 - FRICTION) — so MAX_ACCEL has to go
+    // up a lot to keep it fast while still settling quickly when tilt eases.
+    const MAX_ACCEL = 1.4; // px/frame^2 of "gravity" at full tilt
+    const FRICTION = 0.93; // lower = more rolling resistance/"grip", less ice-like sliding
     const BOUNCE_DAMPING = 0.4;
     const BALL_RADIUS = 28;
     let tiltX = 0; // current gravity input, -1..1
@@ -504,7 +516,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     let velY = 0;
     let rotation = 0; // degrees
     let sunk = false;
-    let touchedTextEl: Element | null = null;
+    let touchedChar: { label: string; index: number } | null = null;
 
     // Computed once and never repositioned afterward: mobile Safari's URL bar
     // hides/shows as you scroll, which changes window.innerHeight mid-scroll.
@@ -532,8 +544,8 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
 
       const deltaGamma = gamma - baseGamma; // + = tilted right
       const deltaBeta = beta - baseBeta; // + = tilted forward
-      tiltX = Math.max(-1, Math.min(1, deltaGamma / TILT_RANGE_DEG));
-      tiltY = Math.max(-1, Math.min(1, deltaBeta / TILT_RANGE_DEG));
+      tiltX = Math.max(-1, Math.min(1, deltaGamma / TILT_RANGE_X_DEG));
+      tiltY = Math.max(-1, Math.min(1, deltaBeta / TILT_RANGE_Y_DEG));
       hasOrientation = true;
     };
 
@@ -578,13 +590,18 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
         setBallPos({ x: posX, y: posY });
         setRotation(rotation);
 
-        // Reveal the ball through the discipline label it's currently passing
-        // behind, matching the desktop hover outline effect.
-        const textEl = document.elementFromPoint(posX, posY)?.closest("[data-gyro-text]") ?? null;
-        if (textEl !== touchedTextEl) {
-          touchedTextEl?.querySelector("[data-gyro-outline]")?.classList.remove("gyro-touching");
-          textEl?.querySelector("[data-gyro-outline]")?.classList.add("gyro-touching");
-          touchedTextEl = textEl;
+        // Scramble only the exact letter the ball is currently touching,
+        // not the whole discipline label — matches the desktop effect.
+        const hitEl = document.elementFromPoint(posX, posY);
+        const labelEl = hitEl?.closest("[data-gyro-text]") ?? null;
+        const charEl = hitEl?.closest("[data-char-index]") ?? null;
+        const touched =
+          labelEl && charEl && labelEl.contains(charEl)
+            ? { label: labelEl.getAttribute("data-label") ?? "", index: Number(charEl.getAttribute("data-char-index")) }
+            : null;
+        if (touched?.label !== touchedChar?.label || touched?.index !== touchedChar?.index) {
+          touchedChar = touched;
+          onTouchedChar?.(touched);
         }
 
         const distToHole = Math.hypot(posX - hole.x, posY - hole.y);
@@ -650,9 +667,9 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       ro.disconnect();
       cancelAnimationFrame(physicsRafId);
       window.removeEventListener("deviceorientation", handleOrientation);
-      touchedTextEl?.querySelector("[data-gyro-outline]")?.classList.remove("gyro-touching");
+      if (touchedChar) onTouchedChar?.(null);
     };
-  }, [cellSize, decay, brushSize, hoverBrushSize, opacity, hoverOpacity, lightHoverOpacity, speedScale, hoverSelector, lightHoverSelector]);
+  }, [cellSize, decay, brushSize, hoverBrushSize, opacity, hoverOpacity, lightHoverOpacity, speedScale, hoverSelector, lightHoverSelector, onTouchedChar]);
 
   // Re-resolve colors when props change or Tailwind dark-mode class toggles on <html>
   useEffect(() => {

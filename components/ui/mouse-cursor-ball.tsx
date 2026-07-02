@@ -36,9 +36,10 @@ interface HoleTarget {
 interface MouseCursorBallProps {
   onHolePosition?: (pos: { x: number; y: number }) => void;
   onEmailHolePosition?: (pos: { x: number; y: number }) => void;
+  onTouchedChar?: (touched: { label: string; index: number } | null) => void;
 }
 
-export function MouseCursorBall({ onHolePosition, onEmailHolePosition }: MouseCursorBallProps) {
+export function MouseCursorBall({ onHolePosition, onEmailHolePosition, onTouchedChar }: MouseCursorBallProps) {
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const [rotation, setRotation] = useState(0);
   const [holes, setHoles] = useState<HoleTarget[]>([]);
@@ -89,6 +90,7 @@ export function MouseCursorBall({ onHolePosition, onEmailHolePosition }: MouseCu
     onEmailHolePosition?.(emailHole);
 
     let rafId: number;
+    let touchedChar: { label: string; index: number } | null = null;
 
     const handleMove = (e: MouseEvent) => {
       targetRef.current = { x: e.clientX, y: e.clientY };
@@ -188,6 +190,22 @@ export function MouseCursorBall({ onHolePosition, onEmailHolePosition }: MouseCu
       setPos({ x: nextX, y: nextY });
       setRotation(rotRef.current);
 
+      // Scramble only the exact letter the ball is currently touching, not
+      // the whole discipline label — driven by the ball's own rendered
+      // position, not real cursor hover, since the ball lags behind the
+      // actual pointer.
+      const hitEl = document.elementFromPoint(nextX, nextY);
+      const labelEl = hitEl?.closest("[data-gyro-text]") ?? null;
+      const charEl = hitEl?.closest("[data-char-index]") ?? null;
+      const touched =
+        labelEl && charEl && labelEl.contains(charEl)
+          ? { label: labelEl.getAttribute("data-label") ?? "", index: Number(charEl.getAttribute("data-char-index")) }
+          : null;
+      if (touched?.label !== touchedChar?.label || touched?.index !== touchedChar?.index) {
+        touchedChar = touched;
+        onTouchedChar?.(touched);
+      }
+
       const spawnGraceElapsed = performance.now() - spawnTimeRef.current > 400;
       if (spawnGraceElapsed) {
         const hitHole = holesRef.current.find(
@@ -228,8 +246,9 @@ export function MouseCursorBall({ onHolePosition, onEmailHolePosition }: MouseCu
       document.removeEventListener("mouseleave", handleLeave);
       window.removeEventListener("pageshow", handlePageShow);
       cancelAnimationFrame(rafId);
+      if (touchedChar) onTouchedChar?.(null);
     };
-  }, [onHolePosition, onEmailHolePosition]);
+  }, [onHolePosition, onEmailHolePosition, onTouchedChar]);
 
   return (
     <>

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { HalftoneTrail } from "@/components/ui/halftone-trail";
 import { MouseCursorBall } from "@/components/ui/mouse-cursor-ball";
+import { ScrambleHover } from "@/components/ui/scramble-hover";
 
 const disciplines = [
   "brand&identity",
@@ -11,14 +12,7 @@ const disciplines = [
   "campaigns",
 ];
 
-function HoverText({ text, outline = false }: { text: string; outline?: boolean }) {
-  if (outline) {
-    return (
-      <span data-gyro-outline className="text-neutral-700 [-webkit-text-stroke:0px] hover:text-transparent hover:[-webkit-text-stroke:1.5px_#f97316] transition-all duration-150">
-        {text}
-      </span>
-    );
-  }
+function HoverText({ text }: { text: string }) {
   return (
     <span className="hover:text-neutral-900 transition-colors duration-150">
       {text}
@@ -26,11 +20,22 @@ function HoverText({ text, outline = false }: { text: string; outline?: boolean 
   );
 }
 
-function HoverImageItem({ label }: { label: string }) {
+function HoverImageItem({ label, activeIndex }: { label: string; activeIndex: number | null }) {
   return (
-    <div className="group relative h-fit w-fit overflow-visible cursor-interactive" data-gyro-text data-hover-light>
+    <div
+      className="group relative h-fit w-fit overflow-visible cursor-interactive"
+      data-gyro-text
+      data-label={label}
+      data-hover-light
+    >
       <span className="font-display text-[2.8rem] md:text-[4.2rem] font-black leading-[0.85] select-none">
-        <HoverText text={label} outline />
+        <ScrambleHover
+          text={label}
+          activeIndex={activeIndex}
+          scrambleSpeed={60}
+          className="text-neutral-700"
+          scrambledClassName="text-transparent [-webkit-text-stroke:1.5px_#f97316]"
+        />
       </span>
     </div>
   );
@@ -41,6 +46,9 @@ export default function Home() {
   const [mobileHolePos, setMobileHolePos] = useState<{ x: number; y: number } | null>(null);
   const [desktopHolePos, setDesktopHolePos] = useState<{ x: number; y: number } | null>(null);
   const [emailHolePos, setEmailHolePos] = useState<{ x: number; y: number } | null>(null);
+  const [mobileTouchedChar, setMobileTouchedChar] = useState<{ label: string; index: number } | null>(null);
+  const [desktopTouchedChar, setDesktopTouchedChar] = useState<{ label: string; index: number } | null>(null);
+  const touchedChar = mobileTouchedChar ?? desktopTouchedChar;
   const holePos = mobileHolePos ?? desktopHolePos;
 
   useEffect(() => {
@@ -64,8 +72,13 @@ export default function Home() {
         hoverOpacity={0.15}
         speedScale={38.0}
         onHolePosition={setMobileHolePos}
+        onTouchedChar={setMobileTouchedChar}
       />
-      <MouseCursorBall onHolePosition={setDesktopHolePos} onEmailHolePosition={setEmailHolePos} />
+      <MouseCursorBall
+        onHolePosition={setDesktopHolePos}
+        onEmailHolePosition={setEmailHolePos}
+        onTouchedChar={setDesktopTouchedChar}
+      />
       {mobileHolePos && (
         <a
           href="https://valentinsmack.myportfolio.com"
@@ -138,7 +151,11 @@ export default function Home() {
       {/* Centre — discipline list */}
       <div className="relative z-10 flex flex-col items-center gap-3 my-8 text-center">
         {disciplines.map((label, i) => (
-          <HoverImageItem key={i} label={label} />
+          <HoverImageItem
+            key={i}
+            label={label}
+            activeIndex={touchedChar?.label === label ? touchedChar.index : null}
+          />
         ))}
       </div>
 
