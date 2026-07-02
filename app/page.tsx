@@ -13,7 +13,7 @@ const disciplines = [
 function HoverText({ text, outline = false }: { text: string; outline?: boolean }) {
   if (outline) {
     return (
-      <span className="text-neutral-700 [-webkit-text-stroke:0px] hover:text-transparent hover:[-webkit-text-stroke:1.5px_#f97316] transition-all duration-150">
+      <span data-gyro-outline className="text-neutral-700 [-webkit-text-stroke:0px] hover:text-transparent hover:[-webkit-text-stroke:1.5px_#f97316] transition-all duration-150">
         {text}
       </span>
     );
@@ -27,7 +27,7 @@ function HoverText({ text, outline = false }: { text: string; outline?: boolean 
 
 function HoverImageItem({ label }: { label: string }) {
   return (
-    <div className="group relative h-fit w-fit overflow-visible cursor-interactive" data-hover>
+    <div className="group relative h-fit w-fit overflow-visible cursor-interactive" data-gyro-text>
       <span className="font-display text-[2.8rem] md:text-[4.2rem] font-black leading-[0.85] select-none">
         <HoverText text={label} outline />
       </span>
@@ -37,6 +37,7 @@ function HoverImageItem({ label }: { label: string }) {
 
 export default function Home() {
   const [isInstagram, setIsInstagram] = useState(false);
+  const [holePos, setHolePos] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     setIsInstagram(navigator.userAgent.includes("Instagram"));
@@ -60,7 +61,19 @@ export default function Home() {
         opacity={1.0}
         hoverOpacity={0.15}
         speedScale={38.0}
+        onHolePosition={setHolePos}
       />
+      {holePos && (
+        <a
+          href="https://valentinsmack.myportfolio.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed z-40 -translate-x-1/2 whitespace-nowrap font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase"
+          style={{ left: holePos.x, top: holePos.y + 38 }}
+        >
+          Portfolio ↗
+        </a>
+      )}
 
       {/* Header */}
       <div className="relative z-10" data-hover>
@@ -88,7 +101,9 @@ export default function Home() {
           web & AI design.
         </p>
         <div className="flex flex-col items-end gap-2">
-          <a href="https://valentinsmack.myportfolio.com" target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase">Portfolio ↗</a>
+          {!holePos && (
+            <a href="https://valentinsmack.myportfolio.com" target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase">Portfolio ↗</a>
+          )}
           <a href="mailto:smack.valentin@gmail.com" className="font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase">Email ↗</a>
         </div>
       </div>

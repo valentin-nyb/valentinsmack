@@ -22,4 +22,12 @@
   .cursor-interactive {
     cursor: url("/cursors/cursor.png") 10 3, auto;
   }
+
+  /* Mimics the desktop :hover outline state, triggered programmatically when
+     the gyro ball passes behind a discipline label on mobile (there's no real
+     pointer hover there), so the ball is visible through the now-transparent text. */
+  .gyro-touching {
+    color: transparent !important;
+    -webkit-text-stroke: 1.5px #f97316 !important;
+  }
 }

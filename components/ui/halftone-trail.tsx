@@ -380,6 +380,7 @@ export interface HalftoneTrailProps {
   speedScale?: number;
   hoverSelector?: string;
   className?: string;
+  onHolePosition?: (pos: { x: number; y: number } | null) => void;
 }
 
 export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
@@ -395,6 +396,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
   speedScale = 35.0,
   hoverSelector = "a, button, [data-hover]",
   className = "",
+  onHolePosition,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -477,10 +479,12 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     let lastY: number | null = null;
     let rotation = 0; // degrees
     let sunk = false;
+    let touchedTextEl: Element | null = null;
 
-    const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.88 };
+    const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.82 };
     const HOLE_RADIUS = 32;
     setHolePos(hole);
+    onHolePosition?.(hole);
 
     const handleOrientation = (e: DeviceOrientationEvent) => {
       // Some browsers fire an initial event with null values before real sensor
@@ -516,6 +520,15 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       engine.updatePointer(x, y, container.getBoundingClientRect());
       setBallPos({ x, y });
       setRotation(rotation);
+
+      // Reveal the ball through the discipline label it's currently passing
+      // behind, matching the desktop hover outline effect.
+      const textEl = document.elementFromPoint(x, y)?.closest("[data-gyro-text]") ?? null;
+      if (textEl !== touchedTextEl) {
+        touchedTextEl?.querySelector("[data-gyro-outline]")?.classList.remove("gyro-touching");
+        textEl?.querySelector("[data-gyro-outline]")?.classList.add("gyro-touching");
+        touchedTextEl = textEl;
+      }
 
       const distToHole = Math.hypot(x - hole.x, y - hole.y);
       if (distToHole < HOLE_RADIUS) {
@@ -575,6 +588,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       requestGyroRef.current = null;
       ro.disconnect();
       window.removeEventListener("deviceorientation", handleOrientation);
+      touchedTextEl?.querySelector("[data-gyro-outline]")?.classList.remove("gyro-touching");
     };
   }, [cellSize, decay, brushSize, hoverBrushSize, opacity, hoverOpacity, speedScale, hoverSelector]);
 
@@ -612,16 +626,24 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       {holePos && <GyroHole x={holePos.x} y={holePos.y} />}
       {ballPos && <GyroBall x={ballPos.x} y={ballPos.y} rotation={rotation} sunk={ballSunk} />}
       {showGyroPrompt && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src="/gyro/cloud.png"
+          alt=""
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none w-[220px]"
+        />
+      )}
+      {showGyroPrompt && (
         <button
           type="button"
           onClick={() => requestGyroRef.current?.()}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto rounded-full bg-orange-500 px-4 py-2 text-xs font-mono uppercase tracking-wider text-white shadow-lg"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-auto rounded-full bg-orange-500 px-4 py-2 text-xs font-mono uppercase tracking-wider text-white shadow-lg"
         >
           Tap to play
         </button>
       )}
       {gyroDenied && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none rounded-lg bg-black/90 px-4 py-3 text-center text-[10px] font-mono uppercase tracking-wider text-white shadow-lg max-w-[85vw]">
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none rounded-lg bg-black/90 px-4 py-3 text-center text-[10px] font-mono uppercase tracking-wider text-white shadow-lg max-w-[85vw]">
           Motion access is off. Enable it in Settings → Safari → Motion &amp; Orientation Access, then reload.
         </div>
       )}
