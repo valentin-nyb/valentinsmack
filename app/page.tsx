@@ -27,7 +27,7 @@ function HoverText({ text, outline = false }: { text: string; outline?: boolean 
 
 function HoverImageItem({ label }: { label: string }) {
   return (
-    <div className="group relative h-fit w-fit overflow-visible cursor-interactive" data-gyro-text>
+    <div className="group relative h-fit w-fit overflow-visible cursor-interactive" data-gyro-text data-hover-light>
       <span className="font-display text-[2.8rem] md:text-[4.2rem] font-black leading-[0.85] select-none">
         <HoverText text={label} outline />
       </span>
@@ -69,7 +69,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
           className="fixed z-40 -translate-x-1/2 whitespace-nowrap font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase"
-          style={{ left: holePos.x - 60, top: holePos.y + 38 }}
+          style={{ left: holePos.x - 60, top: holePos.y + 22 }}
         >
           Portfolio ↗
         </a>

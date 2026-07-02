@@ -151,9 +151,11 @@ interface EngineConfig {
   hoverBrushSize: number;
   opacity: number;
   hoverOpacity: number;
+  lightHoverOpacity: number;
   speedScale: number;
   cellSize: number;
   hoverSelector: string;
+  lightHoverSelector: string;
 }
 
 class HalftoneTrailEngine {
@@ -198,6 +200,7 @@ class HalftoneTrailEngine {
   private dirY = 1;
   private velocity = 0;
   private hovering = false;
+  private hoveringLight = false;
   private reveal = 0;
   private currentBrushSize: number;
   private currentOpacity: number;
@@ -280,6 +283,7 @@ class HalftoneTrailEngine {
 
     const el = document.elementFromPoint(clientX, clientY);
     this.hovering = this.config.hoverSelector ? !!el?.closest(this.config.hoverSelector) : false;
+    this.hoveringLight = this.config.lightHoverSelector ? !!el?.closest(this.config.lightHoverSelector) : false;
   }
 
   resize(w: number, h: number) {
@@ -300,7 +304,11 @@ class HalftoneTrailEngine {
     this.reveal = lerp(this.reveal, 1.0, 0.04);
     const targetBrush = this.hovering ? this.config.hoverBrushSize : this.config.brushSize;
     this.currentBrushSize = lerp(this.currentBrushSize, targetBrush, 0.08);
-    const targetOpacity = this.hovering ? this.config.hoverOpacity : this.config.opacity;
+    const targetOpacity = this.hovering
+      ? this.config.hoverOpacity
+      : this.hoveringLight
+      ? this.config.lightHoverOpacity
+      : this.config.opacity;
     this.currentOpacity = lerp(this.currentOpacity, targetOpacity, 0.08);
     this.velocity *= 0.9;
 
@@ -377,8 +385,10 @@ export interface HalftoneTrailProps {
   hoverBrushSize?: number;
   opacity?: number;
   hoverOpacity?: number;
+  lightHoverOpacity?: number;
   speedScale?: number;
   hoverSelector?: string;
+  lightHoverSelector?: string;
   className?: string;
   onHolePosition?: (pos: { x: number; y: number } | null) => void;
 }
@@ -393,8 +403,10 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
   hoverBrushSize = 0.012,
   opacity = 1.0,
   hoverOpacity = 0.2,
+  lightHoverOpacity = 0.5,
   speedScale = 35.0,
   hoverSelector = "a, button, [data-hover]",
+  lightHoverSelector = "[data-hover-light]",
   className = "",
   onHolePosition,
 }) => {
@@ -409,6 +421,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
   const [ballSunk, setBallSunk] = useState(false);
   const [holePos, setHolePos] = useState<{ x: number; y: number } | null>(null);
   const [gyroDenied, setGyroDenied] = useState(false);
+  const [trailVisible, setTrailVisible] = useState(true);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -418,7 +431,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     let engine: HalftoneTrailEngine;
     try {
       engine = new HalftoneTrailEngine(canvas, {
-        decay, brushSize, hoverBrushSize, opacity, hoverOpacity, speedScale, cellSize, hoverSelector,
+        decay, brushSize, hoverBrushSize, opacity, hoverOpacity, lightHoverOpacity, speedScale, cellSize, hoverSelector, lightHoverSelector,
       });
     } catch {
       setSupported(false);
@@ -578,6 +591,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       // or they simply never happen to tap the page, gyro would otherwise never
       // activate with no indication anything was expected of them.
       setShowGyroPrompt(true);
+      setTrailVisible(false);
     } else {
       requestGyro();
     }
@@ -590,7 +604,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       window.removeEventListener("deviceorientation", handleOrientation);
       touchedTextEl?.querySelector("[data-gyro-outline]")?.classList.remove("gyro-touching");
     };
-  }, [cellSize, decay, brushSize, hoverBrushSize, opacity, hoverOpacity, speedScale, hoverSelector]);
+  }, [cellSize, decay, brushSize, hoverBrushSize, opacity, hoverOpacity, lightHoverOpacity, speedScale, hoverSelector, lightHoverSelector]);
 
   // Re-resolve colors when props change or Tailwind dark-mode class toggles on <html>
   useEffect(() => {
@@ -622,7 +636,14 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       >
         <canvas
           ref={canvasRef}
-          style={{ display: "block", width: "100%", height: "100%", pointerEvents: "none" }}
+          style={{
+            display: "block",
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+            opacity: trailVisible ? 1 : 0,
+            transition: "opacity 0.4s ease-out",
+          }}
         />
         {holePos && <GyroHole x={holePos.x} y={holePos.y} />}
         {ballPos && <GyroBall x={ballPos.x} y={ballPos.y} rotation={rotation} sunk={ballSunk} />}
@@ -633,15 +654,18 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       {showGyroPrompt && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src="/gyro/cloud.png"
+          src="/gyro/speech-bubble.png"
           alt=""
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] pointer-events-none w-[360px]"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] pointer-events-none w-[190px]"
         />
       )}
       {showGyroPrompt && (
         <button
           type="button"
-          onClick={() => requestGyroRef.current?.()}
+          onClick={() => {
+            requestGyroRef.current?.();
+            setTrailVisible(true);
+          }}
           className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] pointer-events-auto rounded-full bg-orange-500 px-6 py-3 text-sm font-mono uppercase tracking-wider text-white shadow-lg"
         >
           Tap to play
