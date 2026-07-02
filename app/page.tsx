@@ -38,7 +38,9 @@ function HoverImageItem({ label }: { label: string }) {
 
 export default function Home() {
   const [isInstagram, setIsInstagram] = useState(false);
-  const [holePos, setHolePos] = useState<{ x: number; y: number } | null>(null);
+  const [mobileHolePos, setMobileHolePos] = useState<{ x: number; y: number } | null>(null);
+  const [desktopHolePos, setDesktopHolePos] = useState<{ x: number; y: number } | null>(null);
+  const holePos = mobileHolePos ?? desktopHolePos;
 
   useEffect(() => {
     setIsInstagram(navigator.userAgent.includes("Instagram"));
@@ -62,9 +64,9 @@ export default function Home() {
         opacity={1.0}
         hoverOpacity={0.15}
         speedScale={38.0}
-        onHolePosition={setHolePos}
+        onHolePosition={setMobileHolePos}
       />
-      <MouseCursorBall />
+      <MouseCursorBall onHolePosition={setDesktopHolePos} />
       {holePos && (
         <a
           href="https://valentinsmack.myportfolio.com"
