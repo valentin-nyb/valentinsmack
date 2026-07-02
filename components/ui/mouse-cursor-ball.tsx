@@ -73,8 +73,8 @@ export function MouseCursorBall() {
     <img
       src="/gyro/8-ball.svg"
       alt=""
-      width={30}
-      height={30}
+      width={52}
+      height={52}
       className="fixed z-[90] pointer-events-none"
       style={{
         left: pos.x,
