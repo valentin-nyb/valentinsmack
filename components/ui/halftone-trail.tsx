@@ -494,23 +494,16 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     let sunk = false;
     let touchedTextEl: Element | null = null;
 
+    // Computed once and never repositioned afterward: mobile Safari's URL bar
+    // hides/shows as you scroll, which changes window.innerHeight mid-scroll.
+    // Reacting to that (e.g. via a resize listener) made the hole visibly
+    // swim during scroll instead of staying put, which is worse than the
+    // small drift it was meant to fix. The extra margin below (0.80 instead
+    // of a tighter fraction) is the actual fix for that drift.
     const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.80 };
     const HOLE_RADIUS = 32;
     setHolePos(hole);
     onHolePosition?.(hole);
-
-    // Mobile Safari's URL bar hides/shows as you scroll, changing the live
-    // viewport height after this effect already captured window.innerHeight
-    // once above. The footer (CSS min-h-screen) reflows with that change
-    // automatically; this one-time snapshot doesn't, so they'd drift apart -
-    // recompute whenever the viewport actually changes.
-    const onViewportResize = () => {
-      hole.x = window.innerWidth * 0.85;
-      hole.y = window.innerHeight * 0.80;
-      setHolePos({ x: hole.x, y: hole.y });
-      onHolePosition?.({ x: hole.x, y: hole.y });
-    };
-    window.addEventListener("resize", onViewportResize);
 
     const handleOrientation = (e: DeviceOrientationEvent) => {
       // Some browsers fire an initial event with null values before real sensor
@@ -615,7 +608,6 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       requestGyroRef.current = null;
       ro.disconnect();
       window.removeEventListener("deviceorientation", handleOrientation);
-      window.removeEventListener("resize", onViewportResize);
       touchedTextEl?.querySelector("[data-gyro-outline]")?.classList.remove("gyro-touching");
     };
   }, [cellSize, decay, brushSize, hoverBrushSize, opacity, hoverOpacity, lightHoverOpacity, speedScale, hoverSelector, lightHoverSelector]);
