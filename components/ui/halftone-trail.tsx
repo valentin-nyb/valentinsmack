@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { GyroBall } from "@/components/ui/gyro-ball";
+import { GyroBall, GyroHole } from "@/components/ui/gyro-ball";
 
 const VERT_SHADER = `
   attribute vec2 position;
@@ -404,6 +404,8 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
   const [showGyroPrompt, setShowGyroPrompt] = useState(false);
   const [ballPos, setBallPos] = useState<{ x: number; y: number } | null>(null);
   const [rotation, setRotation] = useState(0);
+  const [ballSunk, setBallSunk] = useState(false);
+  const [holePos, setHolePos] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -466,12 +468,18 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     let lastX: number | null = null;
     let lastY: number | null = null;
     let rotation = 0; // degrees
+    let sunk = false;
+
+    const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.88 };
+    const HOLE_RADIUS = 30;
+    setHolePos(hole);
 
     const handleOrientation = (e: DeviceOrientationEvent) => {
       // Some browsers fire an initial event with null values before real sensor
       // data is available ("no data yet"). Skip those instead of calibrating
       // against a bogus zero reading.
       if (e.gamma === null || e.beta === null) return;
+      if (sunk) return;
       const gamma = e.gamma; // left/right tilt: -90 to 90
       const beta = e.beta; // front/back tilt: -180 to 180
 
@@ -500,6 +508,15 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       engine.updatePointer(x, y, container.getBoundingClientRect());
       setBallPos({ x, y });
       setRotation(rotation);
+
+      const distToHole = Math.hypot(x - hole.x, y - hole.y);
+      if (distToHole < HOLE_RADIUS) {
+        sunk = true;
+        setBallSunk(true);
+        setTimeout(() => {
+          window.location.href = "https://valentinsmack.myportfolio.com";
+        }, 400);
+      }
     };
 
     type DeviceOrientationEventWithPermission = typeof DeviceOrientationEvent & {
@@ -578,7 +595,8 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
         ref={canvasRef}
         style={{ display: "block", width: "100%", height: "100%", pointerEvents: "none" }}
       />
-      {ballPos && <GyroBall x={ballPos.x} y={ballPos.y} rotation={rotation} />}
+      {holePos && <GyroHole x={holePos.x} y={holePos.y} />}
+      {ballPos && <GyroBall x={ballPos.x} y={ballPos.y} rotation={rotation} sunk={ballSunk} />}
       {showGyroPrompt && (
         <button
           type="button"
