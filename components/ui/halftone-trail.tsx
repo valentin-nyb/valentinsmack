@@ -481,7 +481,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     let sunk = false;
     let touchedTextEl: Element | null = null;
 
-    const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.82 };
+    const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.86 };
     const HOLE_RADIUS = 32;
     setHolePos(hole);
     onHolePosition?.(hole);
