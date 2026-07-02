@@ -23,6 +23,16 @@
     cursor: url("/cursors/cursor.png") 10 3, auto;
   }
 
+  /* iOS Safari defers repainting position:fixed layers during the
+     elastic rubber-band overscroll bounce, which is what makes the
+     mobile hole/ball/pointer-link visibly lag mid-scroll even with
+     GPU-layer hints on those elements. Killing the bounce itself
+     removes the trigger rather than fighting the repaint. */
+  html,
+  body {
+    overscroll-behavior-y: none;
+  }
+
   /* Mimics the desktop :hover outline state, triggered programmatically when
      the gyro ball passes behind a discipline label on mobile (there's no real
      pointer hover there), so the ball is visible through the now-transparent text. */

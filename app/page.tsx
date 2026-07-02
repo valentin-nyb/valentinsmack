@@ -156,7 +156,7 @@ export default function Home() {
           Brand identity, campaigns,<br />
           web & AI design.
         </p>
-        <div className="flex flex-col items-end justify-between self-stretch gap-2">
+        <div className="flex flex-col items-end justify-end self-stretch gap-2">
           {isMobileDevice && (
             <a href="mailto:smack.valentin@gmail.com" className="mt-8 font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase">Email ↗</a>
           )}
