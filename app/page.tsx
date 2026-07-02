@@ -38,6 +38,7 @@ function HoverImageItem({ label }: { label: string }) {
 
 export default function Home() {
   const [isInstagram, setIsInstagram] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [mobileHolePos, setMobileHolePos] = useState<{ x: number; y: number } | null>(null);
   const [desktopHolePos, setDesktopHolePos] = useState<{ x: number; y: number } | null>(null);
   const [emailHolePos, setEmailHolePos] = useState<{ x: number; y: number } | null>(null);
@@ -45,6 +46,10 @@ export default function Home() {
 
   useEffect(() => {
     setIsInstagram(navigator.userAgent.includes("Instagram"));
+    setIsMobileDevice(
+      /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+    );
   }, []);
 
   return (
@@ -68,16 +73,33 @@ export default function Home() {
         onHolePosition={setMobileHolePos}
       />
       <MouseCursorBall onHolePosition={setDesktopHolePos} onEmailHolePosition={setEmailHolePos} />
-      {holePos && (
+      {mobileHolePos && (
         <a
           href="https://valentinsmack.myportfolio.com"
           target="_blank"
           rel="noopener noreferrer"
           className="fixed z-40 whitespace-nowrap font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase"
           style={{
-            left: holePos.x - 110,
-            top: holePos.y + 22,
-            transform: "translateX(-50%) translateZ(0)",
+            left: mobileHolePos.x - 80,
+            top: mobileHolePos.y + 22,
+            transform: "translateZ(0)",
+            WebkitBackfaceVisibility: "hidden",
+            willChange: "transform",
+          }}
+        >
+          Portfolio ↗
+        </a>
+      )}
+      {desktopHolePos && (
+        <a
+          href="https://valentinsmack.myportfolio.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed z-40 whitespace-nowrap font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase"
+          style={{
+            left: desktopHolePos.x - 125,
+            top: desktopHolePos.y + 22,
+            transform: "translateZ(0)",
             WebkitBackfaceVisibility: "hidden",
             willChange: "transform",
           }}
@@ -99,7 +121,9 @@ export default function Home() {
       {!emailHolePos && (
         <a
           href="mailto:smack.valentin@gmail.com"
-          className="absolute top-10 right-6 md:top-14 md:right-12 z-10 font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase"
+          className={`fixed z-10 font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase ${
+            isMobileDevice ? "bottom-10 right-6" : "top-10 right-6 md:top-14 md:right-12"
+          }`}
         >
           Email ↗
         </a>
@@ -109,7 +133,7 @@ export default function Home() {
           href="mailto:smack.valentin@gmail.com"
           className="fixed z-40 whitespace-nowrap font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase"
           style={{
-            left: emailHolePos.x - 105,
+            left: emailHolePos.x - 95,
             top: emailHolePos.y + 10,
             transform: "translateZ(0)",
             WebkitBackfaceVisibility: "hidden",
