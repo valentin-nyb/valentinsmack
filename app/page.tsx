@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import { HalftoneTrail } from "@/components/ui/halftone-trail";
 
 const disciplines = [
@@ -35,8 +36,19 @@ function HoverImageItem({ label }: { label: string }) {
 }
 
 export default function Home() {
+  const [isInstagram, setIsInstagram] = useState(false);
+
+  useEffect(() => {
+    setIsInstagram(navigator.userAgent.includes("Instagram"));
+  }, []);
+
   return (
     <main className="relative min-h-screen flex flex-col justify-between px-6 md:px-12 py-10 md:py-14 bg-white overflow-hidden">
+      {isInstagram && (
+        <div className="fixed top-0 left-0 right-0 z-[100] bg-black text-white font-mono text-[10px] tracking-widest uppercase text-center py-3 px-4">
+          open in safari for the full experience ↗
+        </div>
+      )}
       <HalftoneTrail
         cellSize={10}
         colorLow="#a3a3a3"
