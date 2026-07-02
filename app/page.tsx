@@ -149,7 +149,7 @@ export default function Home() {
       )}
 
       {/* Centre — discipline list */}
-      <div className="relative z-10 flex flex-col items-center gap-3 my-8 text-center">
+      <div className="relative z-10 flex flex-col items-center gap-3 mt-0 mb-8 md:my-8 text-center">
         {disciplines.map((label, i) => (
           <HoverImageItem
             key={i}
