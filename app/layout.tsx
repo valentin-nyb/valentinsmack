@@ -22,7 +22,7 @@ const robotoSlab = Roboto_Slab({
 });
 
 export const metadata: Metadata = {
-  title: "Valentin Suarez Mackeprang — Art Director & Designer",
+  title: "SMACK",
   description: "Art Director and Designer based in London. Brand identity, web design, AI design tools.",
 };
 
