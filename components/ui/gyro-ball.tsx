@@ -37,15 +37,17 @@ interface GyroHoleProps {
   x: number;
   y: number;
   size?: number;
+  aspect?: number;
+  src?: string;
 }
 
-export function GyroHole({ x, y, size = 64 }: GyroHoleProps) {
+export function GyroHole({ x, y, size = 64, aspect = 1, src = "/gyro/hole.png" }: GyroHoleProps) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src="/gyro/hole.png"
+      src={src}
       alt=""
-      width={size}
+      width={Math.round(size * aspect)}
       height={size}
       className="fixed pointer-events-none z-40"
       style={{

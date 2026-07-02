@@ -40,6 +40,7 @@ export default function Home() {
   const [isInstagram, setIsInstagram] = useState(false);
   const [mobileHolePos, setMobileHolePos] = useState<{ x: number; y: number } | null>(null);
   const [desktopHolePos, setDesktopHolePos] = useState<{ x: number; y: number } | null>(null);
+  const [emailHolePos, setEmailHolePos] = useState<{ x: number; y: number } | null>(null);
   const holePos = mobileHolePos ?? desktopHolePos;
 
   useEffect(() => {
@@ -66,15 +67,15 @@ export default function Home() {
         speedScale={38.0}
         onHolePosition={setMobileHolePos}
       />
-      <MouseCursorBall onHolePosition={setDesktopHolePos} />
+      <MouseCursorBall onHolePosition={setDesktopHolePos} onEmailHolePosition={setEmailHolePos} />
       {holePos && (
         <a
           href="https://valentinsmack.myportfolio.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed z-40 whitespace-nowrap font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase"
+          className="fixed z-40 whitespace-nowrap font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase"
           style={{
-            left: holePos.x - 60,
+            left: holePos.x - 110,
             top: holePos.y + 22,
             transform: "translateX(-50%) translateZ(0)",
             WebkitBackfaceVisibility: "hidden",
@@ -95,12 +96,29 @@ export default function Home() {
           <span className="text-orange-500">London</span>
         </p>
       </div>
-      <a
-        href="mailto:smack.valentin@gmail.com"
-        className="absolute top-10 right-6 md:top-14 md:right-12 z-10 font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase"
-      >
-        Email ↗
-      </a>
+      {!emailHolePos && (
+        <a
+          href="mailto:smack.valentin@gmail.com"
+          className="absolute top-10 right-6 md:top-14 md:right-12 z-10 font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase"
+        >
+          Email ↗
+        </a>
+      )}
+      {emailHolePos && (
+        <a
+          href="mailto:smack.valentin@gmail.com"
+          className="fixed z-40 whitespace-nowrap font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase"
+          style={{
+            left: emailHolePos.x - 140,
+            top: emailHolePos.y - 8,
+            transform: "translateZ(0)",
+            WebkitBackfaceVisibility: "hidden",
+            willChange: "transform",
+          }}
+        >
+          Email ↗
+        </a>
+      )}
 
       {/* Centre — discipline list */}
       <div className="relative z-10 flex flex-col items-center gap-3 my-8 text-center">
@@ -118,7 +136,7 @@ export default function Home() {
         </p>
         <div className="flex flex-col items-end gap-2">
           {!holePos && (
-            <a href="https://valentinsmack.myportfolio.com" target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase">Portfolio ↗</a>
+            <a href="https://valentinsmack.myportfolio.com" target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase">Portfolio ↗</a>
           )}
         </div>
       </div>

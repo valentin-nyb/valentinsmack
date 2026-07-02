@@ -16,17 +16,32 @@ const KICK_MULTIPLIER = 6;
 const MIN_KICK_SPEED = 9;
 const MAX_KICK_SPEED = 34;
 const SETTLE_SPEED = 0.06;
-const HOLE_SIZE = 88;
-const HOLE_RADIUS = 40;
+
+const PORTFOLIO_HOLE_SIZE = 120;
+const PORTFOLIO_HOLE_RADIUS = 55;
+const EMAIL_HOLE_SIZE = 50;
+const EMAIL_HOLE_ASPECT = 1005 / 840;
+const EMAIL_HOLE_RADIUS = 24;
+
+interface HoleTarget {
+  x: number;
+  y: number;
+  radius: number;
+  href: string;
+  size: number;
+  aspect: number;
+  src: string;
+}
 
 interface MouseCursorBallProps {
   onHolePosition?: (pos: { x: number; y: number }) => void;
+  onEmailHolePosition?: (pos: { x: number; y: number }) => void;
 }
 
-export function MouseCursorBall({ onHolePosition }: MouseCursorBallProps) {
+export function MouseCursorBall({ onHolePosition, onEmailHolePosition }: MouseCursorBallProps) {
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const [rotation, setRotation] = useState(0);
-  const [holePos, setHolePos] = useState<{ x: number; y: number } | null>(null);
+  const [holes, setHoles] = useState<HoleTarget[]>([]);
   const [sunk, setSunk] = useState(false);
   const ballRef = useRef({ x: 0, y: 0 });
   const targetRef = useRef({ x: 0, y: 0 });
@@ -34,8 +49,9 @@ export function MouseCursorBall({ onHolePosition }: MouseCursorBallProps) {
   const rotRef = useRef(0);
   const modeRef = useRef<"attached" | "free">("attached");
   const initializedRef = useRef(false);
-  const holeRef = useRef<{ x: number; y: number } | null>(null);
+  const holesRef = useRef<HoleTarget[]>([]);
   const sunkRef = useRef(false);
+  const spawnTimeRef = useRef(0);
 
   useEffect(() => {
     const isFinePointer = window.matchMedia(
@@ -49,10 +65,28 @@ export function MouseCursorBall({ onHolePosition }: MouseCursorBallProps) {
     // Computed once and never repositioned afterward — reacting to viewport
     // changes (resize/scroll) made the hole visibly swim on mobile, so the
     // same static-position approach is used here.
-    const hole = { x: window.innerWidth - 130, y: window.innerHeight - 100 };
-    holeRef.current = hole;
-    setHolePos(hole);
-    onHolePosition?.(hole);
+    const portfolioHole: HoleTarget = {
+      x: window.innerWidth - 130,
+      y: window.innerHeight - 100,
+      radius: PORTFOLIO_HOLE_RADIUS,
+      href: "https://valentinsmack.myportfolio.com",
+      size: PORTFOLIO_HOLE_SIZE,
+      aspect: 1,
+      src: "/gyro/hole.png",
+    };
+    const emailHole: HoleTarget = {
+      x: window.innerWidth - 130,
+      y: 90,
+      radius: EMAIL_HOLE_RADIUS,
+      href: "mailto:smack.valentin@gmail.com",
+      size: EMAIL_HOLE_SIZE,
+      aspect: EMAIL_HOLE_ASPECT,
+      src: "/gyro/email-hole.png",
+    };
+    holesRef.current = [portfolioHole, emailHole];
+    setHoles(holesRef.current);
+    onHolePosition?.(portfolioHole);
+    onEmailHolePosition?.(emailHole);
 
     let rafId: number;
 
@@ -61,6 +95,11 @@ export function MouseCursorBall({ onHolePosition }: MouseCursorBallProps) {
       if (!initializedRef.current) {
         ballRef.current = { x: e.clientX, y: e.clientY };
         initializedRef.current = true;
+        // On reload, the real cursor is often still sitting right where it
+        // was when the ball last sank (e.g. hitting back after the
+        // redirect), which would otherwise re-trigger the hole the instant
+        // the ball spawns there. Give it a moment to actually move first.
+        spawnTimeRef.current = performance.now();
       }
     };
 
@@ -149,34 +188,61 @@ export function MouseCursorBall({ onHolePosition }: MouseCursorBallProps) {
       setPos({ x: nextX, y: nextY });
       setRotation(rotRef.current);
 
-      const hole = holeRef.current;
-      if (hole && Math.hypot(nextX - hole.x, nextY - hole.y) < HOLE_RADIUS) {
-        sunkRef.current = true;
-        setSunk(true);
-        setTimeout(() => {
-          window.location.href = "https://valentinsmack.myportfolio.com";
-        }, 400);
+      const spawnGraceElapsed = performance.now() - spawnTimeRef.current > 400;
+      if (spawnGraceElapsed) {
+        const hitHole = holesRef.current.find(
+          (hole) => Math.hypot(nextX - hole.x, nextY - hole.y) < hole.radius
+        );
+        if (hitHole) {
+          sunkRef.current = true;
+          setSunk(true);
+          setTimeout(() => {
+            window.location.href = hitHole.href;
+          }, 400);
+        }
       }
 
       rafId = requestAnimationFrame(tick);
     };
 
+    // If the browser restores this page from bfcache (e.g. hitting Back
+    // after the portfolio redirect) JS state resumes exactly as frozen,
+    // which would otherwise leave the ball permanently sunk/invisible.
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (!e.persisted) return;
+      sunkRef.current = false;
+      setSunk(false);
+      initializedRef.current = false;
+      setPos(null);
+    };
+
     window.addEventListener("mousemove", handleMove);
     window.addEventListener("click", handleClick);
     document.addEventListener("mouseleave", handleLeave);
+    window.addEventListener("pageshow", handlePageShow);
     rafId = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener("mousemove", handleMove);
       window.removeEventListener("click", handleClick);
       document.removeEventListener("mouseleave", handleLeave);
+      window.removeEventListener("pageshow", handlePageShow);
       cancelAnimationFrame(rafId);
     };
-  }, [onHolePosition]);
+  }, [onHolePosition, onEmailHolePosition]);
 
   return (
     <>
-      {holePos && <GyroHole x={holePos.x} y={holePos.y} size={HOLE_SIZE} />}
+      {holes.map((hole) => (
+        <GyroHole
+          key={hole.href}
+          x={hole.x}
+          y={hole.y}
+          size={hole.size}
+          aspect={hole.aspect}
+          src={hole.src}
+        />
+      ))}
       {pos && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
