@@ -503,7 +503,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     // Grip (lower FRICTION) eats into top speed, since terminal velocity is
     // roughly MAX_ACCEL * FRICTION / (1 - FRICTION) — so MAX_ACCEL has to go
     // up a lot to keep it fast while still settling quickly when tilt eases.
-    const MAX_ACCEL = 1.4; // px/frame^2 of "gravity" at full tilt
+    const MAX_ACCEL = 0.9; // px/frame^2 of "gravity" at full tilt
     const FRICTION = 0.93; // lower = more rolling resistance/"grip", less ice-like sliding
     const BOUNCE_DAMPING = 0.4;
     const BALL_RADIUS = 28;
