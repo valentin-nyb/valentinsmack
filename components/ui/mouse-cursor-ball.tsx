@@ -55,7 +55,7 @@ export function MouseCursorBall() {
     // Doesn't preventDefault/stopPropagation, so clicks on links/buttons
     // still work as normal — this just piggybacks a hit-test on top.
     const handleClick = (e: MouseEvent) => {
-      if (!initializedRef.current || modeRef.current === "free") return;
+      if (!initializedRef.current) return;
       const ball = ballRef.current;
       if (Math.hypot(e.clientX - ball.x, e.clientY - ball.y) > HIT_RADIUS) return;
 
