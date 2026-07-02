@@ -1,5 +1,15 @@
 {
   "buildCommand": "NEXT_ADAPTER_PATH= next build",
   "outputDirectory": "out",
-  "framework": null
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/work",
+      "destination": "https://valentinsmack.myportfolio.com"
+    },
+    {
+      "source": "/work/:path*",
+      "destination": "https://valentinsmack.myportfolio.com/:path*"
+    }
+  ]
 }
