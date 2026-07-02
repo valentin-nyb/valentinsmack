@@ -95,6 +95,12 @@ export default function Home() {
           <span className="text-orange-500">London</span>
         </p>
       </div>
+      <a
+        href="mailto:smack.valentin@gmail.com"
+        className="absolute top-10 right-6 md:top-14 md:right-12 z-10 font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase"
+      >
+        Email ↗
+      </a>
 
       {/* Centre — discipline list */}
       <div className="relative z-10 flex flex-col items-center gap-3 my-8 text-center">
@@ -114,7 +120,6 @@ export default function Home() {
           {!holePos && (
             <a href="https://valentinsmack.myportfolio.com" target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase">Portfolio ↗</a>
           )}
-          <a href="mailto:smack.valentin@gmail.com" className="font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase">Email ↗</a>
         </div>
       </div>
     </main>

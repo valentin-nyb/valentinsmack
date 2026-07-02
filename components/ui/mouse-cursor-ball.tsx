@@ -7,7 +7,7 @@ import { GyroHole } from "@/components/ui/gyro-ball";
 // so it visually reads as the hand cursor pushing the ball forward rather
 // than the ball being glued to the pointer tip.
 const LAG = 0.2;
-const BALL_SIZE = 100;
+const BALL_SIZE = 95;
 const BALL_RADIUS = BALL_SIZE / 2;
 const HIT_RADIUS = 56;
 const FRICTION = 0.985;
@@ -16,7 +16,8 @@ const KICK_MULTIPLIER = 6;
 const MIN_KICK_SPEED = 9;
 const MAX_KICK_SPEED = 34;
 const SETTLE_SPEED = 0.06;
-const HOLE_RADIUS = 32;
+const HOLE_SIZE = 88;
+const HOLE_RADIUS = 40;
 
 interface MouseCursorBallProps {
   onHolePosition?: (pos: { x: number; y: number }) => void;
@@ -175,7 +176,7 @@ export function MouseCursorBall({ onHolePosition }: MouseCursorBallProps) {
 
   return (
     <>
-      {holePos && <GyroHole x={holePos.x} y={holePos.y} />}
+      {holePos && <GyroHole x={holePos.x} y={holePos.y} size={HOLE_SIZE} />}
       {pos && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
