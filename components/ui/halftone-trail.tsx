@@ -663,7 +663,11 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
           src="/gyro/8-ball.svg"
           alt=""
           className="fixed top-1/2 left-1/2 z-[100] pointer-events-none w-[160px]"
-          style={{ transform: "translate(-50%, -58%) translateZ(0)" }}
+          style={{
+            transform: "translate(-50%, -58%) translateZ(0)",
+            WebkitBackfaceVisibility: "hidden",
+            willChange: "transform",
+          }}
         />
       )}
       {showGyroPrompt && (
@@ -674,7 +678,11 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
             setTrailVisible(true);
           }}
           className="fixed top-[calc(50%+55px)] left-1/2 z-[101] pointer-events-auto rounded-full bg-orange-500 px-6 py-3 text-sm font-mono uppercase tracking-wider text-white shadow-lg"
-          style={{ transform: "translate(-50%, -50%) translateZ(0)" }}
+          style={{
+            transform: "translate(-50%, -50%) translateZ(0)",
+            WebkitBackfaceVisibility: "hidden",
+            willChange: "transform",
+          }}
         >
           Tap to play
         </button>
@@ -682,7 +690,11 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       {gyroDenied && (
         <div
           className="fixed top-1/2 left-1/2 z-[101] pointer-events-none rounded-lg bg-black/90 px-4 py-3 text-center text-[10px] font-mono uppercase tracking-wider text-white shadow-lg max-w-[85vw]"
-          style={{ transform: "translate(-50%, -50%) translateZ(0)" }}
+          style={{
+            transform: "translate(-50%, -50%) translateZ(0)",
+            WebkitBackfaceVisibility: "hidden",
+            willChange: "transform",
+          }}
         >
           Motion access is off. Enable it in Settings → Safari → Motion &amp; Orientation Access, then reload.
         </div>

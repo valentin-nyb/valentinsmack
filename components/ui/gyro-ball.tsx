@@ -23,6 +23,8 @@ export function GyroBall({ x, y, rotation = 0, sunk = false }: GyroBallProps) {
         opacity: sunk ? 0 : 1,
         zIndex: 50,
         pointerEvents: "none",
+        WebkitBackfaceVisibility: "hidden",
+        willChange: "transform",
         transition: sunk
           ? "transform 0.35s ease-in, opacity 0.35s ease-in"
           : "transform 0.016s linear",
@@ -50,6 +52,8 @@ export function GyroHole({ x, y, size = 64 }: GyroHoleProps) {
         left: x,
         top: y,
         transform: "translate(-50%, -50%) translateZ(0)",
+        WebkitBackfaceVisibility: "hidden",
+        willChange: "transform",
       }}
     />
   );
