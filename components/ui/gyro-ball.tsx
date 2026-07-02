@@ -19,7 +19,7 @@ export function GyroBall({ x, y, rotation = 0, sunk = false }: GyroBallProps) {
         position: "fixed",
         left: x,
         top: y,
-        transform: `translate(-50%, -50%) rotate(${rotation}deg) scale(${sunk ? 0 : 1})`,
+        transform: `translate(-50%, -50%) translateZ(0) rotate(${rotation}deg) scale(${sunk ? 0 : 1})`,
         opacity: sunk ? 0 : 1,
         zIndex: 50,
         pointerEvents: "none",
@@ -49,7 +49,7 @@ export function GyroHole({ x, y, size = 64 }: GyroHoleProps) {
       style={{
         left: x,
         top: y,
-        transform: "translate(-50%, -50%)",
+        transform: "translate(-50%, -50%) translateZ(0)",
       }}
     />
   );
