@@ -635,7 +635,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
         <img
           src="/gyro/cloud.png"
           alt=""
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] pointer-events-none w-[280px]"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] pointer-events-none w-[360px]"
         />
       )}
       {showGyroPrompt && (

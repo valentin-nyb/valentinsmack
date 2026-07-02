@@ -69,7 +69,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
           className="fixed z-40 -translate-x-1/2 whitespace-nowrap font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase"
-          style={{ left: holePos.x, top: holePos.y + 38 }}
+          style={{ left: holePos.x - 60, top: holePos.y + 38 }}
         >
           Portfolio ↗
         </a>
