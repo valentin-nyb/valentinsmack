@@ -579,7 +579,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
           onClick={() => requestGyroRef.current?.()}
           className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto rounded-full bg-orange-500 px-4 py-2 text-xs font-mono uppercase tracking-wider text-white shadow-lg"
         >
-          Tap to enable tilt
+          Move your phone
         </button>
       )}
     </div>
