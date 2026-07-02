@@ -76,7 +76,7 @@ export default function Home() {
           web & AI design.
         </p>
         <div className="flex flex-col items-end gap-2">
-          <a href="https://valentinsmack.com" target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase">Portfolio ↗</a>
+          <a href="https://valentinsmack.com/work" target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase">Portfolio ↗</a>
           <a href="mailto:smack.valentin@gmail.com" className="font-mono text-[11px] text-neutral-400 hover:text-orange-500 transition-colors tracking-wider uppercase">Email ↗</a>
         </div>
       </div>

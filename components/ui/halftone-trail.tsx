@@ -453,13 +453,35 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       };
     }
 
-    // Mobile: gyroscope-driven virtual cursor via DeviceOrientationEvent
-    const handleOrientation = (e: DeviceOrientationEvent) => {
-      const gamma = e.gamma ?? 0; // left/right tilt: -90 to 90
-      const beta = e.beta ?? 0; // front/back tilt: -180 to 180
+    // Mobile: gyroscope-driven virtual cursor via DeviceOrientationEvent.
+    // Calibrated relative to wherever the phone happens to be held when tracking
+    // starts, since absolute angle ranges vary too much by how someone holds a
+    // phone. Tilting left/right (gamma) moves the cursor left/right; tilting
+    // forward/back (beta) moves it down/up.
+    let baseGamma: number | null = null;
+    let baseBeta: number | null = null;
+    const TILT_RANGE_DEG = 30; // degrees of tilt to sweep from center to screen edge
 
-      const rawX = ((gamma + 45) / 90) * window.innerWidth;
-      const rawY = ((beta - 30) / 60) * window.innerHeight;
+    const handleOrientation = (e: DeviceOrientationEvent) => {
+      // Some browsers fire an initial event with null values before real sensor
+      // data is available ("no data yet"). Skip those instead of calibrating
+      // against a bogus zero reading.
+      if (e.gamma === null || e.beta === null) return;
+      const gamma = e.gamma; // left/right tilt: -90 to 90
+      const beta = e.beta; // front/back tilt: -180 to 180
+
+      if (baseGamma === null || baseBeta === null) {
+        baseGamma = gamma;
+        baseBeta = beta;
+      }
+
+      const deltaGamma = gamma - baseGamma; // + = tilted right
+      const deltaBeta = beta - baseBeta; // + = tilted forward
+
+      const halfW = window.innerWidth / 2;
+      const halfH = window.innerHeight / 2;
+      const rawX = halfW + (deltaGamma / TILT_RANGE_DEG) * halfW;
+      const rawY = halfH + (deltaBeta / TILT_RANGE_DEG) * halfH;
       const x = Math.max(0, Math.min(window.innerWidth, rawX));
       const y = Math.max(0, Math.min(window.innerHeight, rawY));
 
