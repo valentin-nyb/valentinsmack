@@ -494,10 +494,23 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     let sunk = false;
     let touchedTextEl: Element | null = null;
 
-    const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.86 };
+    const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.80 };
     const HOLE_RADIUS = 32;
     setHolePos(hole);
     onHolePosition?.(hole);
+
+    // Mobile Safari's URL bar hides/shows as you scroll, changing the live
+    // viewport height after this effect already captured window.innerHeight
+    // once above. The footer (CSS min-h-screen) reflows with that change
+    // automatically; this one-time snapshot doesn't, so they'd drift apart -
+    // recompute whenever the viewport actually changes.
+    const onViewportResize = () => {
+      hole.x = window.innerWidth * 0.85;
+      hole.y = window.innerHeight * 0.80;
+      setHolePos({ x: hole.x, y: hole.y });
+      onHolePosition?.({ x: hole.x, y: hole.y });
+    };
+    window.addEventListener("resize", onViewportResize);
 
     const handleOrientation = (e: DeviceOrientationEvent) => {
       // Some browsers fire an initial event with null values before real sensor
@@ -602,6 +615,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       requestGyroRef.current = null;
       ro.disconnect();
       window.removeEventListener("deviceorientation", handleOrientation);
+      window.removeEventListener("resize", onViewportResize);
       touchedTextEl?.querySelector("[data-gyro-outline]")?.classList.remove("gyro-touching");
     };
   }, [cellSize, decay, brushSize, hoverBrushSize, opacity, hoverOpacity, lightHoverOpacity, speedScale, hoverSelector, lightHoverSelector]);
@@ -654,9 +668,9 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       {showGyroPrompt && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src="/gyro/speech-bubble.png"
+          src="/gyro/8-ball.svg"
           alt=""
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] pointer-events-none w-[190px]"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-[58%] z-[100] pointer-events-none w-[160px]"
         />
       )}
       {showGyroPrompt && (
@@ -666,7 +680,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
             requestGyroRef.current?.();
             setTrailVisible(true);
           }}
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] pointer-events-auto rounded-full bg-orange-500 px-6 py-3 text-sm font-mono uppercase tracking-wider text-white shadow-lg"
+          className="fixed top-[calc(50%+55px)] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] pointer-events-auto rounded-full bg-orange-500 px-6 py-3 text-sm font-mono uppercase tracking-wider text-white shadow-lg"
         >
           Tap to play
         </button>

@@ -95,7 +95,7 @@ export default function Home() {
 
       {/* Footer */}
       <div className="relative z-10 flex items-end justify-between">
-        <p className="font-mono text-[11px] text-orange-500 tracking-wider uppercase max-w-xs leading-relaxed" data-hover>
+        <p className="font-mono text-[11px] text-orange-500 tracking-wider uppercase max-w-xs leading-relaxed mt-8" data-hover>
           Art Director & Designer.<br />
           Brand identity, campaigns,<br />
           web & AI design.
