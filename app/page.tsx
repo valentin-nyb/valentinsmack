@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { HalftoneTrail } from "@/components/ui/halftone-trail";
+import { MouseCursorBall } from "@/components/ui/mouse-cursor-ball";
 
 const disciplines = [
   "brand&identity",
@@ -63,6 +64,7 @@ export default function Home() {
         speedScale={38.0}
         onHolePosition={setHolePos}
       />
+      <MouseCursorBall />
       {holePos && (
         <a
           href="https://valentinsmack.myportfolio.com"
