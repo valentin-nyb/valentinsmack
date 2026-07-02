@@ -406,6 +406,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
   const [rotation, setRotation] = useState(0);
   const [ballSunk, setBallSunk] = useState(false);
   const [holePos, setHolePos] = useState<{ x: number; y: number } | null>(null);
+  const [gyroDenied, setGyroDenied] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -541,9 +542,15 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
           .then((state) => {
             if (state === "granted") {
               window.addEventListener("deviceorientation", handleOrientation);
+            } else {
+              // Most commonly means iOS's global "Motion & Orientation Access"
+              // setting is off (Settings > Safari) - in that case the promise
+              // resolves to "denied" immediately with no dialog ever shown, so
+              // surface something instead of failing silently.
+              setGyroDenied(true);
             }
           })
-          .catch(() => {})
+          .catch(() => setGyroDenied(true))
           .finally(() => setShowGyroPrompt(false));
       } else if (typeof DeviceOrientationEvent !== "undefined") {
         window.addEventListener("deviceorientation", handleOrientation);
@@ -612,6 +619,11 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
         >
           Tap to play
         </button>
+      )}
+      {gyroDenied && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none rounded-lg bg-black/90 px-4 py-3 text-center text-[10px] font-mono uppercase tracking-wider text-white shadow-lg max-w-[85vw]">
+          Motion access is off. Enable it in Settings → Safari → Motion &amp; Orientation Access, then reload.
+        </div>
       )}
     </div>
   );
