@@ -500,7 +500,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     // swim during scroll instead of staying put, which is worse than the
     // small drift it was meant to fix. The extra margin below (0.80 instead
     // of a tighter fraction) is the actual fix for that drift.
-    const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.74 };
+    const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.70 };
     const HOLE_RADIUS = 32;
     setHolePos(hole);
     onHolePosition?.(hole);

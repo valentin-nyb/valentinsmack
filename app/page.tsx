@@ -144,7 +144,7 @@ export default function Home() {
 
       {/* Footer */}
       <div className="relative z-10 flex items-end justify-between">
-        <p className="font-mono text-[11px] text-orange-500 tracking-wider uppercase max-w-xs leading-relaxed mt-12 md:mt-8" data-hover>
+        <p className="font-mono text-[11px] text-orange-500 tracking-wider uppercase max-w-xs leading-relaxed mt-20 md:mt-8" data-hover>
           Art Director & Designer.<br />
           Brand identity, campaigns,<br />
           web & AI design.
@@ -153,7 +153,7 @@ export default function Home() {
           {isMobileDevice && (
             <a href="mailto:smack.valentin@gmail.com" className="font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase">Email ↗</a>
           )}
-          {!holePos && (
+          {!holePos && !isMobileDevice && (
             <a href="https://valentinsmack.myportfolio.com" target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-orange-500 hover:text-orange-700 transition-colors tracking-wider uppercase">Portfolio ↗</a>
           )}
         </div>
