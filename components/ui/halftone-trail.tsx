@@ -430,7 +430,14 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       resolveColor(container, colorHigh)
     );
 
-    const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // UA sniffing alone misses iPadOS, which has reported a desktop "Macintosh"
+    // user agent by default since iPadOS 13 despite being a touchscreen device
+    // with a gyroscope. A real Mac reports maxTouchPoints === 0; an iPad
+    // masquerading as "MacIntel" reports > 1. This is the standard heuristic
+    // for telling the two apart.
+    const mobile =
+      /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
     const ro = new ResizeObserver((entries) => {
       const { width: w, height: h } = entries[0].contentRect;
@@ -471,7 +478,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
     let sunk = false;
 
     const hole = { x: window.innerWidth * 0.85, y: window.innerHeight * 0.88 };
-    const HOLE_RADIUS = 30;
+    const HOLE_RADIUS = 32;
     setHolePos(hole);
 
     const handleOrientation = (e: DeviceOrientationEvent) => {

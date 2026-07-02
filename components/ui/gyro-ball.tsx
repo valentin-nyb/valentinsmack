@@ -37,18 +37,19 @@ interface GyroHoleProps {
   size?: number;
 }
 
-export function GyroHole({ x, y, size = 48 }: GyroHoleProps) {
+export function GyroHole({ x, y, size = 64 }: GyroHoleProps) {
   return (
-    <div
-      className="fixed rounded-full pointer-events-none z-40"
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/gyro/hole.png"
+      alt=""
+      width={size}
+      height={size}
+      className="fixed pointer-events-none z-40"
       style={{
         left: x,
         top: y,
-        width: size,
-        height: size,
         transform: "translate(-50%, -50%)",
-        background: "radial-gradient(circle at 35% 35%, #333 0%, #000 70%)",
-        boxShadow: "inset 0 2px 6px rgba(0,0,0,0.8)",
       }}
     />
   );
