@@ -480,16 +480,28 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       };
     }
 
-    // Mobile: gyroscope-driven virtual cursor via DeviceOrientationEvent.
-    // Calibrated relative to wherever the phone happens to be held when tracking
-    // starts, since absolute angle ranges vary too much by how someone holds a
-    // phone. Tilting left/right (gamma) moves the cursor left/right; tilting
-    // forward/back (beta) moves it down/up.
+    // Mobile: gyroscope-driven ball physics, like a tilt maze — tilting the
+    // phone acts as a gravity vector that accelerates the ball, which keeps
+    // momentum and bounces off the screen edges, rather than the ball being
+    // glued 1:1 to the current tilt angle. Calibrated relative to wherever
+    // the phone happens to be held when tracking starts, since absolute
+    // angle ranges vary too much by how someone holds a phone. Tilting
+    // left/right (gamma) pulls the ball left/right; tilting forward/back
+    // (beta) pulls it down/up.
     let baseGamma: number | null = null;
     let baseBeta: number | null = null;
-    const TILT_RANGE_DEG = 30; // degrees of tilt to sweep from center to screen edge
-    let lastX: number | null = null;
-    let lastY: number | null = null;
+    const TILT_RANGE_DEG = 30; // degrees of tilt for max gravity strength
+    const MAX_ACCEL = 0.45; // px/frame^2 of "gravity" at full tilt
+    const FRICTION = 0.96;
+    const BOUNCE_DAMPING = 0.6;
+    const BALL_RADIUS = 28;
+    let tiltX = 0; // current gravity input, -1..1
+    let tiltY = 0;
+    let hasOrientation = false;
+    let posX = window.innerWidth / 2;
+    let posY = window.innerHeight / 2;
+    let velX = 0;
+    let velY = 0;
     let rotation = 0; // degrees
     let sunk = false;
     let touchedTextEl: Element | null = null;
@@ -510,7 +522,6 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       // data is available ("no data yet"). Skip those instead of calibrating
       // against a bogus zero reading.
       if (e.gamma === null || e.beta === null) return;
-      if (sunk) return;
       const gamma = e.gamma; // left/right tilt: -90 to 90
       const beta = e.beta; // front/back tilt: -180 to 180
 
@@ -521,43 +532,73 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
 
       const deltaGamma = gamma - baseGamma; // + = tilted right
       const deltaBeta = beta - baseBeta; // + = tilted forward
-
-      const halfW = window.innerWidth / 2;
-      const halfH = window.innerHeight / 2;
-      const rawX = halfW + (deltaGamma / TILT_RANGE_DEG) * halfW;
-      const rawY = halfH + (deltaBeta / TILT_RANGE_DEG) * halfH;
-      const x = Math.max(0, Math.min(window.innerWidth, rawX));
-      const y = Math.max(0, Math.min(window.innerHeight, rawY));
-
-      // Spin the ball based on rolling velocity (how far it moved since the last reading)
-      const velX = lastX === null ? 0 : x - lastX;
-      const velY = lastY === null ? 0 : y - lastY;
-      rotation += velX * 3 + velY * 0.5;
-      lastX = x;
-      lastY = y;
-
-      engine.updatePointer(x, y, container.getBoundingClientRect());
-      setBallPos({ x, y });
-      setRotation(rotation);
-
-      // Reveal the ball through the discipline label it's currently passing
-      // behind, matching the desktop hover outline effect.
-      const textEl = document.elementFromPoint(x, y)?.closest("[data-gyro-text]") ?? null;
-      if (textEl !== touchedTextEl) {
-        touchedTextEl?.querySelector("[data-gyro-outline]")?.classList.remove("gyro-touching");
-        textEl?.querySelector("[data-gyro-outline]")?.classList.add("gyro-touching");
-        touchedTextEl = textEl;
-      }
-
-      const distToHole = Math.hypot(x - hole.x, y - hole.y);
-      if (distToHole < HOLE_RADIUS) {
-        sunk = true;
-        setBallSunk(true);
-        setTimeout(() => {
-          window.location.href = "https://valentinsmack.myportfolio.com";
-        }, 400);
-      }
+      tiltX = Math.max(-1, Math.min(1, deltaGamma / TILT_RANGE_DEG));
+      tiltY = Math.max(-1, Math.min(1, deltaBeta / TILT_RANGE_DEG));
+      hasOrientation = true;
     };
+
+    let physicsRafId: number;
+    const tickPhysics = () => {
+      if (sunk) {
+        physicsRafId = requestAnimationFrame(tickPhysics);
+        return;
+      }
+      if (hasOrientation) {
+        velX = (velX + tiltX * MAX_ACCEL) * FRICTION;
+        velY = (velY + tiltY * MAX_ACCEL) * FRICTION;
+
+        let nextX = posX + velX;
+        let nextY = posY + velY;
+
+        const minX = BALL_RADIUS;
+        const maxX = window.innerWidth - BALL_RADIUS;
+        const minY = BALL_RADIUS;
+        const maxY = window.innerHeight - BALL_RADIUS;
+        if (nextX < minX) {
+          nextX = minX;
+          velX = -velX * BOUNCE_DAMPING;
+        } else if (nextX > maxX) {
+          nextX = maxX;
+          velX = -velX * BOUNCE_DAMPING;
+        }
+        if (nextY < minY) {
+          nextY = minY;
+          velY = -velY * BOUNCE_DAMPING;
+        } else if (nextY > maxY) {
+          nextY = maxY;
+          velY = -velY * BOUNCE_DAMPING;
+        }
+
+        posX = nextX;
+        posY = nextY;
+        // Spin the ball based on its rolling velocity this frame
+        rotation += velX * 3 + velY * 0.5;
+
+        engine.updatePointer(posX, posY, container.getBoundingClientRect());
+        setBallPos({ x: posX, y: posY });
+        setRotation(rotation);
+
+        // Reveal the ball through the discipline label it's currently passing
+        // behind, matching the desktop hover outline effect.
+        const textEl = document.elementFromPoint(posX, posY)?.closest("[data-gyro-text]") ?? null;
+        if (textEl !== touchedTextEl) {
+          touchedTextEl?.querySelector("[data-gyro-outline]")?.classList.remove("gyro-touching");
+          textEl?.querySelector("[data-gyro-outline]")?.classList.add("gyro-touching");
+          touchedTextEl = textEl;
+        }
+
+        const distToHole = Math.hypot(posX - hole.x, posY - hole.y);
+        if (distToHole < HOLE_RADIUS) {
+          sunk = true;
+          setBallSunk(true);
+          setTimeout(() => {
+            window.location.href = "https://valentinsmack.myportfolio.com";
+          }, 400);
+        }
+      }
+      physicsRafId = requestAnimationFrame(tickPhysics);
+    };
+    physicsRafId = requestAnimationFrame(tickPhysics);
 
     type DeviceOrientationEventWithPermission = typeof DeviceOrientationEvent & {
       requestPermission?: () => Promise<"granted" | "denied">;
@@ -607,6 +648,7 @@ export const HalftoneTrail: React.FC<HalftoneTrailProps> = ({
       engineRef.current = null;
       requestGyroRef.current = null;
       ro.disconnect();
+      cancelAnimationFrame(physicsRafId);
       window.removeEventListener("deviceorientation", handleOrientation);
       touchedTextEl?.querySelector("[data-gyro-outline]")?.classList.remove("gyro-touching");
     };

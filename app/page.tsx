@@ -51,7 +51,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen flex flex-col justify-between px-6 md:px-12 py-10 md:py-14 bg-white overflow-hidden">
+    <main className="relative min-h-screen flex flex-col justify-between px-6 md:px-12 pt-10 pb-4 md:py-14 bg-white overflow-hidden">
       <HalftoneTrail
         cellSize={10}
         colorLow="#a3a3a3"
@@ -144,7 +144,7 @@ export default function Home() {
 
       {/* Footer */}
       <div className="relative z-10 flex items-end justify-between">
-        <p className="font-mono text-[11px] text-orange-500 tracking-wider uppercase max-w-xs leading-relaxed mt-20 md:mt-8" data-hover>
+        <p className="font-mono text-[11px] text-orange-500 tracking-wider uppercase max-w-xs leading-relaxed md:mt-8" data-hover>
           Art Director & Designer.<br />
           Brand identity, campaigns,<br />
           web & AI design.
