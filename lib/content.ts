@@ -95,7 +95,7 @@ export const services = [
   {
     title: "Art Direction",
     description:
-      "Directing photography, styling, and mood across campaigns and lookbooks — turning a concept into a coherent visual world.",
+      "Concept and visual direction for advertising campaigns — leading photographers, stylists, and production teams from big idea to finished execution.",
   },
   {
     title: "Web & Product Design",

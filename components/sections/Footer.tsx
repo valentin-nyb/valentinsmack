@@ -1,4 +1,5 @@
 import { SocialDock } from "@/components/ui/social-dock";
+import { DownloadCVButton } from "@/components/ui/download-cv-button";
 
 const links = [
   { href: "#work", label: "Work" },
@@ -22,7 +23,7 @@ function FooterLink({ href, label }: { href: string; label: string }) {
 
 export function Footer() {
   return (
-    <footer className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-16">
+    <footer className="border-t border-neutral-900 bg-neutral-950/30 px-6 py-14 backdrop-blur-md md:px-10 md:py-16">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-12 md:grid-cols-[1.2fr_1fr_1fr]">
           <div>
@@ -57,6 +58,9 @@ export function Footer() {
               smack.valentin@gmail.com
             </a>
             <p className="mt-2 text-[13px] tracking-[0.1em] text-orange-500">London, UK</p>
+            <div className="mt-5">
+              <DownloadCVButton />
+            </div>
             <div className="mt-5">
               <SocialDock />
             </div>

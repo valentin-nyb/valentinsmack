@@ -132,18 +132,6 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
             </div>
           </motion.div>
         </div>
-
-        <motion.button
-          animate={{ opacity: isFolderOpen ? 1 : 0, y: isFolderOpen ? 0 : 30 }}
-          className="absolute bottom-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-[11px] font-medium uppercase tracking-widest text-white/50 backdrop-blur-md transition-colors hover:text-white/90"
-          style={{ pointerEvents: isFolderOpen ? "auto" : "none" }}
-          onClick={() => {
-            setIsFolderOpen(false);
-            setHoverFolder(false);
-          }}
-        >
-          Close
-        </motion.button>
       </div>
 
       {typeof document !== "undefined" &&

@@ -41,6 +41,17 @@ export function ProjectModal({
           transition={{ duration: 0.2, ease: "easeOut" }}
           onClick={onClose}
         >
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
+            aria-label="Close"
+            className="fixed right-6 top-6 z-[110] text-[13px] tracking-wide text-neutral-500 transition-colors hover:text-neutral-100"
+          >
+            Close ✕
+          </button>
+
           <motion.div
             className="relative w-full max-w-3xl"
             initial={{ opacity: 0, y: 24 }}
@@ -49,14 +60,6 @@ export function ProjectModal({
             transition={{ duration: 0.25, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              onClick={onClose}
-              aria-label="Close"
-              className="absolute right-6 top-6 text-[13px] tracking-wide text-neutral-500 transition-colors hover:text-neutral-100"
-            >
-              Close ✕
-            </button>
-
             <p className="text-[13px] tracking-[0.15em] text-neutral-500">{project.category}</p>
             <h2 className="mt-4 font-display text-4xl font-black leading-[0.95] text-neutral-50 md:text-6xl">
               {project.title}
