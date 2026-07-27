@@ -32,34 +32,34 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
 
   return (
     <div className="relative w-full py-16">
-      <div className="relative flex min-h-[420px] w-full flex-col items-center justify-center">
-        <div className="pointer-events-none relative flex h-[420px] w-full max-w-sm justify-center">
+      <div className="relative flex min-h-[560px] w-full flex-col items-center justify-center">
+        <div className="pointer-events-none relative flex h-[560px] w-full max-w-2xl justify-center">
           <motion.div
-            className="absolute bottom-6 h-48 w-72 drop-shadow-2xl"
+            className="absolute bottom-8 h-60 w-96 drop-shadow-2xl"
             animate={{ opacity: isFolderOpen ? 0 : 1, scale: isFolderOpen ? 0.9 : 1 }}
           >
-            <div className="absolute left-0 top-0 h-8 w-28 rounded-t-xl border-l border-r border-t border-white/10 bg-gradient-to-t from-[#1e1e1e] to-[#2a2a2a]" />
-            <div className="absolute bottom-0 left-0 right-0 top-7 rounded-b-xl rounded-tr-xl border border-white/10 bg-gradient-to-b from-[#1e1e1e] to-[#0a0a0a] shadow-[inset_0_0_40px_rgba(0,0,0,0.8)]" />
-            <div className="pointer-events-none absolute bottom-2 left-2 right-2 top-9 rounded-lg bg-black shadow-inner" />
+            <div className="absolute left-0 top-0 h-10 w-36 rounded-t-xl border-l border-r border-t border-white/10 bg-gradient-to-t from-[#1e1e1e] to-[#2a2a2a]" />
+            <div className="absolute bottom-0 left-0 right-0 top-9 rounded-b-xl rounded-tr-xl border border-white/10 bg-gradient-to-b from-[#1e1e1e] to-[#0a0a0a] shadow-[inset_0_0_40px_rgba(0,0,0,0.8)]" />
+            <div className="pointer-events-none absolute bottom-2 left-2 right-2 top-11 rounded-lg bg-black shadow-inner" />
           </motion.div>
 
-          <div className="absolute bottom-8 z-10 flex justify-center">
+          <div className="absolute bottom-10 z-10 flex justify-center">
             {preview.map((src, i) => {
               const offset = i - (preview.length - 1) / 2;
 
-              const stackY = hoverFolder ? offset * -10 - 30 : offset * -5;
-              const stackX = hoverFolder ? offset * 24 : offset * 3;
+              const stackY = hoverFolder ? offset * -12 - 36 : offset * -6;
+              const stackX = hoverFolder ? offset * 30 : offset * 4;
               const stackRotate = hoverFolder ? offset * 8 : offset * 3;
               const stackScale = 1 - Math.abs(offset) * 0.03;
 
-              const openY = -100;
-              const openX = offset * 90;
+              const openY = -150;
+              const openX = offset * 130;
 
               return (
                 <motion.div
                   key={src}
                   onClick={() => isFolderOpen && setExpandedIndex(i)}
-                  className={`absolute bottom-0 h-56 w-40 origin-bottom overflow-hidden rounded-xl border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.5)] ${
+                  className={`absolute bottom-0 h-80 w-56 origin-bottom overflow-hidden rounded-xl border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.5)] ${
                     isFolderOpen ? "pointer-events-auto cursor-pointer" : "pointer-events-none"
                   }`}
                   animate={
@@ -82,7 +82,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
           </div>
 
           <motion.div
-            className="pointer-events-auto absolute bottom-0 z-20 h-36 w-[310px] cursor-pointer drop-shadow-[0_-20px_40px_rgba(0,0,0,0.8)]"
+            className="pointer-events-auto absolute bottom-0 z-20 h-44 w-[400px] cursor-pointer drop-shadow-[0_-20px_40px_rgba(0,0,0,0.8)]"
             style={{ transformOrigin: "bottom" }}
             animate={{
               opacity: isFolderOpen ? 0 : 1,
