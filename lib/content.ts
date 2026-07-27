@@ -33,7 +33,6 @@ export const projects: Project[] = [
     category: "Brand & Identity",
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/terra/cover.jpg",
-    video: "/work/terra/cover.mp4",
     images: galleryFor("terra", 7),
   },
   {

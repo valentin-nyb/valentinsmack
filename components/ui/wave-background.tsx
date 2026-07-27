@@ -89,8 +89,8 @@ export function Waves({
     pathsRef.current.forEach((path) => path.remove());
     pathsRef.current = [];
 
-    const xGap = 8;
-    const yGap = 8;
+    const xGap = 28;
+    const yGap = 22;
 
     const oWidth = width + 200;
     const oHeight = height + 30;

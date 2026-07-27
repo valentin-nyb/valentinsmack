@@ -48,18 +48,18 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
         openY: -85, openXMult: 58,
       }
     : {
-        containerH: 500,
-        backH: "h-52", backW: "w-[360px]", backBottom: "bottom-7",
-        cardH: "h-60", cardW: "w-44", cardBottom: "bottom-9",
-        frontH: "h-40", frontW: "w-[330px]",
-        openY: -130, openXMult: 115,
+        containerH: 640,
+        backH: "h-72", backW: "w-[520px]", backBottom: "bottom-10",
+        cardH: "h-96", cardW: "w-64", cardBottom: "bottom-14",
+        frontH: "h-60", frontW: "w-[480px]",
+        openY: -200, openXMult: 175,
       };
 
   return (
-    <div className="relative w-full py-16">
+    <div className="relative w-full pb-16 pt-4">
       <div className="relative flex w-full flex-col items-center justify-center" style={{ minHeight: sizes.containerH }}>
         <div
-          className="pointer-events-none relative flex w-full max-w-xl justify-center"
+          className="pointer-events-none relative flex w-full max-w-2xl justify-center"
           style={{ height: sizes.containerH }}
         >
           <motion.div
@@ -92,7 +92,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
                   }`}
                   animate={
                     !isFolderOpen
-                      ? { y: stackY, x: stackX, rotate: stackRotate, scale: stackScale, zIndex: i + 10 }
+                      ? { y: stackY, x: stackX, rotate: stackRotate, scale: stackScale, zIndex: preview.length - Math.abs(offset) }
                       : { y: openY, x: openX, rotate: 0, scale: 1.05, zIndex: 50 }
                   }
                   whileHover={isFolderOpen ? { scale: 1.1, zIndex: 100 } : {}}

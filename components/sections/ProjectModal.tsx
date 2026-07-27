@@ -34,7 +34,7 @@ export function ProjectModal({
     <AnimatePresence>
       {project && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-neutral-950/95 px-4 py-16 backdrop-blur-sm md:px-10 md:py-24"
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-neutral-950/95 px-4 py-16 backdrop-blur-sm md:px-10 md:py-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
