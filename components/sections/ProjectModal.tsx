@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Project } from "@/lib/content";
-import { ProjectGallery } from "@/components/ui/project-gallery";
+import { FolderGallery } from "@/components/ui/folder-gallery";
 
 export function ProjectModal({
   project,
@@ -63,9 +63,10 @@ export function ProjectModal({
             </h2>
 
             {project.images && project.images.length > 0 && (
-              <div className="mt-10">
-                <ProjectGallery images={project.images} alt={project.title} />
-              </div>
+              <FolderGallery
+                images={project.images}
+                folderName={`${project.title}.gallery`}
+              />
             )}
 
             <p className="mt-10 max-w-xl font-serif text-lg leading-relaxed text-neutral-300">
