@@ -23,7 +23,7 @@ export function Hero() {
             avatarSrc="/avatar.jpg"
             name="Valentin Suarez Mackeprang"
             role="Art Director & Designer"
-            message="I'm Valentin Suarez Mackeprang — working across brand identity, art direction, and web & product design. Raised between Buenos Aires, Madrid, and Aspen, now based in London."
+            message="I'm Valentin Suarez Mackeprang — working across Art Direction, Brand Identity and Web Design. I've been living and working between Buenos Aires, Madrid, and Aspen, now based in London."
             email="smack.valentin@gmail.com"
           />
         </div>
