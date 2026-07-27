@@ -229,8 +229,8 @@ export function Waves({
   const tick = (time: number) => {
     const { current: mouse } = mouseRef;
 
-    mouse.sx += (mouse.x - mouse.sx) * 0.4;
-    mouse.sy += (mouse.y - mouse.sy) * 0.4;
+    mouse.sx = mouse.x;
+    mouse.sy = mouse.y;
 
     const dx = mouse.x - mouse.lx;
     const dy = mouse.y - mouse.ly;

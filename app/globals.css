@@ -36,5 +36,5 @@
 /* Unlayered so it always wins over Tailwind's layered utilities
    (e.g. cursor-pointer) regardless of selector specificity. */
 * {
-  cursor: url("/cursors/hand-pointer.png") 10 4, auto;
+  cursor: url("/cursors/hand-pointer.png") 5 2, auto;
 }
