@@ -35,32 +35,38 @@ export function Nav() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-900 bg-neutral-950/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-10">
-        <a
-          href="#top"
-          className="text-lg font-bold uppercase tracking-tight text-neutral-100"
-          style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
-        >
-          Valentin
-        </a>
+    <>
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-900 bg-neutral-950/80 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-10">
+          <a
+            href="#top"
+            className="text-lg font-bold uppercase tracking-tight text-neutral-100"
+            style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
+          >
+            Valentin
+          </a>
 
-        <nav className="hidden items-center gap-8 md:flex md:gap-10">
-          {links.map((link) => (
-            <NavLink key={link.href} {...link} />
-          ))}
-        </nav>
+          <nav className="hidden items-center gap-8 md:flex md:gap-10">
+            {links.map((link) => (
+              <NavLink key={link.href} {...link} />
+            ))}
+          </nav>
 
-        <button
-          onClick={() => setOpen(true)}
-          aria-label="Open menu"
-          className="flex flex-col gap-1.5 md:hidden"
-        >
-          <span className="h-px w-6 bg-neutral-100" />
-          <span className="h-px w-6 bg-neutral-100" />
-        </button>
-      </div>
+          <button
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            className="flex flex-col gap-1.5 md:hidden"
+          >
+            <span className="h-px w-6 bg-neutral-100" />
+            <span className="h-px w-6 bg-neutral-100" />
+          </button>
+        </div>
+      </header>
 
+      {/* Rendered as a sibling, not nested inside <header> — an ancestor
+          with backdrop-filter becomes a containing block for fixed
+          descendants, which would confine this to the header's own
+          height instead of the full viewport. */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -101,6 +107,6 @@ export function Nav() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

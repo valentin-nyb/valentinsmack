@@ -48,7 +48,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
         openY: -85, openXMult: 58,
       }
     : {
-        containerH: 640,
+        containerH: 700,
         backH: "h-72", backW: "w-[520px]", backBottom: "bottom-10",
         cardH: "h-96", cardW: "w-64", cardBottom: "bottom-14",
         frontH: "h-60", frontW: "w-[480px]",
