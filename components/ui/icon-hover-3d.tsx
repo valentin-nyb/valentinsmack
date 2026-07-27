@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useId } from "react";
+import React, { useEffect, useState, useId } from "react";
 import {
   motion,
   MotionConfigContext,
@@ -17,6 +17,14 @@ interface Props {
   style?: React.CSSProperties;
   width?: number | string;
   height?: number | string;
+  /** Icon-on-top, text below (bento card) instead of icon-left/text-right. */
+  vertical?: boolean;
+  /** Center everything (icon + heading + text) instead of left-aligned. */
+  centered?: boolean;
+  /** Circular halo-ringed icon container instead of the bordered square. */
+  ringed?: boolean;
+  /** Icon size in px (defaults to 100, or 120 when vertical). */
+  iconSize?: number;
 }
 
 const BG = "#0a0a0a";
@@ -75,17 +83,30 @@ function ExtrudedIcon({ icon }: { icon: React.ReactNode }) {
 }
 
 export const IconHover3D: React.FC<Props> = ({
-  heading = "Library",
-  text = "A comprehensive collection of digital books and resources for learning and research.",
+  heading,
+  text,
   icon,
   className = "",
   style = {},
   width = "100%",
   height = "auto",
+  vertical = false,
+  centered = false,
+  ringed = false,
+  iconSize,
 }) => {
   const [isHover, setIsHover] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const defaultLayoutId = useId();
   const variants = [isHover ? "hover" : "default"];
+
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 639px)");
+    setIsMobile(mql.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
 
   return (
     <div style={{ width, height }}>
@@ -98,14 +119,16 @@ export const IconHover3D: React.FC<Props> = ({
               onMouseLeave={() => setIsHover(false)}
               style={{
                 backgroundColor: BG,
-                alignItems: "center",
+                alignItems: centered ? "center" : vertical || isMobile ? "flex-start" : "center",
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: vertical || isMobile ? "column" : "row",
                 flexWrap: "nowrap",
-                gap: "32px",
-                justifyContent: "flex-start",
+                gap: vertical ? "24px" : isMobile ? "16px" : "32px",
+                justifyContent: centered ? "center" : "flex-start",
+                height: "100%",
+                boxSizing: "border-box",
                 overflow: "visible",
-                padding: "24px",
+                padding: isMobile ? "18px" : "24px",
                 position: "relative",
                 width: "100%",
                 borderRadius: "12px",
@@ -121,12 +144,13 @@ export const IconHover3D: React.FC<Props> = ({
                   display: "flex",
                   flex: "none",
                   justifyContent: "center",
-                  height: "100px",
-                  width: "100px",
+                  height: iconSize ?? (vertical ? 120 : 100),
+                  width: iconSize ?? (vertical ? 120 : 100),
                   position: "relative",
                   zIndex: 1,
                   border: "1px solid rgba(250,250,250,0.2)",
-                  borderRadius: "8px",
+                  borderRadius: ringed ? "9999px" : "8px",
+                  boxShadow: ringed ? "0 0 0 8px rgba(250,250,250,0.05)" : undefined,
                 }}
               >
                 <motion.div
@@ -226,83 +250,93 @@ export const IconHover3D: React.FC<Props> = ({
               </motion.div>
 
               {/* Content */}
-              <motion.div
-                style={{
-                  alignItems: "flex-start",
-                  display: "flex",
-                  flex: "none",
-                  flexDirection: "column",
-                  gap: "10px",
-                  justifyContent: "center",
-                  maxWidth: "380px",
-                  overflow: "hidden",
-                  position: "relative",
-                }}
-              >
+              {(heading || text) && (
                 <motion.div
                   style={{
-                    height: "28px",
-                    position: "relative",
-                    width: "auto",
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 900,
-                    fontSize: "20px",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.02em",
-                    userSelect: "none",
+                    alignItems: centered ? "center" : "flex-start",
                     display: "flex",
-                    alignItems: "center",
+                    flex: vertical || isMobile ? "1 1 auto" : "none",
+                    flexDirection: "column",
+                    gap: "10px",
+                    justifyContent: "center",
+                    width: vertical ? "100%" : undefined,
+                    maxWidth: vertical || isMobile ? "100%" : "380px",
+                    minWidth: 0,
                     overflow: "hidden",
-                  }}
-                >
-                  <span style={{ position: "relative", zIndex: 1, color: FG }}>{heading}</span>
-                  <motion.span
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      color: BG,
-                      clipPath: `inset(0 ${isHover ? 0 : 100}% 0 0)`,
-                      zIndex: 2,
-                    }}
-                    animate={{ clipPath: `inset(0 ${isHover ? 0 : 100}% 0 0)` }}
-                    transition={titleTransition}
-                  >
-                    {heading}
-                  </motion.span>
-                  <motion.div
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      backgroundColor: ACCENT,
-                      transformOrigin: "left center",
-                      zIndex: 1,
-                    }}
-                    animate={{ scaleX: isHover ? 1 : 0 }}
-                    transition={titleTransition}
-                  />
-                </motion.div>
-
-                <motion.div
-                  style={{
                     position: "relative",
-                    whiteSpace: "pre-wrap",
-                    width: "100%",
-                    wordBreak: "break-word",
-                    fontFamily: "var(--font-sans)",
-                    fontWeight: 400,
-                    fontSize: "14px",
-                    lineHeight: "1.5em",
-                    color: "rgba(250,250,250,0.6)",
-                    userSelect: "none",
+                    textAlign: centered ? "center" : "left",
                   }}
                 >
-                  {text}
+                  {heading && (
+                    <motion.div
+                      style={{
+                        height: "28px",
+                        position: "relative",
+                        width: "auto",
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 900,
+                        fontSize: "20px",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.02em",
+                        userSelect: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: centered ? "center" : "flex-start",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <span style={{ position: "relative", zIndex: 1, color: FG }}>{heading}</span>
+                      <motion.span
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          color: BG,
+                          clipPath: `inset(0 ${isHover ? 0 : 100}% 0 0)`,
+                          zIndex: 2,
+                        }}
+                        animate={{ clipPath: `inset(0 ${isHover ? 0 : 100}% 0 0)` }}
+                        transition={titleTransition}
+                      >
+                        {heading}
+                      </motion.span>
+                      <motion.div
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: ACCENT,
+                          transformOrigin: "left center",
+                          zIndex: 1,
+                        }}
+                        animate={{ scaleX: isHover ? 1 : 0 }}
+                        transition={titleTransition}
+                      />
+                    </motion.div>
+                  )}
+
+                  {text && (
+                    <motion.div
+                      style={{
+                        position: "relative",
+                        whiteSpace: "pre-wrap",
+                        width: "100%",
+                        wordBreak: "break-word",
+                        fontFamily: "var(--font-sans)",
+                        fontWeight: 400,
+                        fontSize: "14px",
+                        lineHeight: "1.5em",
+                        color: "rgba(250,250,250,0.6)",
+                        userSelect: "none",
+                      }}
+                    >
+                      {text}
+                    </motion.div>
+                  )}
                 </motion.div>
-              </motion.div>
+              )}
             </motion.div>
           </Transition>
         </Variants>
