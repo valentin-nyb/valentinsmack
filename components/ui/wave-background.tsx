@@ -20,14 +20,12 @@ interface WavesProps {
   className?: string;
   strokeColor?: string;
   backgroundColor?: string;
-  pointerSize?: number;
 }
 
 export function Waves({
   className = "",
   strokeColor = "rgba(255, 255, 255, 0.22)",
   backgroundColor = "#0a0a0a",
-  pointerSize = 0.4,
 }: WavesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -186,14 +184,14 @@ export function Waves({
           const s = 1 - d / l;
           const f = Math.cos(d * 0.001) * s;
 
-          p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.0014;
-          p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.0014;
+          p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.0022;
+          p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.0022;
         }
 
-        p.cursor.vx += (0 - p.cursor.x) * 0.01;
-        p.cursor.vy += (0 - p.cursor.y) * 0.01;
-        p.cursor.vx *= 0.95;
-        p.cursor.vy *= 0.95;
+        p.cursor.vx += (0 - p.cursor.x) * 0.02;
+        p.cursor.vy += (0 - p.cursor.y) * 0.02;
+        p.cursor.vx *= 0.85;
+        p.cursor.vy *= 0.85;
         p.cursor.x += p.cursor.vx;
         p.cursor.y += p.cursor.vy;
         p.cursor.x = Math.min(90, Math.max(-90, p.cursor.x));
@@ -276,19 +274,6 @@ export function Waves({
       }
     >
       <svg ref={svgRef} className="block h-full w-full" xmlns="http://www.w3.org/2000/svg" />
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: `${pointerSize}rem`,
-          height: `${pointerSize}rem`,
-          background: strokeColor,
-          borderRadius: "50%",
-          transform: "translate3d(calc(var(--x) - 50%), calc(var(--y) - 50%), 0)",
-          willChange: "transform",
-        }}
-      />
     </div>
   );
 }
