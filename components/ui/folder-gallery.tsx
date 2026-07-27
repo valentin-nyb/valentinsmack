@@ -1,32 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { motion, type PanInfo } from "framer-motion";
+import { createPortal } from "react-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface FolderGalleryProps {
   images: string[];
   folderName: string;
-  dragHintText?: string;
 }
 
-export function FolderGallery({
-  images,
-  folderName,
-  dragHintText = "Drag a photo down to close",
-}: FolderGalleryProps) {
+export function FolderGallery({ images, folderName }: FolderGalleryProps) {
   const [isFolderOpen, setIsFolderOpen] = useState(false);
   const [hoverFolder, setHoverFolder] = useState(false);
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   if (images.length === 0) return null;
 
   const preview = images.slice(0, 5);
-
-  const handleDragEnd = (_e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    if (info.offset.y > 100 && isFolderOpen) {
-      setIsFolderOpen(false);
-      setHoverFolder(false);
-    }
-  };
 
   return (
     <div className="relative w-full py-16">
@@ -56,11 +46,9 @@ export function FolderGallery({
               return (
                 <motion.div
                   key={src}
-                  drag={isFolderOpen}
-                  dragSnapToOrigin
-                  onDragEnd={handleDragEnd}
+                  onClick={() => isFolderOpen && setExpanded(src)}
                   className={`absolute bottom-0 h-56 w-40 origin-bottom overflow-hidden rounded-xl border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.5)] ${
-                    isFolderOpen ? "pointer-events-auto cursor-grab active:cursor-grabbing" : "pointer-events-none"
+                    isFolderOpen ? "pointer-events-auto cursor-pointer" : "pointer-events-none"
                   }`}
                   animate={
                     !isFolderOpen
@@ -68,7 +56,6 @@ export function FolderGallery({
                       : { y: openY, x: openX, rotate: 0, scale: 1.05, zIndex: 50 }
                   }
                   whileHover={isFolderOpen ? { scale: 1.1, zIndex: 100 } : {}}
-                  whileDrag={isFolderOpen ? { scale: 1.15, rotate: 5, zIndex: 150 } : {}}
                   transition={{ type: "spring", stiffness: 350, damping: 30 }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -106,13 +93,49 @@ export function FolderGallery({
           </motion.div>
         </div>
 
-        <motion.div
+        <motion.button
           animate={{ opacity: isFolderOpen ? 1 : 0, y: isFolderOpen ? 0 : 30 }}
-          className="pointer-events-none absolute bottom-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-[11px] font-medium uppercase tracking-widest text-white/50 backdrop-blur-md"
+          className="absolute bottom-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-[11px] font-medium uppercase tracking-widest text-white/50 backdrop-blur-md transition-colors hover:text-white/90"
+          style={{ pointerEvents: isFolderOpen ? "auto" : "none" }}
+          onClick={() => {
+            setIsFolderOpen(false);
+            setHoverFolder(false);
+          }}
         >
-          {dragHintText}
-        </motion.div>
+          Close
+        </motion.button>
       </div>
+
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {expanded && (
+              <motion.div
+                className="fixed inset-0 z-[110] flex items-center justify-center bg-black/95 p-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setExpanded(null)}
+              >
+                <button
+                  onClick={() => setExpanded(null)}
+                  aria-label="Close"
+                  className="absolute right-6 top-6 text-[13px] tracking-wide text-white/60 hover:text-white"
+                >
+                  Close ✕
+                </button>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={expanded}
+                  alt={folderName}
+                  className="max-h-full max-w-full object-contain"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </div>
   );
 }
