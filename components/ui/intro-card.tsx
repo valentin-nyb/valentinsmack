@@ -1,8 +1,10 @@
+import type { ReactNode } from "react";
+
 interface IntroCardProps {
   avatarSrc: string;
   name: string;
   role: string;
-  message: string;
+  message: ReactNode;
   email: string;
 }
 
