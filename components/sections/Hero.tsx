@@ -1,3 +1,5 @@
+import { IntroCard } from "@/components/ui/intro-card";
+
 export function Hero() {
   return (
     <section
@@ -16,13 +18,15 @@ export function Hero() {
           </span>{" "}
           and the brands that move culture.
         </h1>
-        <p className="mt-6 hidden max-w-lg font-serif text-xl leading-relaxed md:block">
-          <span className="box-decoration-clone bg-orange-500 px-1.5 py-0.5 text-neutral-950">
-            I&apos;m Valentin Suarez Mackeprang — working across brand
-            identity, art direction, and web &amp; product design. Raised
-            between Buenos Aires, Madrid, and Aspen, now based in London.
-          </span>
-        </p>
+        <div className="mt-6 hidden md:block">
+          <IntroCard
+            avatarSrc="/avatar.jpg"
+            name="Valentin Suarez Mackeprang"
+            role="Art Director & Designer"
+            message="I'm Valentin Suarez Mackeprang — working across brand identity, art direction, and web & product design. Raised between Buenos Aires, Madrid, and Aspen, now based in London."
+            email="smack.valentin@gmail.com"
+          />
+        </div>
         <div className="mt-8 flex items-center gap-10">
           <a
             href="#work"
