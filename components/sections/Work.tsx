@@ -28,17 +28,17 @@ export function Work() {
   }));
 
   return (
-    <section id="work" className="border-t border-neutral-800 px-6 py-24 md:px-10 md:py-32">
+    <section id="work" className="border-t border-neutral-800 px-6 py-14 md:px-10 md:py-20">
       <div className="mx-auto max-w-6xl">
         <p className="text-[13px] tracking-[0.15em] text-neutral-500">Selected Work</p>
 
-        <div className="mt-8">
+        <div className="mt-6">
           <DynamicFrameLayout
             items={items}
             columns={isDesktop ? 5 : 2}
             rows={isDesktop ? 2 : 5}
             gapSize={4}
-            className="h-[70vh] md:h-[85vh]"
+            className="h-[60vh] md:h-[70vh]"
           />
         </div>
       </div>

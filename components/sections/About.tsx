@@ -8,8 +8,8 @@ const disciplines = [
 
 export function About() {
   return (
-    <section id="about" className="border-t border-neutral-900 px-6 py-28 md:px-10 md:py-36">
-      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[auto_1fr] md:gap-24">
+    <section id="about" className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-20">
+      <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[auto_1fr] md:gap-16">
         <p className="text-[13px] tracking-[0.15em] text-neutral-500">About</p>
         <div className="max-w-2xl">
           <p className="font-serif text-2xl leading-relaxed md:text-3xl">
@@ -22,10 +22,10 @@ export function About() {
               hands-on approach from concept through execution.
             </span>
           </p>
-          <p className="mt-6 text-[13px] tracking-[0.1em] text-neutral-500">
+          <p className="mt-4 text-[13px] tracking-[0.1em] text-neutral-500">
             Buenos Aires — Madrid — Aspen — London
           </p>
-          <ul className="mt-12 flex flex-wrap gap-x-3 gap-y-3 text-[13px] tracking-wide text-neutral-400">
+          <ul className="mt-8 flex flex-wrap gap-x-3 gap-y-3 text-[13px] tracking-wide text-neutral-400">
             {disciplines.map((d, i) => (
               <li key={d} className="flex items-center gap-3">
                 {d}

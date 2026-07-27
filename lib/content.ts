@@ -96,7 +96,7 @@ export const services = [
   {
     title: "Art Direction",
     description:
-      "Concept, mood, and shoot direction for campaigns, lookbooks, and product launches.",
+      "Directing photography, styling, and mood across campaigns and lookbooks — turning a concept into a coherent visual world.",
   },
   {
     title: "Web & Product Design",
@@ -104,9 +104,9 @@ export const services = [
       "Digital experiences and e-commerce design for fashion and retail brands, from concept through build.",
   },
   {
-    title: "AI-Assisted Design",
+    title: "Packaging & Print",
     description:
-      "Generative workflows layered into concepting and production to move faster without losing craft.",
+      "Packaging systems, lookbooks, and print collateral designed to hold up in-store and in-hand.",
   },
   {
     title: "Campaigns",
