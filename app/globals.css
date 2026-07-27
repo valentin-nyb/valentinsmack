@@ -2,8 +2,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
     --muted-foreground: 0 0% 45%;
   }
 
@@ -14,20 +14,19 @@
     font-family: var(--font-sans), system-ui, sans-serif;
   }
 
-  html,
-  body,
-  a,
-  button,
-  [role="button"],
-  .cursor-interactive {
-    cursor: url("/cursors/cursor.png") 10 3, auto;
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background: #f97316;
+    color: #0a0a0a;
   }
 
   /* iOS Safari defers repainting position:fixed layers during the
-     elastic rubber-band overscroll bounce, which is what makes the
-     mobile hole/ball/pointer-link visibly lag mid-scroll even with
-     GPU-layer hints on those elements. Killing the bounce itself
-     removes the trigger rather than fighting the repaint. */
+     elastic rubber-band overscroll bounce, which causes visible lag
+     in fixed-position elements (e.g. the nav) mid-scroll even with
+     GPU-layer hints. Killing the bounce removes the trigger. */
   html,
   body {
     overscroll-behavior-y: none;

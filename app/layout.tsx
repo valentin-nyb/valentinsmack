@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { EB_Garamond, Inter, Roboto_Slab } from "next/font/google";
+import { Waves } from "@/components/ui/wave-background";
 import "./globals.css";
 
 const garamond = EB_Garamond({
@@ -22,15 +23,19 @@ const robotoSlab = Roboto_Slab({
 });
 
 export const metadata: Metadata = {
-  title: "SMACK",
-  description: "Art Director and Designer based in London. Brand identity, web design, AI design tools.",
+  title: "Valentin Suarez Mackeprang — Art Director & Designer, London",
+  description:
+    "Art Director and Designer based in London, working across brand identity, art direction, and web & product design for fashion and retail brands.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${garamond.variable} ${inter.variable} ${robotoSlab.variable}`}>
-      <body className="bg-white dark:bg-neutral-950 font-sans antialiased">
-        {children}
+      <body className="bg-neutral-950 font-sans antialiased">
+        <div className="pointer-events-none fixed inset-0 z-0">
+          <Waves />
+        </div>
+        <div className="relative z-10">{children}</div>
       </body>
     </html>
   );
