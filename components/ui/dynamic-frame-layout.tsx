@@ -16,6 +16,7 @@ interface DynamicFrameLayoutProps {
   rows: number;
   className?: string;
   gapSize?: number;
+  fixedHeight?: boolean;
 }
 
 function FrameMedia({
@@ -70,6 +71,7 @@ export function DynamicFrameLayout({
   rows,
   className = "",
   gapSize = 4,
+  fixedHeight = true,
 }: DynamicFrameLayoutProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -78,7 +80,7 @@ export function DynamicFrameLayout({
       className={`grid w-full ${className}`}
       style={{
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gridTemplateRows: `repeat(${rows}, 1fr)`,
+        gridTemplateRows: fixedHeight ? `repeat(${rows}, 1fr)` : undefined,
         gap: `${gapSize}px`,
       }}
     >
@@ -88,7 +90,7 @@ export function DynamicFrameLayout({
         return (
           <div
             key={item.id}
-            className="group relative cursor-pointer bg-neutral-900"
+            className={`group relative cursor-pointer bg-neutral-900 ${fixedHeight ? "" : "aspect-[4/5]"}`}
             style={{
               zIndex: isHovered ? 10 : 1,
               transform: isHovered ? "scale(1.06)" : "scale(1)",
@@ -103,9 +105,11 @@ export function DynamicFrameLayout({
               <FrameMedia media={item.media} title={item.title} isHovered={isHovered} />
             </div>
 
-            <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-neutral-950/90 via-neutral-950/0 to-neutral-950/0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <p className="text-[11px] tracking-[0.15em] text-neutral-300">{item.category}</p>
-              <p className="mt-1 font-display text-lg font-black leading-tight text-neutral-50">
+            <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-neutral-950/95 via-neutral-950/10 to-transparent p-3 opacity-100 transition-opacity duration-300 md:from-neutral-950/90 md:via-neutral-950/0 md:p-4 md:opacity-0 md:group-hover:opacity-100">
+              <p className="text-[10px] tracking-[0.1em] text-neutral-300 md:text-[11px] md:tracking-[0.15em]">
+                {item.category}
+              </p>
+              <p className="mt-1 font-display text-sm font-black leading-tight text-neutral-50 md:text-lg">
                 {item.title}
               </p>
             </div>

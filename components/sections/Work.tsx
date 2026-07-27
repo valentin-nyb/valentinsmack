@@ -37,8 +37,9 @@ export function Work() {
             items={items}
             columns={isDesktop ? 5 : 2}
             rows={isDesktop ? 2 : 5}
-            gapSize={4}
-            className="h-[60vh] md:h-[70vh]"
+            gapSize={isDesktop ? 4 : 8}
+            fixedHeight={isDesktop}
+            className={isDesktop ? "h-[70vh]" : ""}
           />
         </div>
       </div>

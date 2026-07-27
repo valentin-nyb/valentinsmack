@@ -23,6 +23,13 @@
     color: #0a0a0a;
   }
 
+  a,
+  button,
+  [role="button"],
+  .cursor-pointer {
+    cursor: url("/cursors/hand-pointer.png") 10 4, pointer;
+  }
+
   /* iOS Safari defers repainting position:fixed layers during the
      elastic rubber-band overscroll bounce, which causes visible lag
      in fixed-position elements (e.g. the nav) mid-scroll even with
