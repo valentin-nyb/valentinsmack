@@ -102,7 +102,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
                   <img
                     src={src}
                     alt={folderName}
-                    className="pointer-events-none h-full w-full object-contain"
+                    className="pointer-events-none h-full w-full object-cover"
                   />
                 </motion.div>
               );
