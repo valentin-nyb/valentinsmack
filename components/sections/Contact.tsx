@@ -1,5 +1,3 @@
-import { SocialDock } from "@/components/ui/social-dock";
-
 export function Contact() {
   return (
     <section id="contact" className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-20">
@@ -17,9 +15,6 @@ export function Contact() {
         </a>
         <div className="mt-6 flex flex-wrap items-center gap-x-10 gap-y-2">
           <p className="text-[13px] tracking-[0.1em] text-orange-500">London, UK</p>
-        </div>
-        <div className="mt-8">
-          <SocialDock />
         </div>
       </div>
     </section>

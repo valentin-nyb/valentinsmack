@@ -51,7 +51,7 @@ function DockIcon({
       <motion.div
         ref={ref}
         style={{ width, height: width }}
-        className="flex items-center justify-center rounded-full bg-neutral-50 text-neutral-900 shadow-lg"
+        className="flex items-center justify-center rounded-full bg-neutral-50 text-neutral-900 shadow-lg transition-colors hover:text-orange-500"
       >
         <Icon style={{ width: "45%", height: "45%" }} />
       </motion.div>
@@ -66,7 +66,7 @@ export function SocialDock() {
     <div
       onMouseMove={(e) => mouseX.set(e.clientX)}
       onMouseLeave={() => mouseX.set(Infinity)}
-      className="flex items-end gap-4"
+      className="flex h-[68px] items-end gap-4"
     >
       {socials.map((s) => (
         <DockIcon key={s.name} mouseX={mouseX} Icon={s.Icon} href={s.href} name={s.name} />

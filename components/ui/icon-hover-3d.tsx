@@ -12,6 +12,7 @@ import {
 interface Props {
   heading?: string;
   text?: string;
+  icon?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   width?: number | string;
@@ -27,13 +28,6 @@ const transition1: MotionTransition = {
   delay: 0,
   duration: 0.4,
   type: "spring",
-};
-
-const transition2: MotionTransition = {
-  delay: 0,
-  duration: 0.4,
-  ease: [0.44, 0, 0.56, 1],
-  type: "tween",
 };
 
 const titleTransition: MotionTransition = {
@@ -55,85 +49,35 @@ const Transition: React.FC<{ value: MotionTransition; children: React.ReactNode 
 
 const Variants = motion.create(React.Fragment);
 
-function CubeFace({
-  isHover,
-  style,
-}: {
-  isHover: boolean;
-  style: React.CSSProperties;
-}) {
-  return (
-    <motion.div
-      style={{
-        alignContent: "center",
-        alignItems: "center",
-        display: "flex",
-        flex: "none",
-        flexDirection: "column",
-        flexWrap: "nowrap",
-        gap: "10px",
-        justifyContent: "center",
-        overflow: "hidden",
-        padding: "0px",
-        border: `4px solid ${isHover ? ACCENT : FG}`,
-        backgroundColor: BG,
-        transition: "border-color 0.4s ease",
-        ...style,
-      }}
-    />
-  );
-}
+const EXTRUSION_LAYERS = 14;
 
-function Slice({ isHover }: { isHover: boolean }) {
+/** Stacks copies of a flat icon at incremental Z-depths with a brightness
+ * falloff, so it reads as a solid extruded volume once rotated in 3D
+ * rather than a flat plane tilted in space. */
+function ExtrudedIcon({ icon }: { icon: React.ReactNode }) {
   return (
-    <Transition value={transition2}>
-      <motion.div
-        style={{
-          alignContent: "center",
-          alignItems: "center",
-          display: "flex",
-          flex: "none",
-          flexDirection: "row",
-          flexWrap: "nowrap",
-          gap: "10px",
-          height: "min-content",
-          justifyContent: "center",
-          overflow: "visible",
-          padding: "0px",
-          position: "relative",
-          transformStyle: "preserve-3d",
-          width: "min-content",
-        }}
-      >
-        <CubeFace isHover={isHover} style={{ position: "relative", height: "34px", width: "240px", zIndex: 120 }} />
-        <CubeFace
-          isHover={isHover}
-          style={{ position: "absolute", bottom: 0, right: 0, top: 0, width: "240px", zIndex: 1, transform: "rotateY(180deg)" }}
-        />
-        <CubeFace
-          isHover={isHover}
-          style={{ position: "absolute", bottom: 0, left: "120px", top: 0, width: "240px", zIndex: 1, transform: "rotateY(90deg)" }}
-        />
-        <CubeFace
-          isHover={isHover}
-          style={{ position: "absolute", bottom: 0, right: "120px", top: 0, width: "240px", zIndex: 1, transform: "rotateY(-90deg)" }}
-        />
-        <CubeFace
-          isHover={isHover}
-          style={{ position: "absolute", height: "240px", left: 0, right: 0, top: "-120px", zIndex: 1, transform: "rotateX(90deg)" }}
-        />
-        <CubeFace
-          isHover={isHover}
-          style={{ position: "absolute", height: "240px", left: 0, right: 0, top: "-86px", zIndex: 1, transform: "rotateX(90deg)" }}
-        />
-      </motion.div>
-    </Transition>
+    <>
+      {Array.from({ length: EXTRUSION_LAYERS }).map((_, i) => (
+        <div
+          key={i}
+          style={{
+            position: "absolute",
+            inset: 0,
+            transform: `translateZ(${-i * 3}px)`,
+            filter: `brightness(${1 - i * 0.045})`,
+          }}
+        >
+          {icon}
+        </div>
+      ))}
+    </>
   );
 }
 
 export const IconHover3D: React.FC<Props> = ({
   heading = "Library",
   text = "A comprehensive collection of digital books and resources for learning and research.",
+  icon,
   className = "",
   style = {},
   width = "100%",
@@ -196,34 +140,34 @@ export const IconHover3D: React.FC<Props> = ({
                     scale: 0.3,
                   }}
                 >
-                  <motion.div
-                    style={{
-                      alignItems: "center",
-                      display: "flex",
-                      flex: "none",
-                      flexDirection: "column",
-                      gap: "28px",
-                      justifyContent: "center",
-                      left: "50%",
-                      overflow: "visible",
-                      position: "absolute",
-                      top: "50%",
-                      transformStyle: "preserve-3d",
-                      zIndex: 3,
-                      transformPerspective: 1200,
-                    }}
-                    transformTemplate={transformTemplate1}
-                    animate={{
-                      rotate: isHover ? -28 : 49,
-                      rotateX: isHover ? -28 : 23,
-                      rotateY: isHover ? -43 : 33,
-                      scale: isHover ? 1.1 : 0.7,
-                    }}
-                  >
-                    <Slice isHover={isHover} />
-                    <Slice isHover={isHover} />
-                    <Slice isHover={isHover} />
-                  </motion.div>
+                  {icon && (
+                    <motion.div
+                      style={{
+                        position: "absolute",
+                        left: "50%",
+                        top: "50%",
+                        width: "280px",
+                        height: "280px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: isHover ? ACCENT : FG,
+                        transformStyle: "preserve-3d",
+                        zIndex: 3,
+                        transformPerspective: 1200,
+                        transition: "color 0.4s ease",
+                      }}
+                      transformTemplate={transformTemplate1}
+                      animate={{
+                        rotate: isHover ? -28 : 49,
+                        rotateX: isHover ? -28 : 23,
+                        rotateY: isHover ? -43 : 33,
+                        scale: isHover ? 1.1 : 0.7,
+                      }}
+                    >
+                      <ExtrudedIcon icon={icon} />
+                    </motion.div>
+                  )}
 
                   {/* Corner brackets */}
                   <motion.div
@@ -286,11 +230,11 @@ export const IconHover3D: React.FC<Props> = ({
                 style={{
                   alignItems: "flex-start",
                   display: "flex",
-                  flex: "1 1 auto",
+                  flex: "none",
                   flexDirection: "column",
                   gap: "10px",
                   justifyContent: "center",
-                  minWidth: 0,
+                  maxWidth: "380px",
                   overflow: "hidden",
                   position: "relative",
                 }}
@@ -303,6 +247,8 @@ export const IconHover3D: React.FC<Props> = ({
                     fontFamily: "var(--font-display)",
                     fontWeight: 900,
                     fontSize: "20px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.02em",
                     userSelect: "none",
                     display: "flex",
                     alignItems: "center",
