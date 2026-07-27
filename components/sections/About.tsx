@@ -22,7 +22,7 @@ export function About() {
               hands-on approach from concept through execution.
             </span>
           </p>
-          <p className="mt-4 text-[13px] tracking-[0.1em] text-neutral-500">
+          <p className="mt-4 text-[13px] tracking-[0.1em] text-orange-500">
             Buenos Aires — Madrid — Aspen — London
           </p>
           <ul className="mt-8 flex flex-wrap gap-x-3 gap-y-3 text-[13px] tracking-wide text-neutral-400">
