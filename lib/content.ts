@@ -122,64 +122,43 @@ export const process = [
   { step: "04", title: "Launch", description: "Delivery, handoff, and rollout across every channel." },
 ];
 
-export type PackageFeature = { label: string; included: boolean };
-
 export type Package = {
   name: string;
   description: string;
-  billing: "one-time" | "recurring";
-  priceMonthly: number;
-  priceYearly?: number;
-  features: PackageFeature[];
+  price: string;
+  cadence?: string;
+  features: string[];
   note?: string;
   featured?: boolean;
 };
 
 // PLACEHOLDER PRICING — these are illustrative numbers for laying out the
 // section, not real rates. Replace name/price/features/note for each tier
-// before this section is considered live. Brand Identity and Website are
-// one-time project fees (the monthly/yearly toggle doesn't affect them);
-// Design Retainer is the only actually-recurring plan.
+// before this section is considered live.
 export const packages: Package[] = [
   {
     name: "Brand Identity",
     description: "A complete identity system for a new or evolving brand.",
-    billing: "one-time",
-    priceMonthly: 2500,
-    features: [
-      { label: "Logo & wordmark", included: true },
-      { label: "Colour & type system", included: true },
-      { label: "Brand guidelines", included: true },
-      { label: "Ongoing support", included: false },
-    ],
+    price: "£2,500",
+    cadence: "+ VAT",
+    features: ["Logo & wordmark", "Colour & type system", "Brand guidelines"],
     note: "2 design directions / 2 rounds of revisions",
   },
   {
     name: "Website",
     description: "A bespoke, responsive site designed and built end to end.",
-    billing: "one-time",
-    priceMonthly: 4000,
-    features: [
-      { label: "Up to 8 pages", included: true },
-      { label: "Responsive & SEO-ready", included: true },
-      { label: "CMS handoff", included: true },
-      { label: "Ongoing support", included: false },
-    ],
+    price: "£4,000",
+    cadence: "+ VAT",
+    features: ["Up to 8 pages", "Responsive & SEO-ready", "CMS handoff"],
     note: "2 design directions / 2 rounds of revisions",
     featured: true,
   },
   {
     name: "Design Retainer",
     description: "Ongoing creative support without the overhead of hiring.",
-    billing: "recurring",
-    priceMonthly: 1200,
-    priceYearly: 12000,
-    features: [
-      { label: "Up to 15 hours / month", included: true },
-      { label: "Priority turnaround", included: true },
-      { label: "Brand, campaign & web work", included: true },
-      { label: "Ongoing support", included: true },
-    ],
+    price: "£1,200",
+    cadence: "per month + VAT",
+    features: ["Up to 15 hours / month", "Priority turnaround", "Brand, campaign & web work"],
     note: "Month-to-month, cancel anytime",
   },
 ];
