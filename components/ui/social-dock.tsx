@@ -66,7 +66,7 @@ export function SocialDock() {
     <div
       onMouseMove={(e) => mouseX.set(e.clientX)}
       onMouseLeave={() => mouseX.set(Infinity)}
-      className="flex items-end gap-4 rounded-2xl border border-neutral-800 bg-neutral-900/70 px-5 py-3 backdrop-blur-sm"
+      className="flex items-end gap-4"
     >
       {socials.map((s) => (
         <DockIcon key={s.name} mouseX={mouseX} Icon={s.Icon} href={s.href} name={s.name} />
