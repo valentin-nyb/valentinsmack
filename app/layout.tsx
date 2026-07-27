@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { EB_Garamond, Inter, Roboto_Slab } from "next/font/google";
+import { EB_Garamond, Inter, Montserrat, Roboto_Slab } from "next/font/google";
 import { Waves } from "@/components/ui/wave-background";
 import "./globals.css";
 
@@ -22,6 +22,13 @@ const robotoSlab = Roboto_Slab({
   display: "swap",
 });
 
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Valentin Suarez Mackeprang — Art Director & Designer, London",
   description:
@@ -30,7 +37,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${garamond.variable} ${inter.variable} ${robotoSlab.variable}`}>
+    <html
+      lang="en"
+      className={`${garamond.variable} ${inter.variable} ${robotoSlab.variable} ${montserrat.variable}`}
+    >
       <body className="bg-neutral-950 font-sans antialiased">
         <div className="pointer-events-none fixed inset-0 z-0">
           <Waves />

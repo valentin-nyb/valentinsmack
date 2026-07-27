@@ -16,7 +16,7 @@ export function Hero() {
           <span className="font-serif italic font-normal text-neutral-400">
             fashion, retail,
           </span>{" "}
-          and the brands that move culture.
+          &amp; brands that move culture.
         </h1>
         <div className="mt-6 hidden md:block">
           <IntroCard
