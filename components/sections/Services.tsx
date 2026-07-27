@@ -63,22 +63,26 @@ function MegaphoneIcon() {
 
 const icons = [PenNibIcon, CameraIcon, BrowserIcon, PackageIcon, MegaphoneIcon];
 
-const borderlessCard: React.CSSProperties = { border: "none", padding: 0, backgroundColor: "transparent" };
-
 export function Services() {
-  const topRow = services.slice(0, 3);
-  const bottomRow = services.slice(3, 5);
-
   return (
     <section id="services" className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-20">
       <div className="mx-auto max-w-6xl">
         <p className="text-[13px] tracking-[0.15em] text-neutral-500">Services</p>
 
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-6">
-          {topRow.map((service, i) => {
+          {services.map((service, i) => {
             const Icon = icons[i];
+            // When the count is odd, the last row (lg: 3-per-row) has only
+            // two items — center that pair instead of leaving them left-
+            // aligned with empty trailing columns.
+            const isSecondLast = i === services.length - 2 && services.length % 2 === 1;
+            const isLast = i === services.length - 1 && services.length % 2 === 1;
+            const colStart = isSecondLast ? "lg:col-start-2" : isLast ? "lg:col-start-4" : "";
             return (
-              <div key={service.title} className="col-span-full sm:col-span-3 lg:col-span-2">
+              <div
+                key={service.title}
+                className={`col-span-full sm:col-span-3 lg:col-span-2 ${colStart}`}
+              >
                 <IconHover3D
                   heading={service.title}
                   text={service.description}
@@ -89,31 +93,6 @@ export function Services() {
                   iconSize={90}
                   className="min-h-[280px]"
                 />
-              </div>
-            );
-          })}
-
-          {bottomRow.map((service, i) => {
-            const Icon = icons[i + 3];
-            return (
-              <div
-                key={service.title}
-                className="col-span-full overflow-hidden rounded-xl border border-neutral-800 lg:col-span-3"
-              >
-                <div className="grid sm:grid-cols-2">
-                  <div className="p-6">
-                    <IconHover3D
-                      heading={service.title}
-                      text={service.description}
-                      icon={<Icon />}
-                      vertical
-                      style={borderlessCard}
-                    />
-                  </div>
-                  <div className="flex min-h-[180px] items-center justify-center border-t border-neutral-800 p-6 sm:border-l sm:border-t-0">
-                    <IconHover3D icon={<Icon />} iconSize={140} style={borderlessCard} />
-                  </div>
-                </div>
               </div>
             );
           })}
