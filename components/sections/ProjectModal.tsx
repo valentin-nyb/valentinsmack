@@ -69,20 +69,11 @@ export function ProjectModal({
               />
             )}
 
-            <p className="mt-10 max-w-xl font-serif text-lg leading-relaxed text-neutral-300">
-              {project.description ??
-                "Full case study coming soon. In the meantime, this project is viewable on the complete portfolio."}
-            </p>
-
-            <a
-              href={project.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative mt-10 inline-block text-[13px] tracking-wide text-neutral-100"
-            >
-              View Full Case Study ↗
-              <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-neutral-100 transition-transform duration-300 ease-out group-hover:scale-x-100" />
-            </a>
+            {project.description && (
+              <p className="mt-10 max-w-xl font-serif text-lg leading-relaxed text-neutral-300">
+                {project.description}
+              </p>
+            )}
           </motion.div>
         </motion.div>
       )}
