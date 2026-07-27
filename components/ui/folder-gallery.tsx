@@ -187,7 +187,13 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
                   <img
                     src={images[expandedIndex]}
                     alt={folderName}
-                    className="max-h-[92vh] w-full rounded-lg border border-white/10 object-contain"
+                    onClick={() =>
+                      images.length > 1 &&
+                      setExpandedIndex((i) => (i === null ? i : (i + 1) % images.length))
+                    }
+                    className={`max-h-[92vh] w-full rounded-lg border border-white/10 object-contain ${
+                      images.length > 1 ? "cursor-pointer" : ""
+                    }`}
                   />
                   {images.length > 1 && (
                     <span className="text-[11px] tracking-widest text-white/40">
