@@ -37,7 +37,6 @@ export function Work() {
             items={items}
             columns={isDesktop ? 5 : 2}
             rows={isDesktop ? 2 : 5}
-            hoverSize={6}
             gapSize={4}
             className="h-[70vh] md:h-[85vh]"
           />

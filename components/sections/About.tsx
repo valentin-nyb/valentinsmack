@@ -12,13 +12,15 @@ export function About() {
       <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[auto_1fr] md:gap-24">
         <p className="text-[13px] tracking-[0.15em] text-neutral-500">About</p>
         <div className="max-w-2xl">
-          <p className="font-serif text-2xl leading-relaxed text-neutral-200 md:text-3xl">
-            Valentin is an Art Director and Designer working across brand
-            identity, art direction, and digital product design — with a
-            focus on fashion, retail, and culture-driven brands. His practice
-            blends editorial craft with a fast, experimental process,
-            increasingly shaped by AI-assisted tools without losing hand-made
-            judgment.
+          <p className="font-serif text-2xl leading-relaxed md:text-3xl">
+            <span className="bg-orange-500 text-neutral-950">
+              I&apos;m an Art Director and Designer based in London, working
+              across brand identity, art direction, and digital product
+              design — with a focus on fashion, retail, and culture-driven
+              brands. My practice blends editorial craft with a fast,
+              experimental process — grounded in strong typography and a
+              hands-on approach from concept through execution.
+            </span>
           </p>
           <p className="mt-6 text-[13px] tracking-[0.1em] text-neutral-500">
             Buenos Aires — Madrid — Aspen — London

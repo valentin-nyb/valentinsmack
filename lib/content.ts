@@ -16,7 +16,7 @@ function galleryFor(slug: string, count: number): string[] {
 export const projects: Project[] = [
   {
     title: "OffCut Productions",
-    category: "Brand & Web",
+    category: "Web Design and Dev",
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/offcut-productions/1.jpg",
     images: galleryFor("offcut-productions", 6),

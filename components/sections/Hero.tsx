@@ -16,10 +16,12 @@ export function Hero() {
           </span>{" "}
           and the brands that move culture.
         </h1>
-        <p className="mt-10 max-w-lg font-serif text-xl leading-relaxed text-neutral-400">
-          I&apos;m Valentin Suarez Mackeprang — working across brand identity,
-          art direction, and web &amp; product design. Raised between Buenos
-          Aires, Madrid, and Aspen, now based in London.
+        <p className="mt-10 hidden max-w-lg font-serif text-xl leading-relaxed md:block">
+          <span className="bg-orange-500 text-neutral-950">
+            I&apos;m Valentin Suarez Mackeprang — working across brand
+            identity, art direction, and web &amp; product design. Raised
+            between Buenos Aires, Madrid, and Aspen, now based in London.
+          </span>
         </p>
         <div className="mt-12 flex items-center gap-10">
           <a
