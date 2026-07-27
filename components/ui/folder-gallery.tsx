@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -12,7 +12,19 @@ interface FolderGalleryProps {
 export function FolderGallery({ images, folderName }: FolderGalleryProps) {
   const [isFolderOpen, setIsFolderOpen] = useState(false);
   const [hoverFolder, setHoverFolder] = useState(false);
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (expandedIndex === null) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setExpandedIndex(null);
+      if (e.key === "ArrowRight") setExpandedIndex((i) => (i === null ? i : (i + 1) % images.length));
+      if (e.key === "ArrowLeft")
+        setExpandedIndex((i) => (i === null ? i : (i - 1 + images.length) % images.length));
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [expandedIndex, images.length]);
 
   if (images.length === 0) return null;
 
@@ -46,7 +58,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
               return (
                 <motion.div
                   key={src}
-                  onClick={() => isFolderOpen && setExpanded(src)}
+                  onClick={() => isFolderOpen && setExpandedIndex(i)}
                   className={`absolute bottom-0 h-56 w-40 origin-bottom overflow-hidden rounded-xl border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.5)] ${
                     isFolderOpen ? "pointer-events-auto cursor-pointer" : "pointer-events-none"
                   }`}
@@ -109,28 +121,64 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
       {typeof document !== "undefined" &&
         createPortal(
           <AnimatePresence>
-            {expanded && (
+            {expandedIndex !== null && (
               <motion.div
-                className="fixed inset-0 z-[110] flex items-center justify-center bg-black/95 p-6"
+                className="fixed inset-0 z-[110] flex items-center justify-center bg-black/90 p-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                onClick={() => setExpanded(null)}
+                onClick={() => setExpandedIndex(null)}
               >
                 <button
-                  onClick={() => setExpanded(null)}
+                  onClick={() => setExpandedIndex(null)}
                   aria-label="Close"
                   className="absolute right-6 top-6 text-[13px] tracking-wide text-white/60 hover:text-white"
                 >
                   Close ✕
                 </button>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={expanded}
-                  alt={folderName}
-                  className="max-h-full max-w-full object-contain"
-                />
+
+                {images.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setExpandedIndex((i) => (i === null ? i : (i - 1 + images.length) % images.length));
+                      }}
+                      aria-label="Previous image"
+                      className="absolute left-4 text-2xl text-white/50 hover:text-white md:left-8"
+                    >
+                      ‹
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setExpandedIndex((i) => (i === null ? i : (i + 1) % images.length));
+                      }}
+                      aria-label="Next image"
+                      className="absolute right-4 text-2xl text-white/50 hover:text-white md:right-8"
+                    >
+                      ›
+                    </button>
+                  </>
+                )}
+
+                <div
+                  className="flex max-h-[65vh] w-full max-w-lg flex-col items-center gap-4"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={images[expandedIndex]}
+                    alt={folderName}
+                    className="max-h-[65vh] w-full rounded-lg border border-white/10 object-contain"
+                  />
+                  {images.length > 1 && (
+                    <span className="text-[11px] tracking-widest text-white/40">
+                      {expandedIndex + 1} / {images.length}
+                    </span>
+                  )}
+                </div>
               </motion.div>
             )}
           </AnimatePresence>,
