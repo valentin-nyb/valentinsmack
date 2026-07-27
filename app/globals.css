@@ -23,13 +23,6 @@
     color: #0a0a0a;
   }
 
-  a,
-  button,
-  [role="button"],
-  .cursor-pointer {
-    cursor: url("/cursors/hand-pointer.png") 10 4, pointer;
-  }
-
   /* iOS Safari defers repainting position:fixed layers during the
      elastic rubber-band overscroll bounce, which causes visible lag
      in fixed-position elements (e.g. the nav) mid-scroll even with
@@ -38,4 +31,10 @@
   body {
     overscroll-behavior-y: none;
   }
+}
+
+/* Unlayered so it always wins over Tailwind's layered utilities
+   (e.g. cursor-pointer) regardless of selector specificity. */
+* {
+  cursor: url("/cursors/hand-pointer.png") 10 4, auto;
 }
