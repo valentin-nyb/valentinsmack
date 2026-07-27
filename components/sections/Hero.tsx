@@ -5,7 +5,7 @@ export function Hero() {
       className="flex min-h-[85vh] flex-col justify-center px-6 pt-20 md:px-10"
     >
       <div className="mx-auto w-full max-w-6xl">
-        <p className="flex items-center gap-3 text-[13px] tracking-[0.15em] text-neutral-500">
+        <p className="flex items-center gap-3 text-[13px] tracking-[0.15em] text-orange-500">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-orange-500" />
           Art Director &amp; Designer — London
         </p>

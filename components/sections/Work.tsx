@@ -28,7 +28,7 @@ export function Work() {
   }));
 
   return (
-    <section id="work" className="border-t border-neutral-800 px-6 py-14 md:px-10 md:py-20">
+    <section id="work" className="px-6 py-14 md:px-10 md:py-20">
       <div className="mx-auto max-w-6xl">
         <p className="text-[13px] tracking-[0.15em] text-neutral-500">Selected Work</p>
 

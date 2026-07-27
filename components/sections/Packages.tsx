@@ -1,19 +1,30 @@
+"use client";
+
+import { useState } from "react";
 import { packages } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export function Packages() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <section id="packages" className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-20">
       <div className="mx-auto max-w-6xl">
         <p className="text-[13px] tracking-[0.15em] text-neutral-500">Packages</p>
 
         <div className="mt-8 grid gap-6 md:grid-cols-3">
-          {packages.map((pkg) => (
+          {packages.map((pkg, i) => {
+            const isActive = hoveredIndex !== null ? hoveredIndex === i : pkg.featured;
+
+            return (
             <div
               key={pkg.name}
+              onMouseEnter={() => setHoveredIndex(i)}
+              onMouseLeave={() => setHoveredIndex(null)}
               className={cn(
-                "relative flex flex-col border p-6",
-                pkg.featured ? "border-orange-500/50 bg-neutral-900/40" : "border-neutral-800"
+                "relative flex flex-col border p-6 transition-colors",
+                isActive ? "border-orange-500/60" : "border-neutral-100/40",
+                pkg.featured && "bg-neutral-900/40"
               )}
             >
               {pkg.featured && (
@@ -68,7 +79,8 @@ export function Packages() {
                 <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-neutral-100 transition-transform duration-300 ease-out group-hover:scale-x-100" />
               </a>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

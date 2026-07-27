@@ -8,7 +8,7 @@ export function Services() {
         <div className="mt-6 grid gap-x-8 gap-y-6 md:grid-cols-2">
           {services.map((service, i) => (
             <div key={service.title} className="border-t border-neutral-900 pt-5">
-              <span className="font-serif italic text-neutral-600">
+              <span className="font-serif text-lg font-bold italic text-orange-500">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="mt-3 font-display text-2xl font-black text-neutral-100 md:text-3xl">
