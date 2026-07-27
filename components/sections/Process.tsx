@@ -8,7 +8,7 @@ export function Process() {
         <div className="mt-6 flex flex-col gap-6 md:flex-row md:divide-x md:divide-neutral-900">
           {process.map((p) => (
             <div key={p.step} className="border-t border-neutral-900 pt-5 md:flex-1 md:border-t-0 md:pl-8 md:pt-0 md:first:pl-0">
-              <span className="font-serif italic text-neutral-600">{p.step}</span>
+              <span className="font-serif text-lg font-bold italic text-orange-500">{p.step}</span>
               <h3 className="mt-3 font-display text-lg font-black text-neutral-100">
                 {p.title}
               </h3>

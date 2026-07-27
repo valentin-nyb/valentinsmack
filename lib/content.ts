@@ -132,14 +132,12 @@ export type Package = {
   featured?: boolean;
 };
 
-// PLACEHOLDER PRICING — these are illustrative numbers for laying out the
-// section, not real rates. Replace name/price/features/note for each tier
-// before this section is considered live.
+// Prices confirmed. Features/notes are still illustrative — adjust as needed.
 export const packages: Package[] = [
   {
     name: "Brand Identity",
     description: "A complete identity system for a new or evolving brand.",
-    price: "£2,500",
+    price: "£4,500",
     cadence: "+ VAT",
     features: ["Logo & wordmark", "Colour & type system", "Brand guidelines"],
     note: "2 design directions / 2 rounds of revisions",
@@ -147,7 +145,7 @@ export const packages: Package[] = [
   {
     name: "Website",
     description: "A bespoke, responsive site designed and built end to end.",
-    price: "£4,000",
+    price: "£5,500",
     cadence: "+ VAT",
     features: ["Up to 8 pages", "Responsive & SEO-ready", "CMS handoff"],
     note: "2 design directions / 2 rounds of revisions",

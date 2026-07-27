@@ -13,7 +13,7 @@ export function About() {
         <p className="text-[13px] tracking-[0.15em] text-neutral-500">About</p>
         <div className="max-w-2xl">
           <p className="font-serif text-2xl leading-relaxed md:text-3xl">
-            <span className="bg-orange-500 text-neutral-950">
+            <span className="box-decoration-clone bg-orange-500 px-1.5 py-0.5 text-neutral-950">
               I&apos;m an Art Director and Designer based in London, working
               across brand identity, art direction, and digital product
               design — with a focus on fashion, retail, and culture-driven

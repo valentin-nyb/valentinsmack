@@ -53,7 +53,11 @@ export function Packages() {
               </ul>
 
               {pkg.note && (
-                <p className="mt-4 font-serif text-sm italic text-neutral-600">{pkg.note}</p>
+                <p className="mt-4 font-serif text-sm italic">
+                  <span className="box-decoration-clone bg-orange-500 px-1.5 py-0.5 text-neutral-950">
+                    {pkg.note}
+                  </span>
+                </p>
               )}
 
               <a
