@@ -86,10 +86,10 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
               return (
                 <motion.div
                   key={src}
-                  onClick={() => isFolderOpen && setExpandedIndex(i)}
-                  className={`absolute bottom-0 flex ${sizes.cardH} ${sizes.cardW} origin-bottom items-center justify-center overflow-hidden rounded-xl border border-white/20 bg-neutral-950 shadow-[0_20px_40px_rgba(0,0,0,0.5)] ${
-                    isFolderOpen ? "pointer-events-auto cursor-pointer" : "pointer-events-none"
-                  }`}
+                  onClick={() => (isFolderOpen ? setExpandedIndex(i) : setIsFolderOpen(true))}
+                  onMouseEnter={() => setHoverFolder(true)}
+                  onMouseLeave={() => setHoverFolder(false)}
+                  className={`pointer-events-auto absolute bottom-0 flex ${sizes.cardH} ${sizes.cardW} origin-bottom cursor-pointer items-center justify-center overflow-hidden rounded-xl border border-white/20 bg-neutral-950 shadow-[0_20px_40px_rgba(0,0,0,0.5)]`}
                   animate={
                     !isFolderOpen
                       ? { y: stackY, x: stackX, rotate: stackRotate, scale: stackScale, zIndex: preview.length - Math.abs(offset) }
@@ -124,11 +124,6 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
           >
             <div className="relative flex h-full w-full items-end justify-center overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-b from-[#2a2a2a] to-[#111] pb-6 shadow-[inset_0_2px_10px_rgba(255,255,255,0.1)]">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-              <div className="flex items-center justify-center rounded-lg border border-black/80 bg-black px-4 py-2 shadow-inner">
-                <span className="text-sm font-medium tracking-wide text-white/90">
-                  {folderName}
-                </span>
-              </div>
             </div>
           </motion.div>
         </div>

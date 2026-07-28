@@ -30,7 +30,7 @@ export const projects: Project[] = [
   },
   {
     title: "Habitat.s",
-    category: "Product Design — App",
+    category: "Branding & UX/UI Design",
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/habitat-s/cover.jpg",
     images: galleryFor("habitat-s", 13),
