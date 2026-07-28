@@ -6,10 +6,18 @@ export type Project = {
   video?: string;
   description?: string;
   images?: string[];
+  // Small (~300px) versions of the first few gallery images, used for the
+  // scattered folder previews on the Work section so the homepage doesn't
+  // have to load full-resolution lightbox images up front.
+  previewImages?: string[];
 };
 
 function galleryFor(slug: string, count: number): string[] {
   return Array.from({ length: count }, (_, i) => `/work/${slug}/${i + 1}.jpg`);
+}
+
+function thumbsFor(slug: string, count: number): string[] {
+  return Array.from({ length: Math.min(count, 4) }, (_, i) => `/work/${slug}/thumb-${i + 1}.jpg`);
 }
 
 // Titles pulled from the existing myportfolio.com site.
@@ -20,6 +28,7 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/offcut-productions/cover.jpg",
     images: galleryFor("offcut-productions", 6),
+    previewImages: thumbsFor("offcut-productions", 6),
   },
   {
     title: "local / assets™",
@@ -27,6 +36,7 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/local-assets/cover.jpg",
     images: galleryFor("local-assets", 6),
+    previewImages: thumbsFor("local-assets", 6),
   },
   {
     title: "Habitat.s",
@@ -34,6 +44,7 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/habitat-s/cover.jpg",
     images: galleryFor("habitat-s", 13),
+    previewImages: thumbsFor("habitat-s", 13),
   },
   {
     title: "TERRA.",
@@ -41,6 +52,7 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/terra/cover.jpg",
     images: galleryFor("terra", 7),
+    previewImages: thumbsFor("terra", 7),
   },
   {
     title: "NOT YOUR BREW™",
@@ -48,6 +60,7 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/not-your-brew/cover.jpg",
     images: galleryFor("not-your-brew", 9),
+    previewImages: thumbsFor("not-your-brew", 9),
   },
   {
     title: "Olio",
@@ -55,6 +68,7 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/olio/cover.jpg",
     images: galleryFor("olio", 8),
+    previewImages: thumbsFor("olio", 8),
   },
   {
     title: "CUADROS",
@@ -62,6 +76,7 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/cuadros/cover.jpg",
     images: galleryFor("cuadros", 7),
+    previewImages: thumbsFor("cuadros", 7),
   },
   {
     title: "DICTATOR",
@@ -69,6 +84,7 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/dictator/cover.jpg",
     images: galleryFor("dictator", 6),
+    previewImages: thumbsFor("dictator", 6),
   },
   {
     title: "HILARIDAD — La Juanita",
@@ -76,6 +92,7 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/hilaridad/cover.jpg",
     images: galleryFor("hilaridad", 6),
+    previewImages: thumbsFor("hilaridad", 6),
   },
   {
     title: "Cha Chá Takeover",
@@ -83,6 +100,7 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/cha-cha-takeover/cover.jpg",
     images: galleryFor("cha-cha-takeover", 13),
+    previewImages: thumbsFor("cha-cha-takeover", 13),
   },
 ];
 

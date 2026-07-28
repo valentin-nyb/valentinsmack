@@ -1,0 +1,98 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+export function WorkFolder({
+  title,
+  category,
+  images,
+  onClick,
+  size = 170,
+}: {
+  title: string;
+  category: string;
+  images: string[];
+  onClick: () => void;
+  size?: number;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  const preview = images.slice(0, 4);
+
+  const frontW = size;
+  const frontH = size * 0.72;
+  const backW = size * 1.14;
+  const backH = frontH * 0.82;
+  const cardW = frontW * 0.5;
+  const cardH = frontH * 1.55;
+
+  return (
+    <div
+      className="group relative flex cursor-pointer flex-col items-center"
+      style={{ width: backW }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={onClick}
+    >
+      <div className="relative" style={{ height: backH + 44, width: backW }}>
+        <motion.div
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 drop-shadow-2xl"
+          style={{ width: backW, height: backH }}
+          animate={{ scale: hovered ? 0.97 : 1 }}
+        >
+          <div className="absolute left-0 top-0 h-6 w-20 rounded-t-lg border-l border-r border-t border-white/10 bg-gradient-to-t from-[#1e1e1e] to-[#2a2a2a]" />
+          <div className="absolute bottom-0 left-0 right-0 top-5 rounded-b-lg rounded-tr-lg border border-white/10 bg-gradient-to-b from-[#1e1e1e] to-[#0a0a0a] shadow-[inset_0_0_30px_rgba(0,0,0,0.8)]" />
+        </motion.div>
+
+        <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 justify-center">
+          {preview.map((src, i) => {
+            const offset = i - (preview.length - 1) / 2;
+            const stackY = hovered ? offset * -9 - 20 : offset * -4;
+            const stackX = hovered ? offset * 20 : offset * 3;
+            const stackRotate = hovered ? offset * 7 : offset * 2;
+
+            return (
+              <motion.div
+                key={src}
+                className="absolute bottom-0 origin-bottom overflow-hidden rounded-lg border border-white/20 bg-neutral-950 shadow-lg"
+                style={{ width: cardW, height: cardH }}
+                animate={{
+                  y: stackY,
+                  x: stackX,
+                  rotate: stackRotate,
+                  zIndex: preview.length - Math.abs(offset),
+                }}
+                transition={{ type: "spring", stiffness: 340, damping: 28 }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={src}
+                  alt={title}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <motion.div
+          className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2 drop-shadow-[0_-16px_30px_rgba(0,0,0,0.8)]"
+          style={{ width: frontW, height: frontH, transformOrigin: "bottom" }}
+          animate={{ rotateX: hovered ? -24 : 0, y: hovered ? 10 : 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 26 }}
+        >
+          <div className="relative flex h-full w-full flex-col items-start justify-end overflow-hidden rounded-xl border border-white/20 bg-gradient-to-b from-[#2a2a2a] to-[#111] p-3 shadow-[inset_0_2px_10px_rgba(255,255,255,0.1)]">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+            <p className="text-[9px] tracking-[0.12em] text-neutral-400">{category}</p>
+            <p className="font-display text-[13px] font-black leading-tight text-neutral-50">
+              {title}
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+}

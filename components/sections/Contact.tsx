@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/ui/reveal";
+
 function MailIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" {...props}>
@@ -23,7 +25,7 @@ const CornerMark = ({ className }: { className: string }) => (
 export function Contact() {
   return (
     <section id="contact" className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-20">
-      <div className="relative mx-auto max-w-6xl border border-neutral-600 p-10 md:p-14">
+      <Reveal className="relative mx-auto max-w-6xl border border-neutral-600 p-10 md:p-14">
         <CornerMark className="-left-2 -top-2" />
         <CornerMark className="-right-2 -top-2" />
         <CornerMark className="-bottom-2 -left-2" />
@@ -63,7 +65,7 @@ export function Contact() {
             </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

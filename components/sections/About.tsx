@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/ui/reveal";
+
 const disciplines = [
   "Brand & Identity",
   "Art Direction",
@@ -10,8 +12,10 @@ export function About() {
   return (
     <section id="about" className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-20">
       <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[auto_1fr] md:gap-16">
-        <p className="text-[13px] tracking-[0.15em] text-neutral-500">About</p>
-        <div className="max-w-2xl">
+        <Reveal>
+          <p className="text-[13px] tracking-[0.15em] text-neutral-500">About</p>
+        </Reveal>
+        <Reveal delay={0.1} className="max-w-2xl">
           <p className="font-serif text-2xl leading-relaxed md:text-3xl">
             <span className="box-decoration-clone bg-orange-500 px-1.5 py-0.5 text-neutral-950">
               I&apos;m an Art Director and Designer based in London, working
@@ -35,7 +39,7 @@ export function About() {
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

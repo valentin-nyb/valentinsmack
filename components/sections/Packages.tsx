@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { packages } from "@/lib/content";
 import { cn } from "@/lib/utils";
+import { Reveal } from "@/components/ui/reveal";
 
 export function Packages() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -17,8 +18,9 @@ export function Packages() {
             const isActive = hoveredIndex !== null ? hoveredIndex === i : pkg.featured;
 
             return (
-            <div
+            <Reveal
               key={pkg.name}
+              delay={i * 0.1}
               onMouseEnter={() => setHoveredIndex(i)}
               onMouseLeave={() => setHoveredIndex(null)}
               className={cn(
@@ -78,7 +80,7 @@ export function Packages() {
                 Book a 15-min call →
                 <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-neutral-100 transition-transform duration-300 ease-out group-hover:scale-x-100" />
               </a>
-            </div>
+            </Reveal>
             );
           })}
         </div>

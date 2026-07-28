@@ -1,5 +1,6 @@
 import { services } from "@/lib/content";
 import { IconHover3D } from "@/components/ui/icon-hover-3d";
+import { Reveal } from "@/components/ui/reveal";
 
 const iconProps = {
   width: "100%",
@@ -79,8 +80,9 @@ export function Services() {
             const isLast = i === services.length - 1 && services.length % 2 === 1;
             const colStart = isSecondLast ? "lg:col-start-2" : isLast ? "lg:col-start-4" : "";
             return (
-              <div
+              <Reveal
                 key={service.title}
+                delay={Math.min(i, 4) * 0.08}
                 className={`col-span-full sm:col-span-3 lg:col-span-2 ${colStart}`}
               >
                 <IconHover3D
@@ -93,7 +95,7 @@ export function Services() {
                   iconSize={90}
                   className="min-h-[280px]"
                 />
-              </div>
+              </Reveal>
             );
           })}
         </div>

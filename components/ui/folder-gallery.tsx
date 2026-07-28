@@ -10,7 +10,9 @@ interface FolderGalleryProps {
 }
 
 export function FolderGallery({ images, folderName }: FolderGalleryProps) {
-  const [isFolderOpen, setIsFolderOpen] = useState(false);
+  // Clicking a folder on the Work section is already the "open" action,
+  // so the gallery starts fanned out instead of requiring a second click.
+  const [isFolderOpen, setIsFolderOpen] = useState(true);
   const [hoverFolder, setHoverFolder] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
