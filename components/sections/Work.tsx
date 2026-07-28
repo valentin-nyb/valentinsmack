@@ -59,7 +59,7 @@ export function Work() {
                 style={{ left: `${left}%`, top: `${top}%`, rotate: `${rotate}deg`, zIndex: i }}
               >
                 <motion.div
-                  drag
+                  drag={isDesktop}
                   dragMomentum={false}
                   dragElastic={0.12}
                   dragConstraints={containerRef}

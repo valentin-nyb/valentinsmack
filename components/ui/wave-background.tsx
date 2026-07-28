@@ -57,7 +57,6 @@ export function Waves({
 
     window.addEventListener("resize", onResize);
     window.addEventListener("mousemove", onMouseMove);
-    containerRef.current.addEventListener("touchmove", onTouchMove, { passive: false });
 
     rafRef.current = requestAnimationFrame(tick);
 
@@ -65,7 +64,6 @@ export function Waves({
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("mousemove", onMouseMove);
-      containerRef.current?.removeEventListener("touchmove", onTouchMove);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -131,12 +129,6 @@ export function Waves({
 
   const onMouseMove = (e: MouseEvent) => {
     updateMousePosition(e.clientX, e.clientY);
-  };
-
-  const onTouchMove = (e: TouchEvent) => {
-    e.preventDefault();
-    const touch = e.touches[0];
-    updateMousePosition(touch.clientX, touch.clientY);
   };
 
   const updateMousePosition = (x: number, y: number) => {

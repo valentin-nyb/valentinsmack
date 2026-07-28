@@ -4,7 +4,7 @@ const disciplines = [
   "Brand & Identity",
   "Art Direction",
   "Web & Product",
-  "AI Design",
+  "Photography",
   "Campaigns",
 ];
 
