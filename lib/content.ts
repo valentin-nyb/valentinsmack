@@ -71,11 +71,11 @@ export const projects: Project[] = [
     images: galleryFor("hilaridad", 6),
   },
   {
-    title: "Me Gustas Mucho",
-    category: "Sony Music — Campaign",
+    title: "Habitat.s",
+    category: "Product Design — App",
     href: "https://valentinsmack.myportfolio.com",
-    image: "/work/me-gustas-mucho/cover.jpg",
-    images: galleryFor("me-gustas-mucho", 5),
+    image: "/work/habitat-s/cover.jpg",
+    images: galleryFor("habitat-s", 13),
   },
   {
     title: "Cha Chá Takeover",
