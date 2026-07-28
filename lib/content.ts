@@ -29,6 +29,13 @@ export const projects: Project[] = [
     images: galleryFor("local-assets", 6),
   },
   {
+    title: "Habitat.s",
+    category: "Product Design — App",
+    href: "https://valentinsmack.myportfolio.com",
+    image: "/work/habitat-s/cover.jpg",
+    images: galleryFor("habitat-s", 13),
+  },
+  {
     title: "TERRA.",
     category: "Brand & Identity",
     href: "https://valentinsmack.myportfolio.com",
@@ -69,13 +76,6 @@ export const projects: Project[] = [
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/hilaridad/cover.jpg",
     images: galleryFor("hilaridad", 6),
-  },
-  {
-    title: "Habitat.s",
-    category: "Product Design — App",
-    href: "https://valentinsmack.myportfolio.com",
-    image: "/work/habitat-s/cover.jpg",
-    images: galleryFor("habitat-s", 13),
   },
   {
     title: "Cha Chá Takeover",
