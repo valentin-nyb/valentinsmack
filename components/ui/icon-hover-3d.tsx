@@ -57,7 +57,10 @@ const Transition: React.FC<{ value: MotionTransition; children: React.ReactNode 
 
 const Variants = m.create(React.Fragment);
 
-const EXTRUSION_LAYERS = 14;
+// Fewer, wider-spaced layers reach the same depth/brightness range as
+// the original 14-layer version with less render/hydration work — this
+// component mounts 5x on the page (once per service) on initial load.
+const EXTRUSION_LAYERS = 8;
 
 /** Stacks copies of a flat icon at incremental Z-depths with a brightness
  * falloff, so it reads as a solid extruded volume once rotated in 3D
@@ -71,8 +74,8 @@ function ExtrudedIcon({ icon }: { icon: React.ReactNode }) {
           style={{
             position: "absolute",
             inset: 0,
-            transform: `translateZ(${-i * 3}px)`,
-            filter: `brightness(${1 - i * 0.045})`,
+            transform: `translateZ(${-i * 5.5}px)`,
+            filter: `brightness(${1 - i * 0.083})`,
           }}
         >
           {icon}
