@@ -10,7 +10,10 @@ export function ScrollRestoration() {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-    window.scrollTo(0, 0);
+    // Instant, not the page's global smooth-scroll behavior — an
+    // animated scroll here can fight with the user's own scroll input
+    // right as the page loads, making it feel stuck.
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, []);
 
   return null;
