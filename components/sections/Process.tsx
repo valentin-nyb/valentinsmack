@@ -5,7 +5,7 @@ export function Process() {
   return (
     <section className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-20">
       <div className="mx-auto max-w-6xl">
-        <p className="text-[13px] tracking-[0.15em] text-neutral-500">Process</p>
+        <h2 className="text-[13px] tracking-[0.15em] text-neutral-500">Process</h2>
 
         {/* Mobile: simple stacked list, no timeline */}
         <div className="mt-6 flex flex-col gap-6 md:hidden">

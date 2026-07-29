@@ -11,7 +11,7 @@ export function Packages() {
   return (
     <section id="packages" className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-20">
       <div className="mx-auto max-w-6xl">
-        <p className="text-[13px] tracking-[0.15em] text-neutral-500">Packages</p>
+        <h2 className="text-[13px] tracking-[0.15em] text-neutral-500">Packages</h2>
 
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {packages.map((pkg, i) => {

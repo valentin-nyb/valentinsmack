@@ -13,7 +13,7 @@ export function About() {
     <section id="about" className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-20">
       <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[auto_1fr] md:gap-16">
         <Reveal>
-          <p className="text-[13px] tracking-[0.15em] text-neutral-500">About</p>
+          <h2 className="text-[13px] tracking-[0.15em] text-neutral-500">About</h2>
         </Reveal>
         <Reveal delay={0.1} className="max-w-2xl">
           <p className="font-serif text-2xl leading-relaxed md:text-3xl">

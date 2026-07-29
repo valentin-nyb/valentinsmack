@@ -36,7 +36,7 @@ export function Work() {
   return (
     <section id="work" className="px-6 py-14 md:px-10 md:py-20">
       <div className="mx-auto max-w-6xl">
-        <p className="text-[13px] tracking-[0.15em] text-neutral-500">Selected Work</p>
+        <h2 className="text-[13px] tracking-[0.15em] text-neutral-500">Selected Work</h2>
 
         <div ref={containerRef} className="relative mt-10" style={{ height: rows * rowHeight }}>
           {projects.map((project, i) => {

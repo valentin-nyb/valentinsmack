@@ -68,7 +68,7 @@ export function Services() {
   return (
     <section id="services" className="border-t border-neutral-900 px-6 py-14 md:px-10 md:py-20">
       <div className="mx-auto max-w-6xl">
-        <p className="text-[13px] tracking-[0.15em] text-neutral-500">Services</p>
+        <h2 className="text-[13px] tracking-[0.15em] text-neutral-500">Services</h2>
 
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-6">
           {services.map((service, i) => {
