@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import type { Project } from "@/lib/content";
 import { FolderGallery } from "@/components/ui/folder-gallery";
 
@@ -33,7 +33,7 @@ export function ProjectModal({
   return createPortal(
     <AnimatePresence>
       {project && (
-        <motion.div
+        <m.div
           className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-neutral-950/95 px-4 py-16 backdrop-blur-sm md:px-10 md:py-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -52,7 +52,7 @@ export function ProjectModal({
             Close ✕
           </button>
 
-          <motion.div
+          <m.div
             className="relative w-full max-w-3xl"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,8 +77,8 @@ export function ProjectModal({
                 {project.description}
               </p>
             )}
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       )}
     </AnimatePresence>,
     document.body

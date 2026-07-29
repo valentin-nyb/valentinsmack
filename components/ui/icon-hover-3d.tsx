@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useId } from "react";
 import {
-  motion,
+  m,
   MotionConfigContext,
   LayoutGroup,
   type Transition as MotionTransition,
@@ -55,7 +55,7 @@ const Transition: React.FC<{ value: MotionTransition; children: React.ReactNode 
   return <MotionConfigContext.Provider value={contextValue}>{children}</MotionConfigContext.Provider>;
 };
 
-const Variants = motion.create(React.Fragment);
+const Variants = m.create(React.Fragment);
 
 const EXTRUSION_LAYERS = 14;
 
@@ -113,7 +113,7 @@ export const IconHover3D: React.FC<Props> = ({
       <LayoutGroup id={defaultLayoutId}>
         <Variants animate={variants} initial={false}>
           <Transition value={transition1}>
-            <motion.div
+            <m.div
               className={`icon-hover-3d ${className}`}
               onMouseEnter={() => setIsHover(true)}
               onMouseLeave={() => setIsHover(false)}
@@ -138,7 +138,7 @@ export const IconHover3D: React.FC<Props> = ({
               }}
             >
               {/* Icon */}
-              <motion.div
+              <m.div
                 style={{
                   alignItems: "center",
                   display: "flex",
@@ -153,7 +153,7 @@ export const IconHover3D: React.FC<Props> = ({
                   boxShadow: ringed ? "0 0 0 8px rgba(250,250,250,0.05)" : undefined,
                 }}
               >
-                <motion.div
+                <m.div
                   style={{
                     flex: "none",
                     height: "348px",
@@ -165,7 +165,7 @@ export const IconHover3D: React.FC<Props> = ({
                   }}
                 >
                   {icon && (
-                    <motion.div
+                    <m.div
                       style={{
                         position: "absolute",
                         left: "50%",
@@ -190,11 +190,11 @@ export const IconHover3D: React.FC<Props> = ({
                       }}
                     >
                       <ExtrudedIcon icon={icon} />
-                    </motion.div>
+                    </m.div>
                   )}
 
                   {/* Corner brackets */}
-                  <motion.div
+                  <m.div
                     animate={{ left: isHover ? -6 : 14, top: isHover ? -6 : 14, scale: isHover ? 2.2 : 1 }}
                     style={{
                       flex: "none",
@@ -207,7 +207,7 @@ export const IconHover3D: React.FC<Props> = ({
                       borderTop: `4px solid ${isHover ? ACCENT : FG}`,
                     }}
                   />
-                  <motion.div
+                  <m.div
                     animate={{ left: isHover ? -6 : 14, top: isHover ? 330 : 310, scale: isHover ? 2.2 : 1 }}
                     style={{
                       flex: "none",
@@ -220,7 +220,7 @@ export const IconHover3D: React.FC<Props> = ({
                       borderBottom: `4px solid ${isHover ? ACCENT : FG}`,
                     }}
                   />
-                  <motion.div
+                  <m.div
                     animate={{ right: isHover ? -6 : 14, bottom: isHover ? -6 : 14, scale: isHover ? 2.2 : 1 }}
                     style={{
                       flex: "none",
@@ -233,7 +233,7 @@ export const IconHover3D: React.FC<Props> = ({
                       borderBottom: `4px solid ${isHover ? ACCENT : FG}`,
                     }}
                   />
-                  <motion.div
+                  <m.div
                     animate={{ right: isHover ? -6 : 14, top: isHover ? -6 : 14, scale: isHover ? 2.2 : 1 }}
                     style={{
                       flex: "none",
@@ -246,12 +246,12 @@ export const IconHover3D: React.FC<Props> = ({
                       borderTop: `4px solid ${isHover ? ACCENT : FG}`,
                     }}
                   />
-                </motion.div>
-              </motion.div>
+                </m.div>
+              </m.div>
 
               {/* Content */}
               {(heading || text) && (
-                <motion.div
+                <m.div
                   style={{
                     alignItems: centered ? "center" : "flex-start",
                     display: "flex",
@@ -268,7 +268,7 @@ export const IconHover3D: React.FC<Props> = ({
                   }}
                 >
                   {heading && (
-                    <motion.div
+                    <m.div
                       style={{
                         height: "28px",
                         position: "relative",
@@ -286,7 +286,7 @@ export const IconHover3D: React.FC<Props> = ({
                       }}
                     >
                       <span style={{ position: "relative", zIndex: 1, color: FG }}>{heading}</span>
-                      <motion.span
+                      <m.span
                         style={{
                           position: "absolute",
                           top: 0,
@@ -299,8 +299,8 @@ export const IconHover3D: React.FC<Props> = ({
                         transition={titleTransition}
                       >
                         {heading}
-                      </motion.span>
-                      <motion.div
+                      </m.span>
+                      <m.div
                         style={{
                           position: "absolute",
                           top: 0,
@@ -314,11 +314,11 @@ export const IconHover3D: React.FC<Props> = ({
                         animate={{ scaleX: isHover ? 1 : 0 }}
                         transition={titleTransition}
                       />
-                    </motion.div>
+                    </m.div>
                   )}
 
                   {text && (
-                    <motion.div
+                    <m.div
                       style={{
                         position: "relative",
                         whiteSpace: "pre-wrap",
@@ -333,11 +333,11 @@ export const IconHover3D: React.FC<Props> = ({
                       }}
                     >
                       {text}
-                    </motion.div>
+                    </m.div>
                   )}
-                </motion.div>
+                </m.div>
               )}
-            </motion.div>
+            </m.div>
           </Transition>
         </Variants>
       </LayoutGroup>

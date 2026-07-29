@@ -27,7 +27,7 @@ export function Hero() {
               <>
                 I&apos;m Valentin Suarez Mackeprang — working across Art
                 Direction, Brand Identity and Web Design. I&apos;ve been
-                living and working between Buenos Aires, Madrid, and Aspen,{" "}
+                living and working between Buenos Aires, Madrid and Aspen,{" "}
                 <span className="rounded bg-orange-500 px-1 text-neutral-950">
                   now based in London.
                 </span>

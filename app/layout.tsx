@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { EB_Garamond, Inter, Montserrat, Roboto_Slab } from "next/font/google";
 import { Waves } from "@/components/ui/wave-background";
+import { MotionProvider } from "@/components/ui/motion-provider";
 import "./globals.css";
 
 const garamond = EB_Garamond({
@@ -45,7 +46,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="pointer-events-none fixed inset-0 z-0">
           <Waves />
         </div>
-        <div className="relative z-10">{children}</div>
+        <MotionProvider>
+          <div className="relative z-10">{children}</div>
+        </MotionProvider>
       </body>
     </html>
   );

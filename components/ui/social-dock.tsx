@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { m, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
 
 function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -48,13 +48,13 @@ function DockIcon({
 
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={name}>
-      <motion.div
+      <m.div
         ref={ref}
         style={{ width, height: width }}
         className="flex items-center justify-center rounded-full bg-neutral-50 text-neutral-900 shadow-lg transition-colors hover:text-orange-500"
       >
         <Icon style={{ width: "45%", height: "45%" }} />
-      </motion.div>
+      </m.div>
     </a>
   );
 }

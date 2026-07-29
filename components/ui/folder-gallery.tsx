@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 
 interface FolderGalleryProps {
   images: string[];
@@ -64,14 +64,14 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
           className="pointer-events-none relative flex w-full max-w-2xl justify-center"
           style={{ height: sizes.containerH }}
         >
-          <motion.div
+          <m.div
             className={`absolute ${sizes.backBottom} ${sizes.backH} ${sizes.backW} drop-shadow-2xl`}
             animate={{ opacity: isFolderOpen ? 0 : 1, scale: isFolderOpen ? 0.9 : 1 }}
           >
             <div className="absolute left-0 top-0 h-9 w-32 rounded-t-xl border-l border-r border-t border-white/10 bg-gradient-to-t from-[#1e1e1e] to-[#2a2a2a]" />
             <div className="absolute bottom-0 left-0 right-0 top-8 rounded-b-xl rounded-tr-xl border border-white/10 bg-gradient-to-b from-[#1e1e1e] to-[#0a0a0a] shadow-[inset_0_0_40px_rgba(0,0,0,0.8)]" />
             <div className="pointer-events-none absolute bottom-2 left-2 right-2 top-10 rounded-lg bg-black shadow-inner" />
-          </motion.div>
+          </m.div>
 
           <div className={`absolute ${sizes.cardBottom} z-10 flex justify-center`}>
             {preview.map((src, i) => {
@@ -86,7 +86,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
               const openX = offset * sizes.openXMult;
 
               return (
-                <motion.div
+                <m.div
                   key={src}
                   onClick={() => (isFolderOpen ? setExpandedIndex(i) : setIsFolderOpen(true))}
                   onMouseEnter={() => setHoverFolder(true)}
@@ -106,12 +106,12 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
                     alt={folderName}
                     className="pointer-events-none h-full w-full object-cover"
                   />
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
 
-          <motion.div
+          <m.div
             className={`pointer-events-auto absolute bottom-0 z-20 ${sizes.frontH} ${sizes.frontW} cursor-pointer drop-shadow-[0_-20px_40px_rgba(0,0,0,0.8)]`}
             style={{ transformOrigin: "bottom" }}
             animate={{
@@ -127,7 +127,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
             <div className="relative flex h-full w-full items-end justify-center overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-b from-[#2a2a2a] to-[#111] pb-6 shadow-[inset_0_2px_10px_rgba(255,255,255,0.1)]">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
 
@@ -135,7 +135,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
         createPortal(
           <AnimatePresence>
             {expandedIndex !== null && (
-              <motion.div
+              <m.div
                 className="fixed inset-0 z-[110] flex items-center justify-center bg-black/90 p-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -198,7 +198,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
                     </span>
                   )}
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>,
           document.body

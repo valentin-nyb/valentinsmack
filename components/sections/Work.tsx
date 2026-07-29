@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { projects, type Project } from "@/lib/content";
 import { ProjectModal } from "@/components/sections/ProjectModal";
 import { WorkFolder } from "@/components/ui/work-folder";
@@ -58,7 +58,7 @@ export function Work() {
                 className="absolute -translate-x-1/2 -translate-y-1/2"
                 style={{ left: `${left}%`, top: `${top}%`, rotate: `${rotate}deg`, zIndex: i }}
               >
-                <motion.div
+                <m.div
                   drag={isDesktop}
                   dragMomentum={false}
                   dragElastic={0.12}
@@ -89,7 +89,7 @@ export function Work() {
                       setOpenProject(project);
                     }}
                   />
-                </motion.div>
+                </m.div>
               </div>
             );
           })}
