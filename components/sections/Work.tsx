@@ -31,7 +31,14 @@ export function Work() {
   const cols = isDesktop ? 5 : 2;
   const rows = Math.ceil(projects.length / cols);
   const rowHeight = isDesktop ? 340 : 230;
-  const folderSize = isDesktop ? 210 : 135;
+  const folderSize = isDesktop ? 210 : 100;
+  // Mobile has much less horizontal room per cell than desktop's 5-column
+  // grid, so jitter/rotation are kept tight enough that a folder's full
+  // bounding box (including its fixed pixel width) can't be pushed past
+  // the viewport edge and cause horizontal page overflow.
+  const jitterXMult = isDesktop ? 0.55 : 0.18;
+  const jitterYMult = isDesktop ? 0.5 : 0.2;
+  const rotateRange = isDesktop ? 14 : 6;
 
   return (
     <section id="work" className="px-6 py-14 md:px-10 md:py-20">
@@ -45,9 +52,9 @@ export function Work() {
             const cellW = 100 / cols;
             const cellH = 100 / rows;
 
-            const jitterX = (seededRandom(i * 2 + 1) - 0.5) * cellW * 0.55;
-            const jitterY = (seededRandom(i * 2 + 2) - 0.5) * cellH * 0.5;
-            const rotate = (seededRandom(i * 3 + 5) - 0.5) * 14;
+            const jitterX = (seededRandom(i * 2 + 1) - 0.5) * cellW * jitterXMult;
+            const jitterY = (seededRandom(i * 2 + 2) - 0.5) * cellH * jitterYMult;
+            const rotate = (seededRandom(i * 3 + 5) - 0.5) * rotateRange;
 
             const left = col * cellW + cellW / 2 + jitterX;
             const top = row * cellH + cellH / 2 + jitterY;

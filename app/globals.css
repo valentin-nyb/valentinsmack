@@ -30,6 +30,12 @@
   html,
   body {
     overscroll-behavior-y: none;
+    /* Safety net: absolutely-positioned decorative elements (e.g. the
+       scattered Work folders) can jitter past the viewport edge on
+       narrow screens. Without this the page becomes horizontally
+       scrollable, which reads as the whole site being zoomed/shifted. */
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 }
 
