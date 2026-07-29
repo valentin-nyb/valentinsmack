@@ -104,6 +104,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
                   <img
                     src={src}
                     alt={folderName}
+                    decoding="async"
                     className="pointer-events-none h-full w-full object-cover"
                   />
                 </m.div>
@@ -184,6 +185,7 @@ export function FolderGallery({ images, folderName }: FolderGalleryProps) {
                   <img
                     src={images[expandedIndex]}
                     alt={folderName}
+                    decoding="async"
                     onClick={() =>
                       images.length > 1 &&
                       setExpandedIndex((i) => (i === null ? i : (i + 1) % images.length))
