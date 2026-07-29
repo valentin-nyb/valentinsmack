@@ -23,14 +23,6 @@ function thumbsFor(slug: string, count: number): string[] {
 // Titles pulled from the existing myportfolio.com site.
 export const projects: Project[] = [
   {
-    title: "OffCut Productions",
-    category: "Web Design and Dev",
-    href: "https://valentinsmack.myportfolio.com",
-    image: "/work/offcut-productions/cover.jpg",
-    images: galleryFor("offcut-productions", 6),
-    previewImages: thumbsFor("offcut-productions", 6),
-  },
-  {
     title: "local / assets™",
     category: "Brand & Identity",
     href: "https://valentinsmack.myportfolio.com",
