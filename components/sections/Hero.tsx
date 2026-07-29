@@ -16,7 +16,14 @@ export function Hero() {
           <span className="font-serif italic font-normal text-neutral-400">
             fashion, retail,
           </span>{" "}
-          &amp; brands that move culture.
+          &amp;{" "}
+          <span className="font-serif italic font-normal text-neutral-400">
+            brands
+          </span>{" "}
+          that move{" "}
+          <span className="rounded bg-orange-500 px-1 text-neutral-950">
+            culture.
+          </span>
         </h1>
         <div className="mt-6 hidden md:block">
           <IntroCard
