@@ -35,8 +35,9 @@ export function Work() {
   // Mobile has much less horizontal room per cell than desktop's 5-column
   // grid, so jitter/rotation are kept tight enough that a folder's full
   // bounding box (including its fixed pixel width) can't be pushed far
-  // past the viewport edge — overflow-x: hidden (globals.css) covers the
-  // remaining sliver on the very narrowest phones.
+  // past the viewport edge — this container's own overflow-x: hidden
+  // covers the remaining sliver on the very narrowest phones, scoped
+  // here rather than globally on html/body.
   const jitterXMult = isDesktop ? 0.55 : 0.12;
   const jitterYMult = isDesktop ? 0.5 : 0.15;
   const rotateRange = isDesktop ? 14 : 6;
@@ -46,7 +47,11 @@ export function Work() {
       <div className="mx-auto max-w-6xl">
         <h2 className="text-[13px] tracking-[0.15em] text-neutral-500">Selected Work</h2>
 
-        <div ref={containerRef} className="relative mt-10" style={{ height: rows * rowHeight }}>
+        <div
+          ref={containerRef}
+          className="relative mt-10 overflow-x-hidden"
+          style={{ height: rows * rowHeight }}
+        >
           {projects.map((project, i) => {
             const col = i % cols;
             const row = Math.floor(i / cols);
