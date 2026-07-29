@@ -13,11 +13,11 @@ export function Hero() {
         </p>
         <h1 className="mt-5 max-w-4xl font-display text-5xl font-black leading-[1.05] tracking-tight text-neutral-50 md:text-7xl lg:text-[5.5rem]">
           Brand and digital direction for{" "}
-          <span className="font-serif italic font-normal text-neutral-400">
+          <span className="font-serif italic font-normal text-neutral-400 text-[1.15em]">
             fashion
           </span>
           ,{" "}
-          <span className="font-serif italic font-normal text-neutral-400">
+          <span className="font-serif italic font-normal text-neutral-400 text-[1.15em]">
             retail
           </span>
           , &amp; brands that move{" "}
