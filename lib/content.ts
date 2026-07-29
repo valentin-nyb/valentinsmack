@@ -94,7 +94,7 @@ export const projects: Project[] = [
   },
   {
     title: "HILARIDAD — La Juanita",
-    category: "Campaign",
+    category: "First Release — Campaign",
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/hilaridad/cover.jpg",
     images: galleryFor("hilaridad", 7),
