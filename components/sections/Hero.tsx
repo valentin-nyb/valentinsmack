@@ -22,8 +22,9 @@ export function Hero() {
           </span>{" "}
           that move{" "}
           <span className="rounded bg-orange-500 px-1 text-neutral-950">
-            culture.
+            culture
           </span>
+          .
         </h1>
         <div className="mt-6 hidden md:block">
           <IntroCard
