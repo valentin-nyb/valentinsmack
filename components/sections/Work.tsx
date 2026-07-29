@@ -30,14 +30,15 @@ export function Work() {
 
   const cols = isDesktop ? 5 : 2;
   const rows = Math.ceil(projects.length / cols);
-  const rowHeight = isDesktop ? 340 : 230;
-  const folderSize = isDesktop ? 210 : 100;
+  const rowHeight = isDesktop ? 340 : 150;
+  const folderSize = isDesktop ? 210 : 130;
   // Mobile has much less horizontal room per cell than desktop's 5-column
   // grid, so jitter/rotation are kept tight enough that a folder's full
-  // bounding box (including its fixed pixel width) can't be pushed past
-  // the viewport edge and cause horizontal page overflow.
-  const jitterXMult = isDesktop ? 0.55 : 0.18;
-  const jitterYMult = isDesktop ? 0.5 : 0.2;
+  // bounding box (including its fixed pixel width) can't be pushed far
+  // past the viewport edge — overflow-x: hidden (globals.css) covers the
+  // remaining sliver on the very narrowest phones.
+  const jitterXMult = isDesktop ? 0.55 : 0.12;
+  const jitterYMult = isDesktop ? 0.5 : 0.15;
   const rotateRange = isDesktop ? 14 : 6;
 
   return (
@@ -88,6 +89,7 @@ export function Work() {
                         : [project.image ?? ""]
                     }
                     size={folderSize}
+                    isDesktop={isDesktop}
                     onClick={() => {
                       if (draggedRef.current[i]) {
                         draggedRef.current[i] = false;

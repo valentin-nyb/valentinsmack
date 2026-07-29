@@ -9,12 +9,14 @@ export function WorkFolder({
   images,
   onClick,
   size = 170,
+  isDesktop = true,
 }: {
   title: string;
   category: string;
   images: string[];
   onClick: () => void;
   size?: number;
+  isDesktop?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -27,13 +29,24 @@ export function WorkFolder({
   const cardW = frontW * 0.5;
   const cardH = frontH * 1.55;
 
+  // Desktop: hover reveals the fan, a click always opens. Touch has no
+  // hover, so the first tap reveals the fan and a second tap (while
+  // already revealed) opens the project.
+  const handleClick = () => {
+    if (isDesktop || hovered) {
+      onClick();
+      return;
+    }
+    setHovered(true);
+  };
+
   return (
     <div
       className="group relative flex cursor-pointer flex-col items-center"
       style={{ width: backW }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
+      onMouseEnter={isDesktop ? () => setHovered(true) : undefined}
+      onMouseLeave={isDesktop ? () => setHovered(false) : undefined}
+      onClick={handleClick}
     >
       <div className="relative" style={{ height: backH + 44, width: backW }}>
         <m.div
