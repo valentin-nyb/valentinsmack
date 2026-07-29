@@ -17,7 +17,7 @@ function galleryFor(slug: string, count: number): string[] {
 }
 
 function thumbsFor(slug: string, count: number): string[] {
-  return Array.from({ length: Math.min(count, 4) }, (_, i) => `/work/${slug}/thumb-${i + 1}.jpg`);
+  return Array.from({ length: Math.min(count, 4) }, (_, i) => `/work/${slug}/thumb-${i + 1}.webp`);
 }
 
 // Titles pulled from the existing myportfolio.com site.
