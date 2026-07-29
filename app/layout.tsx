@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { EB_Garamond, Inter, Montserrat, Roboto_Slab } from "next/font/google";
 import { Waves } from "@/components/ui/wave-background";
 import { MotionProvider } from "@/components/ui/motion-provider";
+import { ScrollRestoration } from "@/components/ui/scroll-restoration";
 import "./globals.css";
 
 const garamond = EB_Garamond({
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${garamond.variable} ${inter.variable} ${robotoSlab.variable} ${montserrat.variable}`}
     >
       <body className="bg-neutral-950 font-sans antialiased">
+        <ScrollRestoration />
         <div className="pointer-events-none fixed inset-0 z-0">
           <Waves />
         </div>
