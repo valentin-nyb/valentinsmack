@@ -43,7 +43,7 @@ function DockIcon({
     return val - (bounds.left + bounds.width / 2);
   });
 
-  const widthSync = useTransform(distance, [-140, 0, 140], [40, 68, 40]);
+  const widthSync = useTransform(distance, [-140, 0, 140], [52, 84, 52]);
   const width = useSpring(widthSync, { mass: 0.1, stiffness: 150, damping: 12 });
 
   return (
@@ -66,7 +66,7 @@ export function SocialDock() {
     <div
       onMouseMove={(e) => mouseX.set(e.clientX)}
       onMouseLeave={() => mouseX.set(Infinity)}
-      className="flex h-[68px] items-end gap-4"
+      className="flex h-[88px] items-end gap-4"
     >
       {socials.map((s) => (
         <DockIcon key={s.name} mouseX={mouseX} Icon={s.Icon} href={s.href} name={s.name} />
