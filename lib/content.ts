@@ -10,6 +10,9 @@ export type Project = {
   // scattered folder previews on the Work section so the homepage doesn't
   // have to load full-resolution lightbox images up front.
   previewImages?: string[];
+  // Project wordmark shown in the modal in place of the text title.
+  // Rendered forced-white via CSS filter, so any source artwork works.
+  logo?: string;
 };
 
 function galleryFor(slug: string, count: number): string[] {
@@ -18,6 +21,10 @@ function galleryFor(slug: string, count: number): string[] {
 
 function thumbsFor(slug: string, count: number): string[] {
   return Array.from({ length: Math.min(count, 4) }, (_, i) => `/work/${slug}/thumb-${i + 1}.webp`);
+}
+
+function logoFor(slug: string): string {
+  return `/work/${slug}/logo.png`;
 }
 
 // Titles pulled from the existing myportfolio.com site.
@@ -29,6 +36,7 @@ export const projects: Project[] = [
     image: "/work/local-assets/cover.jpg",
     images: galleryFor("local-assets", 6),
     previewImages: thumbsFor("local-assets", 6),
+    logo: logoFor("local-assets"),
   },
   {
     title: "Habitat.s",
@@ -37,6 +45,7 @@ export const projects: Project[] = [
     image: "/work/habitat-s/cover.jpg",
     images: galleryFor("habitat-s", 13),
     previewImages: thumbsFor("habitat-s", 13),
+    logo: logoFor("habitat-s"),
   },
   {
     title: "TERRA.",
@@ -45,6 +54,7 @@ export const projects: Project[] = [
     image: "/work/terra/cover.jpg",
     images: galleryFor("terra", 7),
     previewImages: thumbsFor("terra", 7),
+    logo: logoFor("terra"),
   },
   {
     title: "NOT YOUR BREW™",
@@ -53,6 +63,7 @@ export const projects: Project[] = [
     image: "/work/not-your-brew/cover.jpg",
     images: galleryFor("not-your-brew", 9),
     previewImages: thumbsFor("not-your-brew", 9),
+    logo: logoFor("not-your-brew"),
   },
   {
     title: "Olio",
@@ -61,6 +72,7 @@ export const projects: Project[] = [
     image: "/work/olio/cover.jpg",
     images: galleryFor("olio", 8),
     previewImages: thumbsFor("olio", 8),
+    logo: logoFor("olio"),
   },
   {
     title: "CUADROS",
@@ -69,6 +81,7 @@ export const projects: Project[] = [
     image: "/work/cuadros/cover.jpg",
     images: galleryFor("cuadros", 7),
     previewImages: thumbsFor("cuadros", 7),
+    logo: logoFor("cuadros"),
   },
   {
     title: "DICTATOR",
@@ -77,14 +90,16 @@ export const projects: Project[] = [
     image: "/work/dictator/cover.jpg",
     images: galleryFor("dictator", 6),
     previewImages: thumbsFor("dictator", 6),
+    logo: logoFor("dictator"),
   },
   {
     title: "HILARIDAD — La Juanita",
     category: "Campaign",
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/hilaridad/cover.jpg",
-    images: galleryFor("hilaridad", 6),
-    previewImages: thumbsFor("hilaridad", 6),
+    images: galleryFor("hilaridad", 7),
+    previewImages: thumbsFor("hilaridad", 7),
+    logo: logoFor("hilaridad"),
   },
   {
     title: "Cha Chá Takeover",
@@ -93,6 +108,7 @@ export const projects: Project[] = [
     image: "/work/cha-cha-takeover/cover.jpg",
     images: galleryFor("cha-cha-takeover", 13),
     previewImages: thumbsFor("cha-cha-takeover", 13),
+    logo: logoFor("cha-cha-takeover"),
   },
 ];
 

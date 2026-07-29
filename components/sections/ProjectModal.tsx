@@ -1,10 +1,35 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, m } from "framer-motion";
 import type { Project } from "@/lib/content";
 import { FolderGallery } from "@/components/ui/folder-gallery";
+
+function ProjectTitle({ logo, title }: { logo?: string; title: string }) {
+  const [logoFailed, setLogoFailed] = useState(false);
+
+  if (!logo || logoFailed) {
+    return (
+      <h2 className="mt-4 font-display text-4xl font-black leading-[0.95] text-neutral-50 md:text-6xl">
+        {title}
+      </h2>
+    );
+  }
+
+  return (
+    <h2 className="mt-4">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={logo}
+        alt={title}
+        onError={() => setLogoFailed(true)}
+        className="h-12 w-auto max-w-full object-contain md:h-16"
+        style={{ filter: "brightness(0) invert(1)" }}
+      />
+    </h2>
+  );
+}
 
 export function ProjectModal({
   project,
@@ -61,9 +86,7 @@ export function ProjectModal({
             onClick={(e) => e.stopPropagation()}
           >
             <p className="text-[13px] tracking-[0.15em] text-neutral-500">{project.category}</p>
-            <h2 className="mt-4 font-display text-4xl font-black leading-[0.95] text-neutral-50 md:text-6xl">
-              {project.title}
-            </h2>
+            <ProjectTitle logo={project.logo} title={project.title} />
 
             {project.images && project.images.length > 0 && (
               <FolderGallery
