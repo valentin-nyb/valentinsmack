@@ -14,13 +14,13 @@ export function Hero() {
         <h1 className="mt-5 max-w-4xl font-display text-5xl font-black leading-[1.05] tracking-tight text-neutral-50 md:text-7xl lg:text-[5.5rem]">
           Brand and digital direction for{" "}
           <span className="font-serif italic font-normal text-neutral-400">
-            fashion, retail,
-          </span>{" "}
-          &amp;{" "}
+            fashion
+          </span>
+          ,{" "}
           <span className="font-serif italic font-normal text-neutral-400">
-            brands
-          </span>{" "}
-          that move{" "}
+            retail
+          </span>
+          , &amp; brands that move{" "}
           <span className="rounded bg-orange-500 px-1 text-neutral-950">
             culture
           </span>
