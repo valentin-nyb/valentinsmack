@@ -20,7 +20,7 @@ export function Hero() {
         </h1>
         <div className="mt-6 hidden md:block">
           <IntroCard
-            avatarSrc="/avatar.jpg"
+            avatarSrc="/avatar.webp"
             name="Valentin Suarez Mackeprang"
             role="Art Director & Designer"
             message={
