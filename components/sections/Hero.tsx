@@ -1,12 +1,24 @@
+"use client";
+
+import { useRef } from "react";
+import { m, useScroll, useTransform } from "framer-motion";
 import { IntroCard } from "@/components/ui/intro-card";
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const cardY = useTransform(scrollYProgress, [0, 1], [0, -160]);
+
   return (
     <section
+      ref={sectionRef}
       id="top"
       className="flex min-h-[85vh] flex-col justify-center px-6 pt-28 md:px-10 md:pt-36"
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="relative mx-auto w-full max-w-6xl">
         <p className="flex items-center gap-3 text-[13px] tracking-[0.15em] text-brand">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" />
           Art Director &amp; Designer — London
@@ -31,7 +43,10 @@ export function Hero() {
           .
           <span className="block">— built to move culture and ship product.</span>
         </h1>
-        <div className="mt-6 hidden md:block">
+        <m.div
+          style={{ y: cardY }}
+          className="hidden md:absolute md:bottom-16 md:right-0 md:block"
+        >
           <IntroCard
             avatarSrc="/avatar.webp"
             name="Valentin Suarez Mackeprang"
@@ -48,7 +63,7 @@ export function Hero() {
             }
             email="smack.valentin@gmail.com"
           />
-        </div>
+        </m.div>
         <div className="mt-8 flex items-center gap-10">
           <a
             href="#work"
