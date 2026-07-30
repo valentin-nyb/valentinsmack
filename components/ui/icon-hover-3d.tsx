@@ -29,7 +29,7 @@ interface Props {
 
 const BG = "#0a0a0a";
 const FG = "#fafafa";
-const ACCENT = "#f97316";
+const ACCENT = "#f0803c";
 
 const transition1: MotionTransition = {
   bounce: 0,
