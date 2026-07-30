@@ -33,7 +33,7 @@ export function IntroCard({ avatarSrc, name, role, message, email }: IntroCardPr
             <span>5 mins</span>
             <span>&middot;</span>
             <span>Read</span>
-            <span aria-hidden>✓</span>
+            <span aria-hidden className="ml-auto">✓</span>
           </div>
         </div>
 
