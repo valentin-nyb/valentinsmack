@@ -102,6 +102,14 @@ export const projects: Project[] = [
     logo: logoFor("hilaridad"),
   },
   {
+    title: "Me Gustas Mucho",
+    category: "Sony Music — Campaign",
+    href: "https://valentinsmack.myportfolio.com",
+    image: "/work/me-gustas-mucho/cover.jpg",
+    images: galleryFor("me-gustas-mucho", 5),
+    previewImages: thumbsFor("me-gustas-mucho", 5),
+  },
+  {
     title: "Cha Chá Takeover",
     category: "Sitrus Eyewear — Campaign",
     href: "https://valentinsmack.myportfolio.com",

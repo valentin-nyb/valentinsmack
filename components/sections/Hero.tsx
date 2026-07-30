@@ -45,7 +45,7 @@ export function Hero() {
         </h1>
         <m.div
           style={{ y: cardY }}
-          className="hidden md:absolute md:bottom-16 md:right-0 md:block"
+          className="hidden md:absolute md:bottom-44 md:-right-4 md:block"
         >
           <IntroCard
             avatarSrc="/avatar.webp"

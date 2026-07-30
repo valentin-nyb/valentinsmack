@@ -74,7 +74,7 @@ export function WorkFolder({
                   y: stackY,
                   x: stackX,
                   rotate: stackRotate,
-                  zIndex: preview.length - Math.abs(offset),
+                  zIndex: preview.length - i,
                 }}
                 transition={{ type: "spring", stiffness: 340, damping: 28 }}
               >
