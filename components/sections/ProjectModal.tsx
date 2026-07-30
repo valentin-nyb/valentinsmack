@@ -18,13 +18,13 @@ function ProjectTitle({ logo, title }: { logo?: string; title: string }) {
   }
 
   return (
-    <h2 className="mt-4">
+    <h2 className="mt-4 flex h-14 w-48 items-center md:h-20 md:w-64">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={logo}
         alt={title}
         onError={() => setLogoFailed(true)}
-        className="h-12 w-auto max-w-full object-contain md:h-16"
+        className="h-full w-full object-contain object-left"
         style={{ filter: "brightness(0) invert(1)" }}
       />
     </h2>
