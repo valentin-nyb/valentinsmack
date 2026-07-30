@@ -121,7 +121,6 @@ export const IconHover3D: React.FC<Props> = ({
               onMouseEnter={() => setIsHover(true)}
               onMouseLeave={() => setIsHover(false)}
               style={{
-                backgroundColor: BG,
                 alignItems: centered ? "center" : vertical || isMobile ? "flex-start" : "center",
                 display: "flex",
                 flexDirection: vertical || isMobile ? "column" : "row",
@@ -134,8 +133,6 @@ export const IconHover3D: React.FC<Props> = ({
                 padding: isMobile ? "18px" : "24px",
                 position: "relative",
                 width: "100%",
-                borderRadius: "12px",
-                border: "1px solid rgba(250,250,250,0.1)",
                 cursor: "pointer",
                 ...style,
               }}
@@ -196,59 +193,6 @@ export const IconHover3D: React.FC<Props> = ({
                     </m.div>
                   )}
 
-                  {/* Corner brackets */}
-                  <m.div
-                    animate={{ left: isHover ? -6 : 14, top: isHover ? -6 : 14, scale: isHover ? 2.2 : 1 }}
-                    style={{
-                      flex: "none",
-                      height: "24px",
-                      overflow: "hidden",
-                      position: "absolute",
-                      width: "24px",
-                      zIndex: 2,
-                      borderLeft: `4px solid ${isHover ? ACCENT : FG}`,
-                      borderTop: `4px solid ${isHover ? ACCENT : FG}`,
-                    }}
-                  />
-                  <m.div
-                    animate={{ left: isHover ? -6 : 14, top: isHover ? 330 : 310, scale: isHover ? 2.2 : 1 }}
-                    style={{
-                      flex: "none",
-                      height: "24px",
-                      overflow: "hidden",
-                      position: "absolute",
-                      width: "24px",
-                      zIndex: 2,
-                      borderLeft: `4px solid ${isHover ? ACCENT : FG}`,
-                      borderBottom: `4px solid ${isHover ? ACCENT : FG}`,
-                    }}
-                  />
-                  <m.div
-                    animate={{ right: isHover ? -6 : 14, bottom: isHover ? -6 : 14, scale: isHover ? 2.2 : 1 }}
-                    style={{
-                      flex: "none",
-                      height: "24px",
-                      overflow: "hidden",
-                      position: "absolute",
-                      width: "24px",
-                      zIndex: 2,
-                      borderRight: `4px solid ${isHover ? ACCENT : FG}`,
-                      borderBottom: `4px solid ${isHover ? ACCENT : FG}`,
-                    }}
-                  />
-                  <m.div
-                    animate={{ right: isHover ? -6 : 14, top: isHover ? -6 : 14, scale: isHover ? 2.2 : 1 }}
-                    style={{
-                      flex: "none",
-                      height: "24px",
-                      overflow: "hidden",
-                      position: "absolute",
-                      width: "24px",
-                      zIndex: 2,
-                      borderRight: `4px solid ${isHover ? ACCENT : FG}`,
-                      borderTop: `4px solid ${isHover ? ACCENT : FG}`,
-                    }}
-                  />
                 </m.div>
               </m.div>
 
