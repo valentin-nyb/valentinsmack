@@ -12,7 +12,7 @@ export function Hero() {
           Art Director &amp; Designer — London
         </p>
         <h1 className="mt-5 max-w-4xl font-display text-5xl font-black leading-[1.05] tracking-tight text-neutral-50 md:text-7xl lg:text-[5.5rem]">
-          Brand strategy and art direction for{" "}
+          brand strategy and art direction for{" "}
           <span className="font-serif italic font-normal text-neutral-400 text-[1.15em]">
             clothing
           </span>
@@ -23,8 +23,8 @@ export function Hero() {
           , and{" "}
           <span className="font-serif italic font-normal text-neutral-400 text-[1.15em]">
             experiential campaigns
-          </span>{" "}
-          — built to move culture and move product
+          </span>
+          . — built to move culture and move product.
         </h1>
         <div className="mt-6 hidden md:block">
           <IntroCard
