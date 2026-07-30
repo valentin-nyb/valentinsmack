@@ -12,9 +12,9 @@ export function DownloadCVButton() {
     <a
       href="/cv.pdf"
       download
-      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-neutral-100/40 px-6 py-3 text-[13px] tracking-wide text-neutral-100 transition-colors duration-300 hover:border-orange-500"
+      className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-neutral-100/40 px-6 py-3 text-[13px] tracking-wide text-neutral-100 transition-colors duration-300 hover:border-brand"
     >
-      <span className="absolute inset-0 origin-left scale-x-0 bg-orange-500 transition-transform duration-300 ease-out group-hover:scale-x-100" />
+      <span className="absolute inset-0 origin-left scale-x-0 bg-brand transition-transform duration-300 ease-out group-hover:scale-x-100" />
 
       <span className="relative h-4 w-4 overflow-hidden">
         <ArrowDownIcon className="absolute inset-0 h-4 w-4 transition-transform duration-300 ease-out group-hover:-translate-y-5 group-hover:text-neutral-950" />

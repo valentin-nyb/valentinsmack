@@ -21,7 +21,7 @@ export function IntroCard({ avatarSrc, name, role, message, email }: IntroCardPr
 
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-neutral-100">{name}</p>
-          <p className="text-[11px] font-medium uppercase tracking-wider text-orange-500">
+          <p className="text-[11px] font-medium uppercase tracking-wider text-brand">
             {role}
           </p>
 
@@ -40,7 +40,7 @@ export function IntroCard({ avatarSrc, name, role, message, email }: IntroCardPr
         <a
           href={`mailto:${email}`}
           aria-label="Email me"
-          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-neutral-500 transition-colors hover:bg-orange-500/10 hover:text-orange-500"
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-neutral-500 transition-colors hover:bg-brand/10 hover:text-brand"
         >
           ➤
         </a>

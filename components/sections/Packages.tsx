@@ -25,12 +25,12 @@ export function Packages() {
               onMouseLeave={() => setHoveredIndex(null)}
               className={cn(
                 "relative flex flex-col border p-6 transition-colors",
-                isActive ? "border-orange-500/60" : "border-neutral-100/40",
+                isActive ? "border-brand/60" : "border-neutral-100/40",
                 pkg.featured && "bg-neutral-900/40"
               )}
             >
               {pkg.featured && (
-                <span className="absolute -top-3 left-6 rounded-full bg-orange-500 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-neutral-950">
+                <span className="absolute -top-3 left-6 rounded-full bg-brand px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-neutral-950">
                   Recommended
                 </span>
               )}
@@ -40,7 +40,7 @@ export function Packages() {
 
               <p className="mt-6 text-[13px] tracking-[0.1em] text-neutral-600">Starting from</p>
               <p className="mt-2 flex items-baseline gap-2">
-                <span className="font-display text-4xl font-black text-orange-500">
+                <span className="font-display text-4xl font-black text-brand">
                   {pkg.price}
                 </span>
                 {pkg.cadence && (
@@ -50,7 +50,7 @@ export function Packages() {
 
               <a
                 href="#contact"
-                className="mt-5 inline-flex items-center justify-center rounded-full bg-orange-500 px-6 py-3 text-[13px] font-medium uppercase tracking-wide text-white transition-colors hover:bg-orange-600"
+                className="mt-5 inline-flex items-center justify-center rounded-full bg-brand px-6 py-3 text-[13px] font-medium uppercase tracking-wide text-white transition-colors hover:bg-brand-dark"
               >
                 Start Your Project →
               </a>
@@ -59,7 +59,7 @@ export function Packages() {
               <ul className="mt-3 flex flex-col gap-2">
                 {pkg.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2 text-[15px] text-neutral-300">
-                    <span className="mt-0.5 text-orange-500">✓</span>
+                    <span className="mt-0.5 text-brand">✓</span>
                     {feature}
                   </li>
                 ))}
@@ -67,7 +67,7 @@ export function Packages() {
 
               {pkg.note && (
                 <p className="mt-4 font-serif text-sm italic">
-                  <span className="box-decoration-clone bg-[#f0803c] px-1.5 py-0.5 text-neutral-950">
+                  <span className="box-decoration-clone bg-brand px-1.5 py-0.5 text-neutral-950">
                     {pkg.note}
                   </span>
                 </p>

@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { m, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { useState } from "react";
+import { m } from "framer-motion";
 
 function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -25,33 +25,25 @@ const socials = [
 ];
 
 function DockIcon({
-  mouseX,
   Icon,
   href,
   name,
 }: {
-  mouseX: MotionValue<number>;
   Icon: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
   href: string;
   name: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const distance = useTransform(mouseX, (val) => {
-    const bounds = ref.current?.getBoundingClientRect();
-    if (!bounds) return 0;
-    return val - (bounds.left + bounds.width / 2);
-  });
-
-  const widthSync = useTransform(distance, [-140, 0, 140], [52, 84, 52]);
-  const width = useSpring(widthSync, { mass: 0.1, stiffness: 150, damping: 12 });
+  const [hovered, setHovered] = useState(false);
+  const size = hovered ? 108 : 60;
 
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={name}>
       <m.div
-        ref={ref}
-        style={{ width, height: width }}
-        className="flex items-center justify-center rounded-full bg-neutral-50 text-neutral-900 shadow-lg transition-colors hover:text-orange-500"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        animate={{ width: size, height: size }}
+        transition={{ type: "spring", mass: 0.3, stiffness: 220, damping: 20 }}
+        className="flex items-center justify-center rounded-full bg-neutral-50 text-neutral-900 shadow-lg transition-colors hover:text-brand"
       >
         <Icon style={{ width: "45%", height: "45%" }} />
       </m.div>
@@ -60,16 +52,10 @@ function DockIcon({
 }
 
 export function SocialDock() {
-  const mouseX = useMotionValue(Infinity);
-
   return (
-    <div
-      onMouseMove={(e) => mouseX.set(e.clientX)}
-      onMouseLeave={() => mouseX.set(Infinity)}
-      className="flex h-[88px] items-end gap-4"
-    >
+    <div className="flex h-[68px] items-end justify-start gap-5">
       {socials.map((s) => (
-        <DockIcon key={s.name} mouseX={mouseX} Icon={s.Icon} href={s.href} name={s.name} />
+        <DockIcon key={s.name} Icon={s.Icon} href={s.href} name={s.name} />
       ))}
     </div>
   );

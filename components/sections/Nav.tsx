@@ -98,7 +98,7 @@ export function Nav() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="font-display text-4xl font-black text-neutral-100 transition-colors hover:text-orange-500"
+                  className="font-display text-4xl font-black text-neutral-100 transition-colors hover:text-brand"
                 >
                   {link.label}
                 </a>

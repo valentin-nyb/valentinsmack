@@ -33,7 +33,7 @@ export function Footer() {
             >
               Valentin
             </span>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-orange-500">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-brand">
               Art Director &amp; Designer based in London, working across
               brand identity, art direction, and web &amp; product design
               for fashion and retail brands.
@@ -53,15 +53,15 @@ export function Footer() {
             <p className="text-[13px] tracking-[0.15em] text-neutral-500">Get in touch</p>
             <a
               href="mailto:smack.valentin@gmail.com"
-              className="mt-4 block w-fit text-[15px] text-neutral-100 transition-colors hover:text-orange-500"
+              className="mt-4 block w-fit text-[15px] text-neutral-100 transition-colors hover:text-brand"
             >
               smack.valentin@gmail.com
             </a>
-            <p className="mt-2 text-[13px] tracking-[0.1em] text-orange-500">London, UK</p>
+            <p className="mt-2 text-[13px] tracking-[0.1em] text-brand">London, UK</p>
             <div className="mt-5">
               <DownloadCVButton />
             </div>
-            <div className="mt-5">
+            <div className="mt-4">
               <SocialDock />
             </div>
           </div>

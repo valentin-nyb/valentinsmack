@@ -7,13 +7,13 @@ export function Hero() {
       className="flex min-h-[85vh] flex-col justify-center px-6 pt-28 md:px-10 md:pt-36"
     >
       <div className="mx-auto w-full max-w-6xl">
-        <p className="flex items-center gap-3 text-[13px] tracking-[0.15em] text-orange-500">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-orange-500" />
+        <p className="flex items-center gap-3 text-[13px] tracking-[0.15em] text-brand">
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" />
           Art Director &amp; Designer — London
         </p>
         <h1 className="mt-2 max-w-4xl font-display text-5xl font-black leading-[1.05] tracking-tight text-neutral-50 md:text-7xl lg:text-[5.5rem]">
           brand strategy and{" "}
-          <span className="rounded bg-[#f0803c] px-1 text-neutral-950">
+          <span className="rounded bg-brand px-1 text-neutral-950">
             art direction
           </span>{" "}
           for{" "}
@@ -41,7 +41,7 @@ export function Hero() {
                 I&apos;m Valentin Suarez Mackeprang — working across Art
                 Direction, Brand Identity and Web Design. I&apos;ve been
                 living and working between Buenos Aires, Madrid and Aspen,{" "}
-                <span className="rounded bg-[#f0803c] px-1 text-neutral-950">
+                <span className="rounded bg-brand px-1 text-neutral-950">
                   now based in London.
                 </span>
               </>

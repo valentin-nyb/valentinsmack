@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@theme {
+  /* Single source of truth for the site's orange accent — used for
+     every highlight, button, badge, dot, and border across the site. */
+  --color-brand: #f0803c;
+  --color-brand-dark: #cc6d33;
+}
+
 @layer base {
   :root {
     --background: 0 0% 4%;
@@ -19,7 +26,7 @@
   }
 
   ::selection {
-    background: #f97316;
+    background: #f0803c;
     color: #0a0a0a;
   }
 

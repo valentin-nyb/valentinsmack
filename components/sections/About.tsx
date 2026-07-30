@@ -17,16 +17,14 @@ export function About() {
         </Reveal>
         <Reveal delay={0.1} className="max-w-2xl">
           <p className="font-serif text-2xl leading-relaxed md:text-3xl">
-            <span className="box-decoration-clone bg-[#f0803c] px-1.5 py-0.5 text-neutral-950">
-              I&apos;m an Art Director and Designer based in London, working
-              across brand identity, art direction, and digital product
-              design — with a focus on fashion, retail, and culture-driven
-              brands. My practice blends editorial craft with a fast,
-              experimental process — grounded in strong typography and a
-              hands-on approach from concept through execution.
+            <span className="box-decoration-clone bg-brand px-1.5 py-0.5 text-neutral-950">
+              Art Director and Designer based in London. Brand identity, art
+              direction, web design and development — for fashion, retail,
+              and brands that move culture. Fast, editorial, typography-led,
+              hands-on from concept to code.
             </span>
           </p>
-          <p className="mt-4 text-[13px] tracking-[0.1em] text-orange-500">
+          <p className="mt-4 text-[13px] tracking-[0.1em] text-brand">
             Buenos Aires — Madrid — Aspen — London
           </p>
           <ul className="mt-8 flex flex-wrap gap-x-3 gap-y-3 text-[13px] tracking-wide text-neutral-400">
