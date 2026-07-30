@@ -29,7 +29,7 @@ export function Hero() {
             experiential
           </span>
           .
-          <span className="block">— built to move culture and move product.</span>
+          <span className="block">— built to move culture and ship product.</span>
         </h1>
         <div className="mt-6 hidden md:block">
           <IntroCard
