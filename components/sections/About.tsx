@@ -17,7 +17,7 @@ export function About() {
         </Reveal>
         <Reveal delay={0.1} className="max-w-2xl">
           <p className="font-serif text-2xl leading-relaxed md:text-3xl">
-            <span className="box-decoration-clone bg-orange-500 px-1.5 py-0.5 text-neutral-950">
+            <span className="box-decoration-clone bg-[#f0803c] px-1.5 py-0.5 text-neutral-950">
               I&apos;m an Art Director and Designer based in London, working
               across brand identity, art direction, and digital product
               design — with a focus on fashion, retail, and culture-driven

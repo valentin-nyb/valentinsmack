@@ -14,14 +14,18 @@ export function Hero() {
         <h1 className="mt-5 max-w-4xl font-display text-5xl font-black leading-[1.05] tracking-tight text-neutral-50 md:text-7xl lg:text-[5.5rem]">
           Brand and digital direction for{" "}
           <span className="font-serif italic font-normal text-neutral-400 text-[1.15em]">
-            fashion
+            clothing
           </span>
           ,{" "}
           <span className="font-serif italic font-normal text-neutral-400 text-[1.15em]">
             retail
           </span>
+          ,{" "}
+          <span className="font-serif italic font-normal text-neutral-400 text-[1.15em]">
+            experiential campaigns
+          </span>
           , &amp; brands that move{" "}
-          <span className="rounded bg-orange-500 px-1 text-neutral-950">
+          <span className="rounded bg-[#f0803c] px-1 text-neutral-950">
             culture
           </span>
           .
@@ -36,7 +40,7 @@ export function Hero() {
                 I&apos;m Valentin Suarez Mackeprang — working across Art
                 Direction, Brand Identity and Web Design. I&apos;ve been
                 living and working between Buenos Aires, Madrid and Aspen,{" "}
-                <span className="rounded bg-orange-500 px-1 text-neutral-950">
+                <span className="rounded bg-[#f0803c] px-1 text-neutral-950">
                   now based in London.
                 </span>
               </>
