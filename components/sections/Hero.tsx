@@ -16,7 +16,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="top"
-      className="flex min-h-[85vh] flex-col justify-center px-6 pt-28 md:px-10 md:pt-36"
+      className="flex min-h-[85svh] flex-col justify-center px-6 pt-28 md:px-10 md:pt-36"
     >
       <div className="relative mx-auto w-full max-w-6xl">
         <p className="flex items-center gap-3 text-[13px] tracking-[0.15em] text-brand">
