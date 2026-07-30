@@ -34,10 +34,11 @@ export function Work() {
   const folderSize = isDesktop ? 210 : 130;
   // Mobile has much less horizontal room per cell than desktop's 5-column
   // grid, so jitter/rotation are kept tight enough that a folder's full
-  // bounding box (including its fixed pixel width) can't be pushed far
-  // past the viewport edge — this container's own overflow-x: hidden
-  // covers the remaining sliver on the very narrowest phones, scoped
-  // here rather than globally on html/body.
+  // bounding box (including its fixed pixel width) stays clear of the
+  // viewport edge on realistic phone widths. No overflow:hidden safety
+  // net here — CSS forces overflow-y to also clip once overflow-x isn't
+  // visible, which cut off folders whose jitter pushed them above the
+  // container's top edge (an intentional part of the scattered look).
   const jitterXMult = isDesktop ? 0.55 : 0.12;
   const jitterYMult = isDesktop ? 0.5 : 0.15;
   const rotateRange = isDesktop ? 14 : 6;
@@ -49,7 +50,7 @@ export function Work() {
 
         <div
           ref={containerRef}
-          className="relative mt-10 overflow-x-hidden"
+          className="relative mt-10"
           style={{ height: rows * rowHeight }}
         >
           {projects.map((project, i) => {
