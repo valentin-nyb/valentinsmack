@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { EB_Garamond, Inter, Montserrat, Roboto_Slab } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Waves } from "@/components/ui/wave-background";
 import { MotionProvider } from "@/components/ui/motion-provider";
 import { ScrollRestoration } from "@/components/ui/scroll-restoration";
@@ -51,6 +52,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MotionProvider>
           <div className="relative z-10">{children}</div>
         </MotionProvider>
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </body>
     </html>
   );
