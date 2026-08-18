@@ -33,9 +33,13 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://valentinsmack.com"),
   title: "Valentin Suarez Mackeprang — Art Director & Designer, London",
   description:
     "Art Director and Designer based in London, working across brand identity, art direction, and web & product design for fashion and retail brands.",
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

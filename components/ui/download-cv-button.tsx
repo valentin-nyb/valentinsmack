@@ -11,7 +11,8 @@ export function DownloadCVButton() {
   return (
     <a
       href="/cv.pdf"
-      download
+      target="_blank"
+      rel="noopener noreferrer"
       className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-neutral-100/40 px-6 py-3 text-[13px] tracking-wide text-neutral-100 transition-colors duration-300 hover:border-brand"
     >
       <span className="absolute inset-0 origin-left scale-x-0 bg-brand transition-transform duration-300 ease-out group-hover:scale-x-100" />

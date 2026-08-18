@@ -30,7 +30,7 @@ export function Hero() {
           </span>{" "}
           for{" "}
           <span className="font-serif italic font-normal text-neutral-400 text-[1.15em]">
-            clothing
+            brands
           </span>
           ,{" "}
           <span className="font-serif italic font-normal text-neutral-400 text-[1.15em]">
@@ -41,7 +41,7 @@ export function Hero() {
             experiential
           </span>
           .
-          <span className="block">— built to move culture and ship product.</span>
+          <span className="block">— built to ship product and move culture.</span>
         </h1>
         <m.div
           style={{ y: cardY }}
@@ -64,22 +64,6 @@ export function Hero() {
             email="smack.valentin@gmail.com"
           />
         </m.div>
-        <div className="mt-8 flex items-center gap-10">
-          <a
-            href="#work"
-            className="group relative text-[13px] tracking-wide text-neutral-100"
-          >
-            View Work
-            <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-neutral-100 transition-transform duration-300 ease-out group-hover:scale-x-100" />
-          </a>
-          <a
-            href="mailto:smack.valentin@gmail.com"
-            className="group relative text-[13px] tracking-wide text-neutral-500 transition-colors hover:text-neutral-100"
-          >
-            Email
-            <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-neutral-100 transition-transform duration-300 ease-out group-hover:scale-x-100" />
-          </a>
-        </div>
       </div>
     </section>
   );

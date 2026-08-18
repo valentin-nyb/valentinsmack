@@ -34,8 +34,8 @@ export const projects: Project[] = [
     category: "Brand & Identity",
     href: "https://valentinsmack.myportfolio.com",
     image: "/work/local-assets/cover.jpg",
-    images: galleryFor("local-assets", 6),
-    previewImages: thumbsFor("local-assets", 6),
+    images: galleryFor("local-assets", 9),
+    previewImages: thumbsFor("local-assets", 9),
     logo: logoFor("local-assets"),
   },
   {
@@ -108,6 +108,14 @@ export const projects: Project[] = [
     image: "/work/me-gustas-mucho/cover.jpg",
     images: galleryFor("me-gustas-mucho", 5),
     previewImages: thumbsFor("me-gustas-mucho", 5),
+  },
+  {
+    title: "Aaron Smith — Dancin'",
+    category: "Sony Music — Single Artwork",
+    href: "https://valentinsmack.myportfolio.com",
+    image: "/work/aaron-smith-sony-music/cover.jpg",
+    images: galleryFor("aaron-smith-sony-music", 3),
+    previewImages: thumbsFor("aaron-smith-sony-music", 3),
   },
   {
     title: "Cha Chá Takeover",

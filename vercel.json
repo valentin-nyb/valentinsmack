@@ -2,6 +2,30 @@
   "buildCommand": "NEXT_ADAPTER_PATH= next build",
   "outputDirectory": "out",
   "framework": null,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.valentinsmack.com" }],
+      "destination": "https://valentinsmack.com/$1",
+      "permanent": true
+    },
+    { "source": "/dictator", "destination": "/", "permanent": true },
+    { "source": "/malasana-mag", "destination": "/", "permanent": true },
+    { "source": "/aspirina-martillo", "destination": "/", "permanent": true },
+    { "source": "/not-your-brew", "destination": "/", "permanent": true },
+    { "source": "/megustasmucho-sony-music", "destination": "/", "permanent": true },
+    { "source": "/cha-cha-takeover", "destination": "/", "permanent": true },
+    { "source": "/olio", "destination": "/", "permanent": true },
+    { "source": "/travel-terra", "destination": "/", "permanent": true },
+    { "source": "/cuadros", "destination": "/", "permanent": true },
+    { "source": "/hilaridad-la-juanita", "destination": "/", "permanent": true },
+    { "source": "/adidas-skate-yourself", "destination": "/", "permanent": true },
+    { "source": "/adidas-floor-is-lava", "destination": "/", "permanent": true },
+    { "source": "/wi-pi", "destination": "/", "permanent": true },
+    { "source": "/copia-de-analogic-photos-35mm", "destination": "/", "permanent": true },
+    { "source": "/analogic-photos", "destination": "/", "permanent": true },
+    { "source": "/bigpicture", "destination": "/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

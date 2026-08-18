@@ -50,7 +50,7 @@ export function WorkFolder({
     >
       <div className="relative" style={{ height: backH + 44, width: backW }}>
         <m.div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 drop-shadow-2xl"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 shadow-2xl"
           style={{ width: backW, height: backH, willChange: "transform" }}
           animate={{ scale: hovered ? 0.97 : 1 }}
         >
@@ -92,7 +92,7 @@ export function WorkFolder({
         </div>
 
         <m.div
-          className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2 drop-shadow-[0_-16px_30px_rgba(0,0,0,0.8)]"
+          className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2 shadow-[0_-16px_30px_rgba(0,0,0,0.8)]"
           style={{ width: frontW, height: frontH, transformOrigin: "bottom", willChange: "transform" }}
           animate={{ rotateX: hovered ? -24 : 0, y: hovered ? 10 : 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 26 }}

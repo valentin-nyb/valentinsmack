@@ -39,7 +39,7 @@ export function Nav() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-neutral-900 bg-neutral-950/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6">
           <a
-            href="#top"
+            href="/"
             className="text-lg font-bold uppercase tracking-tight text-neutral-100"
             style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
           >
